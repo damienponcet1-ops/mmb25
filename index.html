@@ -8,117 +8,27 @@
     <link rel="manifest" href="manifest.json">
     
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-            margin: 0;
-            padding: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+        body { font-family: Arial, sans-serif; background-color: #121212; color: #ffffff; margin: 0; padding: 8px; display: flex; flex-direction: column; align-items: center; }
         
         /* HEADER : Bluetooth, Titre, Menu */
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: 450px;
-            margin-bottom: 10px;
-            position: relative;
-        }
-        h1 {
-            font-size: 1.1rem;
-            margin: 0;
-            color: #ffb700;
-            text-align: center;
-            flex-grow: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            padding: 0 5px;
-        }
+        .header-container { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 450px; margin-bottom: 10px; position: relative; }
+        h1 { font-size: 1.1rem; margin: 0; color: #ffb700; text-align: center; flex-grow: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 5px; }
 
-        /* OUTILS DE GAUCHE (Bluetooth + Refresh) */
-        .left-tools {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-
-        /* OUTILS DE DROITE (Live + Menus) */
-        .menus-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .left-tools { display: flex; gap: 6px; align-items: center; }
+        .menus-wrapper { display: flex; align-items: center; gap: 10px; }
         
-        #sessionMenu, #mainMenu {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
+        #sessionMenu, #mainMenu { position: relative; display: flex; align-items: center; }
 
-        .btn-live {
-            background: rgba(255, 59, 48, 0.1);
-            color: #ff3b30;
-            border: 1px solid #ff3b30;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+        .btn-live { background: rgba(255, 59, 48, 0.1); color: #ff3b30; border: 1px solid #ff3b30; padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; display: flex; align-items: center; gap: 5px; cursor: pointer; transition: all 0.2s; }
         .btn-live:hover { background: rgba(255, 59, 48, 0.2); }
-        
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #ff3b30;
-            border-radius: 50%;
-            display: inline-block;
-            animation: pulse-red 1.5s infinite;
-        }
-        
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7); }
-            70% { box-shadow: 0 0 0 6px rgba(255, 59, 48, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); }
-        }
+        .live-dot { width: 8px; height: 8px; background-color: #ff3b30; border-radius: 50%; display: inline-block; animation: pulse-red 1.5s infinite; }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7); } 70% { box-shadow: 0 0 0 6px rgba(255, 59, 48, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 59, 48, 0); } }
 
-        .btn-menu {
-            background: transparent;
-            color: white;
-            font-size: 1.5rem;
-            border: none;
-            cursor: pointer;
-            padding: 0 5px;
-        }
+        .btn-menu { background: transparent; color: white; font-size: 1.5rem; border: none; cursor: pointer; padding: 0 5px; }
         
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 35px;
-            background-color: #1e1e1e;
-            min-width: 230px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.8);
-            z-index: 100;
-            border-radius: 4px;
-            border: 1px solid #444;
-            flex-direction: column;
-            padding: 4px;
-        }
+        .dropdown-content { display: none; position: absolute; right: 0; top: 35px; background-color: #1e1e1e; min-width: 230px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.8); z-index: 100; border-radius: 4px; border: 1px solid #444; flex-direction: column; padding: 4px; }
         .dropdown-content.show { display: flex; }
-        .dropdown-content button, .dropdown-content label {
-            margin: 3px 0; justify-content: flex-start; font-size: 0.8rem; padding: 6px; width: 100%; box-sizing: border-box; background: transparent; border: none; color: white; text-align: left; cursor: pointer; border-radius: 3px; display: flex; align-items: center; gap: 8px;
-        }
+        .dropdown-content button, .dropdown-content label { margin: 3px 0; justify-content: flex-start; font-size: 0.8rem; padding: 6px; width: 100%; box-sizing: border-box; background: transparent; border: none; color: white; text-align: left; cursor: pointer; border-radius: 3px; display: flex; align-items: center; gap: 8px; }
         .dropdown-content button:hover, .dropdown-content label:hover { background-color: #2a2a2a; }
         .dropdown-content button:disabled { color: #666 !important; cursor: not-allowed; background-color: transparent !important; }
         .dropdown-content hr { border: none; border-top: 1px solid #444; margin: 4px 0; width: 100%; }
@@ -128,7 +38,6 @@
         .session-item .s-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px; }
         .session-item .s-grade { color: #ffb700; font-weight: bold; }
         
-        /* Icônes spécifiques du Menu Hamburger */
         .menu-icon-badge { display: inline-flex; width: 18px; height: 18px; border-radius: 50%; font-size: 0.7rem; font-weight: bold; align-items: center; justify-content: center; border: 1px solid #d4ac0d; background-color: #f1c40f; color: #000; flex-shrink: 0; }
         .menu-icon-check { display: inline-flex; width: 16px; height: 16px; border-radius: 50%; background-color: #27ae60; border: 1px solid #2ecc71; flex-shrink: 0; }
         .menu-icon-check-slash { display: inline-flex; width: 16px; height: 16px; border-radius: 50%; background-color: #27ae60; border: 1px solid #dc3545; position: relative; flex-shrink: 0; }
@@ -179,11 +88,16 @@
         .nav-btn { background: #1e1e1e; border: 1px solid #333; color: #ffb700; font-size: 1rem; padding: 10px 12px; border-radius: 6px; cursor: pointer; }
         .nav-btn:active { background: #333; }
 
-        .bottom-triptych { display: grid; grid-template-columns: 0.8fr 1.4fr 0.8fr; gap: 8px; }
+        /* NOUVEAU GRID : 4 COLONNES POUR AJOUTER LE COEUR */
+        .bottom-triptych { display: grid; grid-template-columns: 0.7fr 0.7fr 1.4fr 0.7fr; gap: 6px; }
         .triptych-container { display: flex; flex-direction: column; align-items: flex-end; }
         .triptych-btn { background: #1e1e1e; border: 1px solid #333; border-radius: 8px; height: 52px; width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; cursor: pointer; transition: all 0.2s; }
         .triptych-btn:active { transform: scale(0.98); }
         .triptych-grade { font-size: 1.4rem; font-weight: 900; color: #ffffff; }
+        
+        .triptych-heart { font-size: 1.6rem; color: #888; }
+        .triptych-heart.is-fav { color: #ff3b30; text-shadow: 0 0 10px rgba(255, 59, 48, 0.4); }
+
         .triptych-list { font-size: 1.8rem; font-weight: bold; color: #b388ff; }
         .triptych-list.in-list { background-color: #dc3545; border-color: #bd2130; color: #ffffff; }
         
@@ -274,6 +188,7 @@
                     <label><input type="checkbox" id="excludeCompleted" checked> <span class="menu-icon-check-slash"></span> Masquer réalisés</label>
                     <label><input type="checkbox" id="onlyCompleted"> <span class="menu-icon-check"></span> Uniquement réalisés</label>
                     <label><input type="checkbox" id="filterBenchmark"> <span class="menu-icon-badge">B</span> Uniquement Benchmarks</label>
+                    <label><input type="checkbox" id="filterFavorites"> ❤️ Uniquement favoris</label>
                     <hr>
                     <button id="btnStats" style="color: #1abc9c;">📊 Statistiques</button>
                     <button id="btnClearStorage" style="color: #e74c3c;">⚠️ Vider la base</button>
@@ -339,6 +254,8 @@
         
         <div class="bottom-triptych">
             <div id="bottomGrade" class="triptych-btn triptych-grade" title="Modifier la cotation">-</div>
+            
+            <div id="bottomHeart" class="triptych-btn triptych-heart" title="Ajouter aux favoris">🤍</div>
             
             <div id="bottomCheckWrapper" class="triptych-btn" style="flex-direction: row; gap: 8px;">
                 <div id="bottomCheck" class="check-circle" style="flex-shrink: 0;">
@@ -452,6 +369,7 @@
         const filterCotation = document.getElementById('filterCotation');
         const filterList = document.getElementById('filterList');
         const filterBenchmark = document.getElementById('filterBenchmark');
+        const filterFavorites = document.getElementById('filterFavorites');
         const excludeCompletedCheckbox = document.getElementById('excludeCompleted');
         const onlyCompletedCheckbox = document.getElementById('onlyCompleted');
         const sortAscensionsCheckbox = document.getElementById('sortAscensions');
@@ -479,6 +397,7 @@
         const bottomPanel = document.getElementById('bottomPanel');
         const bottomBlockName = document.getElementById('bottomBlockName');
         const bottomGrade = document.getElementById('bottomGrade');
+        const bottomHeart = document.getElementById('bottomHeart');
         const bottomCheckWrapper = document.getElementById('bottomCheckWrapper'); 
         const btnAddRep = document.getElementById('btnAddRep'); 
         const btnSubRep = document.getElementById('btnSubRep'); 
@@ -525,29 +444,17 @@
         const gradeOrder = ['?', '6A', '6A+', '6B', '6B+', '6C', '6C+', '7A', '7A+', '7B', '7B+', '7C', '7C+', '8A', '8A+', '8B', '8B+'];
 
         function getTodayString() {
-            let d = new Date();
-            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+            let d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
         }
 
         function getGradeColor(gradeStr) {
-            if (!gradeStr) return '#333333';
-            let g = gradeStr.toUpperCase().trim();
-            const gradeScale = {
-                '6A': '#2ecc71', '6A+': '#27ae60', '6B': '#1e8449', '6B+': '#5dade2', '6C': '#3498db', '6C+': '#2874a6',
-                '7A': '#f5b041', '7A+': '#f39c12', '7B': '#d35400', '7B+': '#e74c3c', '7C': '#c0392b', '7C+': '#922b21',
-                '8A': '#af7ac5', '8A+': '#9b59b6', '8B': '#8e44ad', '8B+': '#5b2c6f'
-            };
-            for (let key in gradeScale) { if (g.includes(key)) return gradeScale[key]; }
-            return '#333333';
+            if (!gradeStr) return '#333333'; let g = gradeStr.toUpperCase().trim();
+            const gradeScale = { '6A': '#2ecc71', '6A+': '#27ae60', '6B': '#1e8449', '6B+': '#5dade2', '6C': '#3498db', '6C+': '#2874a6', '7A': '#f5b041', '7A+': '#f39c12', '7B': '#d35400', '7B+': '#e74c3c', '7C': '#c0392b', '7C+': '#922b21', '8A': '#af7ac5', '8A+': '#9b59b6', '8B': '#8e44ad', '8B+': '#5b2c6f' };
+            for (let key in gradeScale) { if (g.includes(key)) return gradeScale[key]; } return '#333333';
         }
 
         // --- GESTION DU RAFRAÎCHISSEMENT ---
-        btnRefresh.addEventListener('click', () => {
-            if (blockSelect.options.length > 0) {
-                blockSelect.selectedIndex = 0;
-                displayBlock(blockSelect.value);
-            }
-        });
+        btnRefresh.addEventListener('click', () => { if (blockSelect.options.length > 0) { blockSelect.selectedIndex = 0; displayBlock(blockSelect.value); } });
 
         // --- GESTION DU MENU SESSION (LIVE) ---
         function updateSessionDropdown() {
@@ -581,23 +488,17 @@
 
         // --- GESTION DES LISTES ---
         function updateListFilterOptions() {
-            let currentFilter = filterList.value;
-            filterList.innerHTML = '<option value="">Toutes les listes</option>';
+            let currentFilter = filterList.value; filterList.innerHTML = '<option value="">Toutes les listes</option>';
             for(let listName in customLists) { let opt = document.createElement('option'); opt.value = listName; opt.textContent = listName; filterList.appendChild(opt); }
-            if(customLists[currentFilter]) filterList.value = currentFilter;
-            btnDeleteList.disabled = (filterList.value === "");
+            if(customLists[currentFilter]) filterList.value = currentFilter; btnDeleteList.disabled = (filterList.value === "");
         }
 
         function renderListModal() {
-            if(!currentBlockName) return;
-            listModalTitle.textContent = `Listes pour "${currentBlockName}"`; existingListsDiv.innerHTML = '';
+            if(!currentBlockName) return; listModalTitle.textContent = `Listes pour "${currentBlockName}"`; existingListsDiv.innerHTML = '';
             for(let listName in customLists) {
                 let isInside = customLists[listName].includes(currentBlockName);
                 let btn = document.createElement('button'); btn.textContent = listName + (isInside ? ' ✅' : ''); btn.className = isInside ? 'btn-green' : 'btn-gray';
-                btn.onclick = () => {
-                    if(isInside) customLists[listName] = customLists[listName].filter(b => b !== currentBlockName); else customLists[listName].push(currentBlockName);
-                    localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); renderListModal(); updateBlockSelect(); updateListButtonState();
-                };
+                btn.onclick = () => { if(isInside) customLists[listName] = customLists[listName].filter(b => b !== currentBlockName); else customLists[listName].push(currentBlockName); localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); renderListModal(); updateBlockSelect(); updateListButtonState(); };
                 existingListsDiv.appendChild(btn);
             }
         }
@@ -625,11 +526,10 @@
         btnCreateList.addEventListener('click', () => {
             let val = newListNameInput.value.trim(); if(!val) return alert("Entrez un nom de liste.");
             if(!customLists[val]) customLists[val] = []; if(!customLists[val].includes(currentBlockName)) customLists[val].push(currentBlockName);
-            localStorage.setItem('minimoon_lists', JSON.stringify(customLists));
-            newListNameInput.value = ''; updateListFilterOptions(); renderListModal(); updateBlockSelect(); updateListButtonState();
+            localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); newListNameInput.value = ''; updateListFilterOptions(); renderListModal(); updateBlockSelect(); updateListButtonState();
         });
 
-        // --- GESTION DES COTATIONS ---
+        // --- GESTION DES COTATIONS ET FAVORIS ---
         bottomGrade.addEventListener('click', () => {
             if(!currentBlockName || !blocks[currentBlockName]) return;
             let currentGrade = blocks[currentBlockName].grade || "?"; let optionExists = Array.from(newGradeSelect.options).some(opt => opt.value === currentGrade);
@@ -641,19 +541,24 @@
             localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); gradeModal.style.display = 'none'; displayBlock(currentBlockName); updateBlockSelect(); 
         });
 
+        bottomHeart.addEventListener('click', () => {
+            if (currentBlockName && blocks[currentBlockName]) {
+                blocks[currentBlockName].favorite = !blocks[currentBlockName].favorite;
+                localStorage.setItem('minimoon_blocks', JSON.stringify(blocks));
+                displayBlock(currentBlockName);
+                updateBlockSelect(currentBlockName);
+            }
+        });
+
         // --- GESTION IMPORT / EXPORT / SUPPRESSION ---
         btnPasteJSON.addEventListener('click', () => { dropdownMenu.classList.remove('show'); pasteJsonText.value = ''; pasteModal.style.display = 'block'; });
         btnClosePaste.addEventListener('click', () => pasteModal.style.display = 'none');
         btnSavePaste.addEventListener('click', () => {
             let text = pasteJsonText.value.trim(); if (!text) return alert("Veuillez coller du texte JSON.");
-            try { let parsed = JSON.parse(text); processImportedData(parsed); pasteModal.style.display = 'none'; } 
-            catch(e) { alert("Erreur JSON: " + e.message + "\nVérifiez que le code copié est valide."); }
+            try { let parsed = JSON.parse(text); processImportedData(parsed); pasteModal.style.display = 'none'; } catch(e) { alert("Erreur JSON: " + e.message + "\nVérifiez que le code copié est valide."); }
         });
 
-        btnSearchToggle.addEventListener('click', () => {
-            if (searchInput.style.display === 'none' || searchInput.style.display === '') { searchInput.style.display = 'block'; searchInput.focus(); } 
-            else { searchInput.style.display = 'none'; searchInput.value = ''; updateBlockSelect(); }
-        });
+        btnSearchToggle.addEventListener('click', () => { if (searchInput.style.display === 'none' || searchInput.style.display === '') { searchInput.style.display = 'block'; searchInput.focus(); } else { searchInput.style.display = 'none'; searchInput.value = ''; updateBlockSelect(); } });
         searchInput.addEventListener('input', () => updateBlockSelect());
 
         btnDeleteBlock.addEventListener('click', () => {
@@ -667,10 +572,7 @@
         
         btnDeleteList.addEventListener('click', () => {
             let activeList = filterList.value; if (!activeList) return; 
-            if (confirm(`Voulez-vous vraiment supprimer la liste "${activeList}" ?`)) {
-                delete customLists[activeList]; localStorage.setItem('minimoon_lists', JSON.stringify(customLists));
-                filterList.value = ""; updateListFilterOptions(); updateBlockSelect(); dropdownMenu.classList.remove('show'); alert(`La liste "${activeList}" a été supprimée.`);
-            }
+            if (confirm(`Voulez-vous vraiment supprimer la liste "${activeList}" ?`)) { delete customLists[activeList]; localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); filterList.value = ""; updateListFilterOptions(); updateBlockSelect(); dropdownMenu.classList.remove('show'); alert(`La liste "${activeList}" a été supprimée.`); }
         });
 
         // --- BLUETOOTH ---
@@ -682,10 +584,8 @@
             try {
                 bluetoothDevice = await navigator.bluetooth.requestDevice({ filters: [{ namePrefix: 'MoonBoard' }], optionalServices: [BLE_SERVICE_UUID] });
                 bluetoothDevice.addEventListener('gattserverdisconnected', () => { btnConnect.classList.remove('connected'); bleCharacteristic = null; });
-                const server = await bluetoothDevice.gatt.connect(); const service = await server.getPrimaryService(BLE_SERVICE_UUID);
-                bleCharacteristic = await service.getCharacteristic(BLE_RX_UUID);
-                btnConnect.classList.add('connected');
-                if (currentBlockName && blocks[currentBlockName]) sendToESP32(blocks[currentBlockName]);
+                const server = await bluetoothDevice.gatt.connect(); const service = await server.getPrimaryService(BLE_SERVICE_UUID); bleCharacteristic = await service.getCharacteristic(BLE_RX_UUID);
+                btnConnect.classList.add('connected'); if (currentBlockName && blocks[currentBlockName]) sendToESP32(blocks[currentBlockName]);
             } catch (error) { console.error("Erreur Bluetooth:", error); }
         });
 
@@ -704,21 +604,13 @@
         // --- EXPORT & RESTAURATION ---
         function downloadData(dataObj, filename) {
             const dataStr = JSON.stringify(dataObj, null, 2);
-            if (navigator.canShare) {
-                try {
-                    const file = new File([dataStr], filename, { type: "application/json" });
-                    if (navigator.canShare({ files: [file] })) { navigator.share({ title: "Export", files: [file] }).catch(err => console.log(err)); dropdownMenu.classList.remove('show'); return; }
-                } catch (e) { console.log(e); }
-            }
+            if (navigator.canShare) { try { const file = new File([dataStr], filename, { type: "application/json" }); if (navigator.canShare({ files: [file] })) { navigator.share({ title: "Export", files: [file] }).catch(err => console.log(err)); dropdownMenu.classList.remove('show'); return; } } catch (e) { console.log(e); } }
             const blob = new Blob([dataStr], { type: 'application/json' }); const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.style.display = 'none'; a.href = url; a.download = filename;
-            document.body.appendChild(a); a.click(); setTimeout(() => { document.body.removeChild(a); window.URL.revokeObjectURL(url); }, 100); dropdownMenu.classList.remove('show');
+            const a = document.createElement('a'); a.style.display = 'none'; a.href = url; a.download = filename; document.body.appendChild(a); a.click(); setTimeout(() => { document.body.removeChild(a); window.URL.revokeObjectURL(url); }, 100); dropdownMenu.classList.remove('show');
         }
 
         document.getElementById('btnExportBlocks').addEventListener('click', () => { downloadData(blocks, 'minimoon_blocks_export.json'); });
-        document.getElementById('btnExportBackup').addEventListener('click', () => {
-            const backupData = { type: "minimoon_full_backup", blocks: blocks, lists: customLists, gridConfig: JSON.parse(localStorage.getItem('minimoon_grid') || '{}') }; downloadData(backupData, `minimoon_backup_${new Date().toISOString().slice(0,10)}.json`);
-        });
+        document.getElementById('btnExportBackup').addEventListener('click', () => { const backupData = { type: "minimoon_full_backup", blocks: blocks, lists: customLists, gridConfig: JSON.parse(localStorage.getItem('minimoon_grid') || '{}') }; downloadData(backupData, `minimoon_backup_${new Date().toISOString().slice(0,10)}.json`); });
 
         function processImportedData(parsed) {
             if (parsed && parsed.type === "minimoon_full_backup") {
@@ -737,20 +629,13 @@
                 let routeName = route.name || route.Name || `Import_${Date.now()}_${index}`; let routeMethod = route.method || route.Method || ""; let routeGrade = route.grade || route.Grade || route.userGrade || "?";
                 let isBenchmarkVal = false; if ('benchmark' in route) isBenchmarkVal = (String(route.benchmark).toLowerCase() === 'true'); else if ('isBenchmark' in route) isBenchmarkVal = (String(route.isBenchmark).toLowerCase() === 'true');
                 let completed = route.completed === true; let completedDate = route.completedDate || null; let ascentsLog = route.ascentsLog || [];
+                let fav = route.favorite === true;
                 if (completed && ascentsLog.length === 0) { ascentsLog = [completedDate || "1970-01-01"]; }
                 let ascCount = parseInt(route.ascensionCount || route.AscensionCount || 0, 10); let setter = route.setby || route.setter || "Inconnu";
                 let routeMoves = route.moves || route.Moves || []; let depart = [], progression = [], arrivee = [];
-                if (Array.isArray(routeMoves)) {
-                    routeMoves.forEach(m => {
-                        let rawId = m.description || m.Description || m.hold || m.id; if (!rawId && typeof m === 'string') rawId = m;
-                        if (rawId && typeof rawId === 'string') {
-                            let id = rawId.toUpperCase(); let isStart = m.isStart || m.IsStart || m.type === 'start' || m.type === 'Start'; let isEnd = m.isEnd || m.IsEnd || m.type === 'finish' || m.type === 'end' || m.type === 'top';
-                            if (isStart) depart.push(id); else if (isEnd) arrivee.push(id); else progression.push(id);
-                        }
-                    });
-                }
+                if (Array.isArray(routeMoves)) { routeMoves.forEach(m => { let rawId = m.description || m.Description || m.hold || m.id; if (!rawId && typeof m === 'string') rawId = m; if (rawId && typeof rawId === 'string') { let id = rawId.toUpperCase(); let isStart = m.isStart || m.IsStart || m.type === 'start' || m.type === 'Start'; let isEnd = m.isEnd || m.IsEnd || m.type === 'finish' || m.type === 'end' || m.type === 'top'; if (isStart) depart.push(id); else if (isEnd) arrivee.push(id); else progression.push(id); } }); }
                 if (route.depart && Array.isArray(route.depart)) depart = route.depart; if (route.progression && Array.isArray(route.progression)) progression = route.progression; if (route.arrivee && Array.isArray(route.arrivee)) arrivee = route.arrivee;
-                newBlocks[routeName] = { depart, progression, arrivee, method: routeMethod, grade: routeGrade, isBenchmark: isBenchmarkVal, ascensionCount: ascCount, setby: setter, completed: completed, completedDate: completedDate, ascentsLog: ascentsLog };
+                newBlocks[routeName] = { depart, progression, arrivee, method: routeMethod, grade: routeGrade, isBenchmark: isBenchmarkVal, ascensionCount: ascCount, setby: setter, completed: completed, completedDate: completedDate, ascentsLog: ascentsLog, favorite: fav };
             });
             
             let newKeys = Object.keys(newBlocks); blocks = {...blocks, ...newBlocks}; localStorage.setItem('minimoon_blocks', JSON.stringify(blocks));
@@ -776,7 +661,7 @@
         btnSaveCreate.addEventListener('click', () => {
             if (currentCreation.depart.length === 0 && currentCreation.progression.length === 0 && currentCreation.arrivee.length === 0) return alert("Ajoute au moins une prise sur le mur !");
             let name = prompt("Nom du nouveau bloc :");
-            if (name) { blocks[name] = { depart: currentCreation.depart, progression: currentCreation.progression, arrivee: currentCreation.arrivee, method: "", grade: "6B+", isBenchmark: false, ascensionCount: 0, setby: "Moi", completed: false }; localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); isCreating = false; menusWrapper.style.display = 'flex'; creationTools.style.display = 'none'; bottomPanel.style.display = 'flex'; updateBlockSelect(name); }
+            if (name) { blocks[name] = { depart: currentCreation.depart, progression: currentCreation.progression, arrivee: currentCreation.arrivee, method: "", grade: "6B+", isBenchmark: false, ascensionCount: 0, setby: "Moi", completed: false, favorite: false }; localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); isCreating = false; menusWrapper.style.display = 'flex'; creationTools.style.display = 'none'; bottomPanel.style.display = 'flex'; updateBlockSelect(name); }
         });
 
         // --- AFFICHAGE ET LOGIQUE DE SÉLECTION ---
@@ -796,6 +681,8 @@
                 if (block.isBenchmark) badgeBenchmark.style.display = 'inline-flex';
                 bottomBlockName.textContent = name; let gradeVal = block.grade || "?"; bottomGrade.textContent = gradeVal; bottomGrade.style.backgroundColor = getGradeColor(gradeVal);
                 
+                if (block.favorite) { bottomHeart.textContent = '❤️'; bottomHeart.classList.add('is-fav'); } else { bottomHeart.textContent = '🤍'; bottomHeart.classList.remove('is-fav'); }
+
                 if (block.completed) {
                     bottomCheckWrapper.classList.add('is-checked'); repControls.style.display = 'flex';
                     if (!block.ascentsLog || block.ascentsLog.length === 0) { block.ascentsLog = [block.completedDate || getTodayString()]; }
@@ -806,6 +693,7 @@
                 updateListButtonState(); sendToESP32(block);
             } else {
                 bottomBlockName.textContent = "Aucun bloc sélectionné"; bottomGrade.textContent = "-"; bottomGrade.style.backgroundColor = "#333333";
+                bottomHeart.textContent = '🤍'; bottomHeart.classList.remove('is-fav');
                 bottomCheckWrapper.classList.remove('is-checked'); repControls.style.display = 'none'; infoSetter.textContent = "-"; infoAscensions.textContent = "-";
                 updateListButtonState(); sendToESP32(null); 
             }
@@ -813,10 +701,12 @@
 
         function updateBlockSelect(forceSelectName = null) {
             let selected = forceSelectName || blockSelect.value; blockSelect.innerHTML = '';
-            let allKeys = Object.keys(blocks); let excludeChecked = excludeCompletedCheckbox.checked; let onlyChecked = onlyCompletedCheckbox.checked; let sortAscensions = sortAscensionsCheckbox.checked; let sortAlpha = sortAlphaCheckbox.checked; let currentGradeFilter = filterCotation.value; let currentListFilter = filterList.value; let benchmarkOnly = filterBenchmark.checked; let searchQuery = searchInput.value.toLowerCase(); let totalBlocksInDB = allKeys.length;
+            let allKeys = Object.keys(blocks); let excludeChecked = excludeCompletedCheckbox.checked; let onlyChecked = onlyCompletedCheckbox.checked; let favOnly = filterFavorites.checked; let sortAscensions = sortAscensionsCheckbox.checked; let sortAlpha = sortAlphaCheckbox.checked; let currentGradeFilter = filterCotation.value; let currentListFilter = filterList.value; let benchmarkOnly = filterBenchmark.checked; let searchQuery = searchInput.value.toLowerCase(); let totalBlocksInDB = allKeys.length;
             let filteredKeys = allKeys.filter(k => {
                 let b = blocks[k];
-                if (excludeChecked && b.completed) return false; if (onlyChecked && !b.completed) return false; if (currentGradeFilter && !(b.grade && b.grade.includes(currentGradeFilter))) return false; if (benchmarkOnly && !b.isBenchmark) return false; if (searchQuery && !k.toLowerCase().includes(searchQuery)) return false; if (currentListFilter && (!customLists[currentListFilter] || !customLists[currentListFilter].includes(k))) return false;
+                if (excludeChecked && b.completed) return false; if (onlyChecked && !b.completed) return false;
+                if (favOnly && !b.favorite) return false;
+                if (currentGradeFilter && !(b.grade && b.grade.includes(currentGradeFilter))) return false; if (benchmarkOnly && !b.isBenchmark) return false; if (searchQuery && !k.toLowerCase().includes(searchQuery)) return false; if (currentListFilter && (!customLists[currentListFilter] || !customLists[currentListFilter].includes(k))) return false;
                 return true;
             });
             filteredKeys.sort((a, b) => {
@@ -825,13 +715,18 @@
             });
             blockCounter.textContent = `${filteredKeys.length}/${totalBlocksInDB}`;
             filteredKeys.forEach(k => {
-                let opt = document.createElement('option'); opt.value = k; let ascText = (sortAscensions && blocks[k].ascensionCount > 0) ? ` - ${blocks[k].ascensionCount} asc.` : ''; opt.textContent = `${k} (${blocks[k].grade || '?'})${ascText}`; blockSelect.appendChild(opt);
+                let opt = document.createElement('option'); opt.value = k; 
+                let ascText = (sortAscensions && blocks[k].ascensionCount > 0) ? ` - ${blocks[k].ascensionCount} asc.` : '';
+                let favText = blocks[k].favorite ? ' ❤️' : ''; let doneText = blocks[k].completed ? ' ✅' : '';
+                opt.textContent = `${k} (${blocks[k].grade || '?'})${ascText}${doneText}${favText}`;
+                blockSelect.appendChild(opt);
             });
             if (filteredKeys.includes(selected)) { blockSelect.value = selected; displayBlock(selected); } else if (filteredKeys.length > 0) { blockSelect.value = filteredKeys[0]; displayBlock(filteredKeys[0]); } else { displayBlock(""); }
         }
 
         sortAscensionsCheckbox.addEventListener('change', () => { if(sortAscensionsCheckbox.checked) sortAlphaCheckbox.checked = false; else if (!sortAlphaCheckbox.checked) sortAlphaCheckbox.checked = true; updateBlockSelect(); });
         sortAlphaCheckbox.addEventListener('change', () => { if(sortAlphaCheckbox.checked) sortAscensionsCheckbox.checked = false; else if (!sortAscensionsCheckbox.checked) sortAscensionsCheckbox.checked = true; updateBlockSelect(); });
+        filterFavorites.addEventListener('change', () => updateBlockSelect());
 
         // --- LOGIQUE DE VALIDATION ET DE RÉPÉTITION ---
         bottomCheckWrapper.addEventListener('click', () => {
@@ -841,8 +736,7 @@
                 b.completed = !b.completed;
                 if (b.completed) { b.completedDate = getTodayString(); b.ascentsLog = [getTodayString()]; } else { b.completedDate = null; b.ascentsLog = []; }
                 localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); displayBlock(currentBlockName);
-                if (excludeCompletedCheckbox.checked || onlyCompletedCheckbox.checked) updateBlockSelect();
-                updateSessionDropdown();
+                if (excludeCompletedCheckbox.checked || onlyCompletedCheckbox.checked) updateBlockSelect(); updateSessionDropdown();
             }
         });
 
