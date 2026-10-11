@@ -77,9 +77,8 @@
         /* Flex-grow sur le nom permet de repousser les éléments de droite sans déborder */
         .cs-name { font-weight: bold; font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-grow: 1; min-width: 0; color: #fff; }
         
-        .cs-grade-text { color: #aaa; font-size: 0.75rem; flex-shrink: 0; }
-        .cs-asc { color: #888; font-size: 0.7rem; flex-shrink: 0; margin-left: 2px; }
-        .cs-active-bulb { font-size: 0.85rem; flex-shrink: 0; margin-left: 4px; text-shadow: 0 0 8px rgba(255, 183, 0, 0.8); }
+        .cs-asc { color: #888; font-size: 0.7rem; flex-shrink: 0; margin-left: 4px; }
+        .cs-active-bulb { display: flex; align-items: center; flex-shrink: 0; margin-left: 4px; }
 
         /* PANNEAU DU MUR */
         .board-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 11 / 12; background-color: #f4d03f; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.5); touch-action: pan-y; }
@@ -160,11 +159,9 @@
             <button id="btnConnect" class="btn-bt" title="Bluetooth">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5"></polyline></svg>
             </button>
-            <button id="btnRefresh" class="btn-bt" title="Remonter en haut de la liste">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-            </button>
             <button id="btnClearBoard" class="btn-bt" title="Éteindre le mur (Libérer pour un ami)">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
+                <!-- Ampoule violette -->
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#b388ff" stroke="#b388ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.2 1.18 4.1 2.9 5.3C8.6 15 9 16.5 9 18h6c0-1.5.4-3 1.1-3.7 1.72-1.2 2.9-3.1 2.9-5.3a7 7 0 0 0-7-7z"/></svg>
             </button>
         </div>
         
@@ -213,8 +210,11 @@
         <input type="text" id="searchInput" class="search-input" placeholder="Rechercher par nom...">
     </div>
 
-    <!-- LIGNE 2 : Select Bloc & Loupe -->
+    <!-- LIGNE 2 : Select Bloc & Loupe & Refresh -->
     <div class="toolbar" style="flex-wrap: nowrap;">
+        <button id="btnRefresh" class="btn-gray" title="Remonter en haut de la liste" style="padding: 6px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        </button>
         <div class="custom-select" id="customBlockSelect">
             <div class="custom-select-header" id="csHeader">
                 <div style="display:flex; align-items:center; gap:8px; overflow:hidden;">
@@ -241,7 +241,7 @@
         
         <div class="custom-select" id="customGradeSelect" style="width: 50%;">
             <div class="custom-select-header" id="cgHeader">
-                <div style="display:flex; align-items:center; gap:6px; overflow:hidden;">
+                <div style="display:flex; align-items:center; gap:6px; overflow:hidden; flex-grow: 1;">
                     <span id="cgHeaderBadge" class="cs-badge" style="background:transparent; display:none;"></span>
                     <span id="cgHeaderName" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size: 0.85rem;">Toutes cotations</span>
                 </div>
@@ -249,9 +249,6 @@
             </div>
             <div class="custom-select-list" id="cgList"></div>
         </div>
-        <!-- Select natifs cachés pour la logique interne -->
-        <select id="filterList" style="display:none;"><option value="">Toutes les listes</option></select>
-        <select id="filterCotation" style="display:none;"><option value="">Toutes les cotations</option></select>
     </div>
 
     <!-- MUR -->
@@ -399,17 +396,19 @@
 
         const COLS = ['A','B','C','D','E','F','G','H','I','J','K']; const ROWS = [12,11,10,9,8,7,6,5,4,3,2,1];
         const gradeOrder = ['?', '6A', '6A+', '6B', '6B+', '6C', '6C+', '7A', '7A+', '7B', '7B+', '7C', '7C+', '8A', '8A+', '8B', '8B+'];
+        
         let blocks = JSON.parse(localStorage.getItem('minimoon_blocks') || '{}');
         let customLists = JSON.parse(localStorage.getItem('minimoon_lists') || '{}');
         let currentBlockName = ""; let isCreating = false; let currentCreation = { depart: [], progression: [], arrivee: [] };
 
+        // Nouveaux filtres propres en variables (remplace les <select> cachés)
+        let currentListFilter = "";
+        let currentGradeFilter = "";
+
         const gridOverlay = document.getElementById('gridOverlay');
-        const blockSelect = document.getElementById('blockSelect'); // Caché
+        const blockSelect = document.getElementById('blockSelect'); // Caché, pour compatibilité interne
         const csList = document.getElementById('csList'); 
-        
-        const filterList = document.getElementById('filterList'); // Caché
         const clList = document.getElementById('clList');
-        const filterCotation = document.getElementById('filterCotation'); // Caché
         const cgList = document.getElementById('cgList');
 
         const filterBenchmark = document.getElementById('filterBenchmark');
@@ -524,10 +523,7 @@
         
         // --- BOUTON ETEINDRE LE MUR ---
         btnClearBoard.addEventListener('click', () => {
-            // Efface l'écran et envoie la commande Bluetooth pour éteindre
-            blockSelect.value = "";
-            displayBlock("");
-            updateBlockSelect("");
+            blockSelect.value = ""; displayBlock(""); updateBlockSelect("");
         });
 
         function updateSessionDropdown() {
@@ -553,40 +549,59 @@
 
         // --- CUSTOM SELECT : LISTES ---
         function updateListFilterOptions() {
-            let currentFilter = filterList.value; clList.innerHTML = '';
-            let allOpt = document.createElement('div'); allOpt.className = 'cs-item' + (currentFilter === "" ? " selected" : "");
+            clList.innerHTML = '';
+            let allOpt = document.createElement('div'); allOpt.className = 'cs-item' + (currentListFilter === "" ? " selected" : "");
             allOpt.innerHTML = `<div class="cs-name">Toutes les listes</div>`;
-            allOpt.onclick = (e) => { e.stopPropagation(); filterList.value = ""; document.getElementById('clHeaderName').textContent = "Toutes les listes"; clList.classList.remove('show'); updateListButtonState(); updateBlockSelect(); updateListFilterOptions(); };
+            allOpt.onclick = (e) => { e.stopPropagation(); currentListFilter = ""; document.getElementById('clHeaderName').textContent = "Toutes les listes"; clList.classList.remove('show'); updateListButtonState(); updateBlockSelect(); updateListFilterOptions(); };
             clList.appendChild(allOpt);
 
             for(let listName in customLists) { 
                 let count = customLists[listName].length;
-                let opt = document.createElement('div'); opt.className = 'cs-item' + (currentFilter === listName ? " selected" : "");
+                let opt = document.createElement('div'); opt.className = 'cs-item' + (currentListFilter === listName ? " selected" : "");
                 opt.innerHTML = `<div class="cs-name">${listName} <span style="color:#888; font-size:0.75rem; font-weight:normal;">(${count})</span></div>`;
-                opt.onclick = (e) => { e.stopPropagation(); filterList.value = listName; document.getElementById('clHeaderName').textContent = listName; clList.classList.remove('show'); updateListButtonState(); updateBlockSelect(); updateListFilterOptions(); };
+                opt.onclick = (e) => { e.stopPropagation(); currentListFilter = listName; document.getElementById('clHeaderName').textContent = listName; clList.classList.remove('show'); updateListButtonState(); updateBlockSelect(); updateListFilterOptions(); };
                 clList.appendChild(opt); 
             }
-            if(customLists[currentFilter]) { filterList.value = currentFilter; document.getElementById('clHeaderName').textContent = currentFilter; } else { filterList.value = ""; document.getElementById('clHeaderName').textContent = "Toutes les listes"; }
-            btnDeleteList.disabled = (filterList.value === "");
+            if(customLists[currentListFilter]) { document.getElementById('clHeaderName').textContent = currentListFilter; } else { currentListFilter = ""; document.getElementById('clHeaderName').textContent = "Toutes les listes"; }
+            btnDeleteList.disabled = (currentListFilter === "");
         }
 
         // --- CUSTOM SELECT : COTATIONS ---
         function initGradeFilterSelect() {
-            const gradeOptions = [{val: "", label: "Toutes cotations"}, {val: "?", label: "Non coté (?)"}, ...gradeOrder.map(g => ({val: g, label: g}))];
-            cgList.innerHTML = ''; let currentFilter = filterCotation.value;
+            // Nettoyage: un seul point d'interrogation en excluant '?' du mapping de gradeOrder
+            const gradeOptions = [
+                {val: "", label: "Toutes cotations"}, 
+                {val: "?", label: "Non coté"}, 
+                ...gradeOrder.filter(g => g !== '?').map(g => ({val: g, label: g}))
+            ];
+            cgList.innerHTML = ''; 
 
             gradeOptions.forEach(optData => {
-                let opt = document.createElement('div'); opt.className = 'cs-item' + (currentFilter === optData.val ? " selected" : "");
-                let badgeHtml = "";
-                if(optData.val !== "" && optData.val !== "?") badgeHtml = `<div class="cs-badge" style="background-color: ${getGradeColor(optData.val)};">${optData.val}</div>`;
-                else if(optData.val === "?") badgeHtml = `<div class="cs-badge" style="background-color: #333;">?</div>`;
+                let opt = document.createElement('div'); opt.className = 'cs-item' + (currentGradeFilter === optData.val ? " selected" : "");
                 
-                opt.innerHTML = `${badgeHtml}<div class="cs-name">${optData.label}</div>`;
+                if (optData.val === "") {
+                    // Pas de couleur pour "Toutes cotations"
+                    opt.innerHTML = `<div class="cs-name" style="text-align:center; width:100%;">${optData.label}</div>`;
+                } else if (optData.val === "?") {
+                    // Gros badge noir pour "Non coté" - Sans redondance de texte
+                    opt.innerHTML = `<div class="cs-badge" style="background-color: #333; flex-grow: 1; text-align: center; padding: 6px; font-size: 0.85rem;">${optData.label}</div>`;
+                } else {
+                    // Gros badge coloré pour les cotations - Sans redondance de texte
+                    let bgColor = getGradeColor(optData.val);
+                    opt.innerHTML = `<div class="cs-badge" style="background-color: ${bgColor}; flex-grow: 1; text-align: center; padding: 6px; font-size: 0.85rem;">${optData.val}</div>`;
+                }
+                
                 opt.onclick = (e) => {
-                    e.stopPropagation(); filterCotation.value = optData.val;
+                    e.stopPropagation(); currentGradeFilter = optData.val;
                     const hBadge = document.getElementById('cgHeaderBadge'); const hName = document.getElementById('cgHeaderName');
-                    if(optData.val === "") { hBadge.style.display = 'none'; hName.textContent = "Toutes cotations"; } 
-                    else { hBadge.style.display = 'block'; hBadge.textContent = optData.val; hBadge.style.backgroundColor = getGradeColor(optData.val); hName.textContent = optData.label; }
+                    
+                    if(optData.val === "") { 
+                        hBadge.style.display = 'none'; hName.style.display = 'block'; hName.textContent = "Toutes cotations"; 
+                    } else if(optData.val === "?") { 
+                        hBadge.style.display = 'block'; hBadge.textContent = "Non coté"; hBadge.style.backgroundColor = "#333"; hName.style.display = 'none';
+                    } else { 
+                        hBadge.style.display = 'block'; hBadge.textContent = optData.val; hBadge.style.backgroundColor = getGradeColor(optData.val); hName.style.display = 'none'; 
+                    }
                     cgList.classList.remove('show'); initGradeFilterSelect(); updateBlockSelect();
                 };
                 cgList.appendChild(opt);
@@ -604,7 +619,7 @@
         }
 
         function updateListButtonState() {
-            let activeList = filterList.value;
+            let activeList = currentListFilter;
             if (activeList && customLists[activeList]) {
                 let isInside = customLists[activeList].includes(currentBlockName);
                 if (isInside) { bottomListAdd.textContent = '➖'; bottomListAdd.classList.add('in-list'); bottomListAdd.title = `Retirer de la liste "${activeList}"`; } 
@@ -614,7 +629,7 @@
 
         bottomListAdd.addEventListener('click', () => {
             if(!currentBlockName) return alert("Sélectionnez un bloc d'abord !");
-            let activeList = filterList.value;
+            let activeList = currentListFilter;
             if (activeList && customLists[activeList]) {
                 let isInside = customLists[activeList].includes(currentBlockName);
                 if (isInside) customLists[activeList] = customLists[activeList].filter(b => b !== currentBlockName); else customLists[activeList].push(currentBlockName);
@@ -665,8 +680,8 @@
         });
         
         btnDeleteList.addEventListener('click', () => {
-            let activeList = filterList.value; if (!activeList) return; 
-            if (confirm(`Voulez-vous vraiment supprimer la liste "${activeList}" ?`)) { delete customLists[activeList]; localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); filterList.value = ""; updateListFilterOptions(); updateBlockSelect(); dropdownMenu.classList.remove('show'); alert(`La liste "${activeList}" a été supprimée.`); }
+            let activeList = currentListFilter; if (!activeList) return; 
+            if (confirm(`Voulez-vous vraiment supprimer la liste "${activeList}" ?`)) { delete customLists[activeList]; localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); currentListFilter = ""; updateListFilterOptions(); updateBlockSelect(); dropdownMenu.classList.remove('show'); alert(`La liste "${activeList}" a été supprimée.`); }
         });
 
         // BLUETOOTH
@@ -738,7 +753,7 @@
 
         document.getElementById('btnImport').addEventListener('click', () => { document.getElementById('fileImport').click(); settingsModal.style.display = 'none'; });
         document.getElementById('fileImport').addEventListener('change', (e) => { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = ev => { try { processImportedData(JSON.parse(ev.target.result)); } catch(err) { alert("Erreur."); console.error(err); } }; reader.readAsText(file); e.target.value = ''; });
-        document.getElementById('btnClearStorage').addEventListener('click', () => { if(confirm("⚠️ Effacer TOUT ?")) { blocks = {}; customLists = {}; localStorage.removeItem('minimoon_blocks'); localStorage.removeItem('minimoon_lists'); updateListFilterOptions(); updateBlockSelect(); updateSessionDropdown(); settingsModal.style.display = 'none'; } });
+        document.getElementById('btnClearStorage').addEventListener('click', () => { if(confirm("⚠️ Effacer TOUT ?")) { blocks = {}; customLists = {}; localStorage.removeItem('minimoon_blocks'); localStorage.removeItem('minimoon_lists'); currentListFilter = ""; updateListFilterOptions(); updateBlockSelect(); updateSessionDropdown(); settingsModal.style.display = 'none'; } });
 
         // --- GESTION DE LA GRILLE ET CRÉATION DE BLOCS ---
         function initGrid() { gridOverlay.innerHTML = ''; ROWS.forEach(r => { COLS.forEach(c => { let holdId = c + r; let cell = document.createElement('div'); cell.className = 'grid-cell'; cell.addEventListener('click', () => handleHoldClick(holdId)); let div = document.createElement('div'); div.className = 'hold'; div.dataset.id = holdId; cell.appendChild(div); gridOverlay.appendChild(cell); }); }); }
@@ -799,12 +814,20 @@
         function updateBlockSelect(forceSelectName = null) {
             let selected = forceSelectName || blockSelect.value; blockSelect.innerHTML = ''; csList.innerHTML = ''; 
             
-            let allKeys = Object.keys(blocks); let excludeChecked = excludeCompletedCheckbox.checked; let onlyChecked = onlyCompletedCheckbox.checked; let favOnly = filterFavorites.checked; let sortAscensions = sortAscensionsCheckbox.checked; let sortAlpha = sortAlphaCheckbox.checked; let currentGradeFilter = filterCotation.value; let currentListFilter = filterList.value; let benchmarkOnly = filterBenchmark.checked; let searchQuery = searchInput.value.toLowerCase(); let totalBlocksInDB = allKeys.length;
+            let allKeys = Object.keys(blocks); let excludeChecked = excludeCompletedCheckbox.checked; let onlyChecked = onlyCompletedCheckbox.checked; let favOnly = filterFavorites.checked; let sortAscensions = sortAscensionsCheckbox.checked; let sortAlpha = sortAlphaCheckbox.checked; let benchmarkOnly = filterBenchmark.checked; let searchQuery = searchInput.value.toLowerCase(); let totalBlocksInDB = allKeys.length;
             
             let filteredKeys = allKeys.filter(k => {
                 let b = blocks[k];
                 if (excludeChecked && b.completed) return false; if (onlyChecked && !b.completed) return false; if (favOnly && !b.favorite) return false;
-                if (currentGradeFilter && !(b.grade && b.grade.includes(currentGradeFilter))) return false; if (benchmarkOnly && !b.isBenchmark) return false; if (searchQuery && !k.toLowerCase().includes(searchQuery)) return false; if (currentListFilter && (!customLists[currentListFilter] || !customLists[currentListFilter].includes(k))) return false;
+                
+                if (currentGradeFilter === "?") {
+                    if (b.grade && b.grade !== "?") return false;
+                } else if (currentGradeFilter && !(b.grade && b.grade.includes(currentGradeFilter))) {
+                    return false;
+                }
+                
+                if (benchmarkOnly && !b.isBenchmark) return false; if (searchQuery && !k.toLowerCase().includes(searchQuery)) return false; 
+                if (currentListFilter && (!customLists[currentListFilter] || !customLists[currentListFilter].includes(k))) return false;
                 return true;
             });
             
@@ -818,13 +841,13 @@
                 let ascText = (sortAscensions && b.ascensionCount > 0) ? `<div class="cs-asc">- ${b.ascensionCount} asc.</div>` : '';
                 let favText = b.favorite ? '❤️' : ''; let doneText = b.completed ? '✅' : ''; let iconsHtml = (doneText || favText) ? `<div class="cs-icons">${doneText}${favText}</div>` : '';
                 
-                // L'icône ampoule est ajoutée uniquement si c'est le bloc sélectionné
                 let isActive = (k === selected);
-                let activeBulbHtml = isActive ? `<div class="cs-active-bulb">💡</div>` : '';
+                // Ampoule violette en format SVG inline parfait
+                let activeBulbHtml = isActive ? `<div class="cs-active-bulb"><svg width="16" height="16" viewBox="0 0 24 24" fill="#b388ff" stroke="#b388ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.2 1.18 4.1 2.9 5.3C8.6 15 9 16.5 9 18h6c0-1.5.4-3 1.1-3.7 1.72-1.2 2.9-3.1 2.9-5.3a7 7 0 0 0-7-7z"/></svg></div>` : '';
 
                 let item = document.createElement('div'); item.className = 'cs-item'; if (isActive) item.classList.add('selected'); 
                 
-                item.innerHTML = `<div class="cs-badge" style="background-color: ${bgColor};">${gradeStr}</div>${iconsHtml}<div class="cs-name">${k}</div><div class="cs-grade-text">(${gradeStr})</div>${ascText}${activeBulbHtml}`;
+                item.innerHTML = `<div class="cs-badge" style="background-color: ${bgColor};">${gradeStr}</div>${iconsHtml}<div class="cs-name">${k}</div>${ascText}${activeBulbHtml}`;
                 item.addEventListener('click', (e) => { e.stopPropagation(); blockSelect.value = k; displayBlock(k); csList.classList.remove('show'); updateBlockSelect(k); });
                 csList.appendChild(item);
             });
