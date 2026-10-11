@@ -45,23 +45,24 @@
 
         /* BARRES D'OUTILS */
         .toolbar { display: flex; flex-wrap: nowrap; gap: 6px; justify-content: center; align-items: center; width: 100%; max-width: 450px; margin-bottom: 6px; }
-        button, select.btn-outline, input { border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold; display: flex; align-items: center; justify-content: center; color: white; white-space: nowrap; }
+        button, input { border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold; display: flex; align-items: center; justify-content: center; color: white; white-space: nowrap; }
         button:active { opacity: 0.8; }
         
         .btn-blue { background-color: #005bb5; } .btn-orange { background-color: #e67e22; } .btn-green { background-color: #27ae60; }
         .btn-purple { background-color: #673ab7; } .btn-red { background-color: #dc3545; } .btn-yellow { background-color: #f1c40f; color: #000; }
         .btn-gray { background-color: #333; color: #fff; }
+        .btn-gray-modal { background-color: #2a2a2a; color: #fff; padding: 10px; border: 1px solid #444; border-radius: 4px; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; gap: 8px; justify-content: flex-start; }
+        .btn-gray-modal:hover { background-color: #333; }
         
         .btn-bt { background-color: #333; color: #888; border: 1px solid transparent; transition: all 0.3s ease; padding: 6px; }
         .btn-bt.connected { color: #00d2ff; background-color: #111; border: 1px solid #00d2ff; box-shadow: 0 0 10px rgba(0, 210, 255, 0.6); }
         .btn-bt:active { transform: scale(0.9); }
         
-        select.btn-outline { background-color: #1e1e1e; border: 1px solid #e67e22; color: #e67e22; }
         input.search-input { background: #222; border: 1px solid #444; color: #fff; width: 100%; box-sizing: border-box; margin-bottom: 6px; display: none; font-size: 16px; }
         input[type="text"] { font-size: 16px; background: #333; color: white; border: 1px solid #555; }
-        select.main-select { background: #222; border: 1px solid #444; font-size: 0.85rem; width: 100%; }
+        select.main-select { background: #222; border: 1px solid #444; font-size: 0.85rem; width: 100%; color: white; border-radius: 4px; padding: 5px; }
 
-        /* --- NOUVEAU MENU DÉROULANT SUR-MESURE --- */
+        /* --- MENUS DÉROULANTS SUR-MESURE --- */
         .custom-select { position: relative; flex-grow: 1; min-width: 0; }
         .custom-select-header { background: #222; border: 1px solid #444; color: white; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; height: 32px; box-sizing: border-box; }
         .custom-select-list { display: none; position: absolute; top: calc(100% + 4px); left: 0; min-width: 100%; width: max-content; max-width: 90vw; background: #1e1e1e; border: 1px solid #555; z-index: 1000; max-height: 400px; overflow-y: auto; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.9); }
@@ -150,7 +151,6 @@
 
     <!-- HEADER -->
     <div class="header-container">
-        
         <div class="left-tools">
             <button id="btnConnect" class="btn-bt" title="Bluetooth">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5"></polyline></svg>
@@ -168,7 +168,6 @@
         </div>
 
         <div class="menus-wrapper" id="menusWrapper">
-            
             <div id="sessionMenu">
                 <button id="btnLiveSession" class="btn-live" title="Session en cours">
                     <span class="live-dot"></span> Live
@@ -182,14 +181,9 @@
             <div id="mainMenu">
                 <button id="btnMenu" class="btn-menu">☰</button>
                 <div id="dropdownMenu" class="dropdown-content">
-                    <button id="btnImport" style="color: #b388ff;">📥 Importer un fichier</button>
-                    <button id="btnPasteJSON" style="color: #e67e22;">📋 Coller un JSON</button>
-                    <button id="btnExportBlocks" style="color: #2ecc71;">📤 Exporter Blocs (Brut)</button>
-                    <button id="btnExportBackup" style="color: #3498db;">💾 Sauvegarde complète (Total)</button>
                     <button id="btnPencil" style="color: #f39c12;">✏️ Créer un bloc</button>
-                    <button id="btnAdjustGrid" style="color: #aaa;">⚙️ Ajuster la grille</button>
-                    <button id="btnDeleteBlock" style="color: #ff4d4d;">🗑️ Supprimer le bloc affiché</button>
-                    <button id="btnDeleteList" style="color: #ff9800;" disabled>🗑️ Supprimer la liste affichée</button>
+                    <button id="btnDeleteBlock" style="color: #ff4d4d;">🗑️ Supprimer le bloc</button>
+                    <button id="btnDeleteList" style="color: #ff9800;" disabled>🗑️ Supprimer la liste</button>
                     <hr>
                     <label><input type="checkbox" id="sortAscensions" checked> <span class="menu-icon-badge" style="background-color: #3498db; border-color: #2980b9; color: white;">📈</span> Popularité</label>
                     <label><input type="checkbox" id="sortAlpha"> <span class="menu-icon-badge" style="background-color: #95a5a6; border-color: #7f8c8d; color: white;">🔤</span> Ordre alphabétique</label>
@@ -200,10 +194,9 @@
                     <label><input type="checkbox" id="filterFavorites"> ❤️ Uniquement favoris</label>
                     <hr>
                     <button id="btnStats" style="color: #1abc9c;">📊 Statistiques</button>
-                    <button id="btnClearStorage" style="color: #e74c3c;">⚠️ Vider la base</button>
+                    <button id="btnOpenSettings" style="color: #aaa;">⚙️ Paramètres</button>
                 </div>
             </div>
-            
         </div>
         <input type="file" id="fileImport" accept=".json" style="display: none;">
     </div>
@@ -212,9 +205,8 @@
         <input type="text" id="searchInput" class="search-input" placeholder="Rechercher par nom...">
     </div>
 
-    <!-- LIGNE 2 : Select sur mesure & Loupe -->
+    <!-- LIGNE 2 : Select Bloc & Loupe -->
     <div class="toolbar" style="flex-wrap: nowrap;">
-        
         <div class="custom-select" id="customBlockSelect">
             <div class="custom-select-header" id="csHeader">
                 <div style="display:flex; align-items:center; gap:8px; overflow:hidden;">
@@ -225,30 +217,33 @@
             </div>
             <div class="custom-select-list" id="csList"></div>
         </div>
-        
-        <!-- On garde le select natif caché pour ne pas casser la logique interne -->
         <select id="blockSelect" style="display:none;"></select>
-        
         <button id="btnSearchToggle" class="btn-gray">🔍</button>
     </div>
 
-    <!-- LIGNE 3 : Filtres Listes & Cotations -->
-    <div class="toolbar" style="flex-wrap: nowrap;">
-        <select id="filterList" class="btn-outline" style="width: 100%;">
-            <option value="">Toutes les listes</option>
-        </select>
-        <select id="filterCotation" class="btn-outline" style="width: 100%;">
-            <option value="">Toutes les cotations</option>
-            <option value="?">Non coté (?)</option>
-            <option value="6A">6A</option> <option value="6A+">6A+</option>
-            <option value="6B">6B</option> <option value="6B+">6B+</option>
-            <option value="6C">6C</option> <option value="6C+">6C+</option>
-            <option value="7A">7A</option> <option value="7A+">7A+</option>
-            <option value="7B">7B</option> <option value="7B+">7B+</option>
-            <option value="7C">7C</option> <option value="7C+">7C+</option>
-            <option value="8A">8A</option> <option value="8A+">8A+</option>
-            <option value="8B">8B</option> <option value="8B+">8B+</option>
-        </select>
+    <!-- LIGNE 3 : Custom Select Listes & Cotations -->
+    <div class="toolbar" style="flex-wrap: nowrap; gap: 6px;">
+        <div class="custom-select" id="customListSelect" style="width: 50%;">
+            <div class="custom-select-header" id="clHeader">
+                <span id="clHeaderName" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size: 0.85rem;">Toutes les listes</span>
+                <span style="font-size: 0.7rem; color: #888;">▼</span>
+            </div>
+            <div class="custom-select-list" id="clList"></div>
+        </div>
+        
+        <div class="custom-select" id="customGradeSelect" style="width: 50%;">
+            <div class="custom-select-header" id="cgHeader">
+                <div style="display:flex; align-items:center; gap:6px; overflow:hidden;">
+                    <span id="cgHeaderBadge" class="cs-badge" style="background:transparent; display:none;"></span>
+                    <span id="cgHeaderName" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size: 0.85rem;">Toutes cotations</span>
+                </div>
+                <span style="font-size: 0.7rem; color: #888;">▼</span>
+            </div>
+            <div class="custom-select-list" id="cgList"></div>
+        </div>
+        <!-- Select natifs cachés pour la logique interne -->
+        <select id="filterList" style="display:none;"><option value="">Toutes les listes</option></select>
+        <select id="filterCotation" style="display:none;"><option value="">Toutes les cotations</option></select>
     </div>
 
     <!-- MUR -->
@@ -276,7 +271,6 @@
         
         <div class="bottom-triptych">
             <div id="bottomGrade" class="triptych-btn triptych-grade" title="Modifier la cotation">-</div>
-            
             <div id="bottomHeart" class="triptych-btn triptych-heart" title="Ajouter aux favoris">🤍</div>
             
             <div id="bottomCheckWrapper" class="triptych-btn" style="flex-direction: row; gap: 8px;">
@@ -318,6 +312,21 @@
     </div>
 
     <!-- MODALES -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content" style="gap: 10px;">
+            <h3 style="margin-bottom: 10px;">⚙️ Paramètres</h3>
+            <button id="btnImport" class="btn-gray-modal"><span style="color: #b388ff; width:20px; text-align:center;">📥</span> Importer un fichier</button>
+            <button id="btnPasteJSON" class="btn-gray-modal"><span style="color: #e67e22; width:20px; text-align:center;">📋</span> Coller un JSON</button>
+            <button id="btnExportBlocks" class="btn-gray-modal"><span style="color: #2ecc71; width:20px; text-align:center;">📤</span> Exporter Blocs (Brut)</button>
+            <button id="btnExportBackup" class="btn-gray-modal"><span style="color: #3498db; width:20px; text-align:center;">💾</span> Sauvegarde complète (Total)</button>
+            <button id="btnAdjustGrid" class="btn-gray-modal"><span style="color: #aaa; width:20px; text-align:center;">⚙️</span> Ajuster la grille</button>
+            <button id="btnClearStorage" class="btn-gray-modal" style="margin-top: 5px; border-color:#dc3545;"><span style="color: #e74c3c; width:20px; text-align:center;">⚠️</span> Vider la base</button>
+            <div class="modal-buttons" style="margin-top: 10px;">
+                <button id="btnCloseSettings" class="btn-gray" style="background-color: #444;">Fermer</button>
+            </div>
+        </div>
+    </div>
+
     <div id="listModal" class="modal">
         <div class="modal-content">
             <h3 id="listModalTitle">Ajouter à une liste</h3>
@@ -362,7 +371,6 @@
         </div>
     </div>
 
-    <!-- MODALE STATISTIQUES -->
     <div id="statsModal" class="modal">
         <div class="modal-content">
             <h3 style="margin-bottom: 10px;">📊 Statistiques de réalisation</h3>
@@ -382,15 +390,20 @@
         if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW:', err)); }); }
 
         const COLS = ['A','B','C','D','E','F','G','H','I','J','K']; const ROWS = [12,11,10,9,8,7,6,5,4,3,2,1];
+        const gradeOrder = ['?', '6A', '6A+', '6B', '6B+', '6C', '6C+', '7A', '7A+', '7B', '7B+', '7C', '7C+', '8A', '8A+', '8B', '8B+'];
         let blocks = JSON.parse(localStorage.getItem('minimoon_blocks') || '{}');
         let customLists = JSON.parse(localStorage.getItem('minimoon_lists') || '{}');
         let currentBlockName = ""; let isCreating = false; let currentCreation = { depart: [], progression: [], arrivee: [] };
 
         const gridOverlay = document.getElementById('gridOverlay');
-        const blockSelect = document.getElementById('blockSelect'); // Invisible, gardé pour la logique
-        const csList = document.getElementById('csList'); // Nouveau menu déroulant
-        const filterCotation = document.getElementById('filterCotation');
-        const filterList = document.getElementById('filterList');
+        const blockSelect = document.getElementById('blockSelect'); // Caché
+        const csList = document.getElementById('csList'); 
+        
+        const filterList = document.getElementById('filterList'); // Caché
+        const clList = document.getElementById('clList');
+        const filterCotation = document.getElementById('filterCotation'); // Caché
+        const cgList = document.getElementById('cgList');
+
         const filterBenchmark = document.getElementById('filterBenchmark');
         const filterFavorites = document.getElementById('filterFavorites');
         const excludeCompletedCheckbox = document.getElementById('excludeCompleted');
@@ -439,6 +452,11 @@
         const badgeFootlessKb = document.getElementById('badgeFootlessKb');
         const badgeBenchmark = document.getElementById('badgeBenchmark');
 
+        // Modal Paramètres
+        const settingsModal = document.getElementById('settingsModal');
+        const btnOpenSettings = document.getElementById('btnOpenSettings');
+        const btnCloseSettings = document.getElementById('btnCloseSettings');
+
         const listModal = document.getElementById('listModal');
         const btnCloseList = document.getElementById('btnCloseList');
         const btnCreateList = document.getElementById('btnCreateList');
@@ -464,7 +482,6 @@
         const tabStatsToday = document.getElementById('tabStatsToday');
         const statsViewAll = document.getElementById('statsViewAll');
         const statsViewToday = document.getElementById('statsViewToday');
-        const gradeOrder = ['?', '6A', '6A+', '6B', '6B+', '6C', '6C+', '7A', '7A+', '7B', '7B+', '7C', '7C+', '8A', '8A+', '8B', '8B+'];
 
         function getTodayString() {
             let d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
@@ -476,24 +493,31 @@
             for (let key in gradeScale) { if (g.includes(key)) return gradeScale[key]; } return '#333333';
         }
 
-        // --- GESTION DU RAFRAÎCHISSEMENT ---
-        btnRefresh.addEventListener('click', () => { 
-            if (blockSelect.options.length > 0) { 
-                blockSelect.selectedIndex = 0; 
-                displayBlock(blockSelect.value); 
-                updateBlockSelect(blockSelect.value); 
-            } 
+        // --- GESTION DES CLICS SUR LES MENUS CUSTOM ---
+        function closeAllCustomSelects() { csList.classList.remove('show'); clList.classList.remove('show'); cgList.classList.remove('show'); dropdownMenu.classList.remove('show'); dropdownSession.classList.remove('show'); }
+        
+        document.getElementById('csHeader').addEventListener('click', (e) => { e.stopPropagation(); let isShow = csList.classList.contains('show'); closeAllCustomSelects(); if(!isShow) csList.classList.add('show'); });
+        document.getElementById('clHeader').addEventListener('click', (e) => { e.stopPropagation(); let isShow = clList.classList.contains('show'); closeAllCustomSelects(); if(!isShow) clList.classList.add('show'); });
+        document.getElementById('cgHeader').addEventListener('click', (e) => { e.stopPropagation(); let isShow = cgList.classList.contains('show'); closeAllCustomSelects(); if(!isShow) cgList.classList.add('show'); });
+        
+        btnLiveSession.addEventListener('click', (e) => { e.stopPropagation(); let isShow = dropdownSession.classList.contains('show'); closeAllCustomSelects(); if(!isShow) dropdownSession.classList.add('show'); });
+        btnMenu.addEventListener('click', (e) => { e.stopPropagation(); let isShow = dropdownMenu.classList.contains('show'); closeAllCustomSelects(); if(!isShow) dropdownMenu.classList.add('show'); });
+        
+        document.addEventListener('click', (e) => { 
+            if(!e.target.closest('.custom-select') && !e.target.closest('.menus-wrapper')) closeAllCustomSelects(); 
         });
 
-        // --- GESTION DU MENU SESSION (LIVE) ---
+        // --- MENU PARAMETRES ---
+        btnOpenSettings.addEventListener('click', () => { closeAllCustomSelects(); settingsModal.style.display = 'block'; });
+        btnCloseSettings.addEventListener('click', () => settingsModal.style.display = 'none');
+
+        btnRefresh.addEventListener('click', () => { if (blockSelect.options.length > 0) { blockSelect.selectedIndex = 0; displayBlock(blockSelect.value); updateBlockSelect(blockSelect.value); } });
+
         function updateSessionDropdown() {
             let todayStr = getTodayString(); let sessionBlocks = [];
             for (let k in blocks) {
                 let b = blocks[k];
-                if (b.completed && b.ascentsLog) {
-                    let todayCount = b.ascentsLog.filter(d => d === todayStr).length;
-                    if (todayCount > 0) sessionBlocks.push({ name: k, grade: b.grade || '?', count: todayCount });
-                }
+                if (b.completed && b.ascentsLog) { let todayCount = b.ascentsLog.filter(d => d === todayStr).length; if (todayCount > 0) sessionBlocks.push({ name: k, grade: b.grade || '?', count: todayCount }); }
             }
             sessionListItems.innerHTML = '';
             if (sessionBlocks.length === 0) {
@@ -502,8 +526,7 @@
             } else {
                 btnLiveSession.style.opacity = '1'; btnLiveSession.querySelector('.live-dot').style.animation = 'pulse-red 1.5s infinite';
                 sessionBlocks.forEach(sb => {
-                    let btn = document.createElement('button'); btn.className = 'session-item';
-                    let repText = sb.count > 1 ? ` <span style="color:#aaa; font-size:0.75rem;">(x${sb.count})</span>` : '';
+                    let btn = document.createElement('button'); btn.className = 'session-item'; let repText = sb.count > 1 ? ` <span style="color:#aaa; font-size:0.75rem;">(x${sb.count})</span>` : '';
                     btn.innerHTML = `<span class="s-name">${sb.name}</span><span><span class="s-grade">${sb.grade}</span>${repText}</span>`;
                     btn.onclick = () => { blockSelect.value = sb.name; displayBlock(sb.name); dropdownSession.classList.remove('show'); updateBlockSelect(sb.name); };
                     sessionListItems.appendChild(btn);
@@ -511,21 +534,46 @@
             }
         }
 
-        btnLiveSession.addEventListener('click', (e) => { dropdownSession.classList.toggle('show'); dropdownMenu.classList.remove('show'); csList.classList.remove('show'); e.stopPropagation(); });
-        btnMenu.addEventListener('click', (e) => { dropdownMenu.classList.toggle('show'); dropdownSession.classList.remove('show'); csList.classList.remove('show'); e.stopPropagation(); });
-        document.getElementById('csHeader').addEventListener('click', (e) => { csList.classList.toggle('show'); dropdownMenu.classList.remove('show'); dropdownSession.classList.remove('show'); e.stopPropagation(); });
-        
-        document.addEventListener('click', (e) => { 
-            if(!e.target.closest('#mainMenu')) dropdownMenu.classList.remove('show'); 
-            if(!e.target.closest('#sessionMenu')) dropdownSession.classList.remove('show'); 
-            if(!e.target.closest('#customBlockSelect')) csList.classList.remove('show'); 
-        });
-
-        // --- GESTION DES LISTES ---
+        // --- CUSTOM SELECT : LISTES ---
         function updateListFilterOptions() {
-            let currentFilter = filterList.value; filterList.innerHTML = '<option value="">Toutes les listes</option>';
-            for(let listName in customLists) { let opt = document.createElement('option'); opt.value = listName; opt.textContent = listName; filterList.appendChild(opt); }
-            if(customLists[currentFilter]) filterList.value = currentFilter; btnDeleteList.disabled = (filterList.value === "");
+            let currentFilter = filterList.value; clList.innerHTML = '';
+            let allOpt = document.createElement('div'); allOpt.className = 'cs-item' + (currentFilter === "" ? " selected" : "");
+            allOpt.innerHTML = `<div class="cs-name">Toutes les listes</div>`;
+            allOpt.onclick = (e) => { e.stopPropagation(); filterList.value = ""; document.getElementById('clHeaderName').textContent = "Toutes les listes"; clList.classList.remove('show'); updateListButtonState(); updateBlockSelect(); updateListFilterOptions(); };
+            clList.appendChild(allOpt);
+
+            for(let listName in customLists) { 
+                let count = customLists[listName].length;
+                let opt = document.createElement('div'); opt.className = 'cs-item' + (currentFilter === listName ? " selected" : "");
+                opt.innerHTML = `<div class="cs-name">${listName} <span style="color:#888; font-size:0.75rem; font-weight:normal;">(${count})</span></div>`;
+                opt.onclick = (e) => { e.stopPropagation(); filterList.value = listName; document.getElementById('clHeaderName').textContent = listName; clList.classList.remove('show'); updateListButtonState(); updateBlockSelect(); updateListFilterOptions(); };
+                clList.appendChild(opt); 
+            }
+            if(customLists[currentFilter]) { filterList.value = currentFilter; document.getElementById('clHeaderName').textContent = currentFilter; } else { filterList.value = ""; document.getElementById('clHeaderName').textContent = "Toutes les listes"; }
+            btnDeleteList.disabled = (filterList.value === "");
+        }
+
+        // --- CUSTOM SELECT : COTATIONS ---
+        function initGradeFilterSelect() {
+            const gradeOptions = [{val: "", label: "Toutes cotations"}, {val: "?", label: "Non coté (?)"}, ...gradeOrder.map(g => ({val: g, label: g}))];
+            cgList.innerHTML = ''; let currentFilter = filterCotation.value;
+
+            gradeOptions.forEach(optData => {
+                let opt = document.createElement('div'); opt.className = 'cs-item' + (currentFilter === optData.val ? " selected" : "");
+                let badgeHtml = "";
+                if(optData.val !== "" && optData.val !== "?") badgeHtml = `<div class="cs-badge" style="background-color: ${getGradeColor(optData.val)};">${optData.val}</div>`;
+                else if(optData.val === "?") badgeHtml = `<div class="cs-badge" style="background-color: #333;">?</div>`;
+                
+                opt.innerHTML = `${badgeHtml}<div class="cs-name">${optData.label}</div>`;
+                opt.onclick = (e) => {
+                    e.stopPropagation(); filterCotation.value = optData.val;
+                    const hBadge = document.getElementById('cgHeaderBadge'); const hName = document.getElementById('cgHeaderName');
+                    if(optData.val === "") { hBadge.style.display = 'none'; hName.textContent = "Toutes cotations"; } 
+                    else { hBadge.style.display = 'block'; hBadge.textContent = optData.val; hBadge.style.backgroundColor = getGradeColor(optData.val); hName.textContent = optData.label; }
+                    cgList.classList.remove('show'); initGradeFilterSelect(); updateBlockSelect();
+                };
+                cgList.appendChild(opt);
+            });
         }
 
         function renderListModal() {
@@ -533,7 +581,7 @@
             for(let listName in customLists) {
                 let isInside = customLists[listName].includes(currentBlockName);
                 let btn = document.createElement('button'); btn.textContent = listName + (isInside ? ' ✅' : ''); btn.className = isInside ? 'btn-green' : 'btn-gray';
-                btn.onclick = () => { if(isInside) customLists[listName] = customLists[listName].filter(b => b !== currentBlockName); else customLists[listName].push(currentBlockName); localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); renderListModal(); updateBlockSelect(); updateListButtonState(); };
+                btn.onclick = () => { if(isInside) customLists[listName] = customLists[listName].filter(b => b !== currentBlockName); else customLists[listName].push(currentBlockName); localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); renderListModal(); updateListButtonState(); updateListFilterOptions(); updateBlockSelect(); };
                 existingListsDiv.appendChild(btn);
             }
         }
@@ -553,7 +601,7 @@
             if (activeList && customLists[activeList]) {
                 let isInside = customLists[activeList].includes(currentBlockName);
                 if (isInside) customLists[activeList] = customLists[activeList].filter(b => b !== currentBlockName); else customLists[activeList].push(currentBlockName);
-                localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); updateListButtonState(); updateBlockSelect();
+                localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); updateListButtonState(); updateListFilterOptions(); updateBlockSelect();
             } else { listModal.style.display = 'block'; newListNameInput.value = ''; renderListModal(); }
         });
 
@@ -561,10 +609,9 @@
         btnCreateList.addEventListener('click', () => {
             let val = newListNameInput.value.trim(); if(!val) return alert("Entrez un nom de liste.");
             if(!customLists[val]) customLists[val] = []; if(!customLists[val].includes(currentBlockName)) customLists[val].push(currentBlockName);
-            localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); newListNameInput.value = ''; updateListFilterOptions(); renderListModal(); updateBlockSelect(); updateListButtonState();
+            localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); newListNameInput.value = ''; updateListFilterOptions(); renderListModal(); updateListButtonState(); updateBlockSelect(); 
         });
 
-        // --- GESTION DES COTATIONS ET FAVORIS ---
         bottomGrade.addEventListener('click', () => {
             if(!currentBlockName || !blocks[currentBlockName]) return;
             let currentGrade = blocks[currentBlockName].grade || "?"; let optionExists = Array.from(newGradeSelect.options).some(opt => opt.value === currentGrade);
@@ -577,16 +624,11 @@
         });
 
         bottomHeart.addEventListener('click', () => {
-            if (currentBlockName && blocks[currentBlockName]) {
-                blocks[currentBlockName].favorite = !blocks[currentBlockName].favorite;
-                localStorage.setItem('minimoon_blocks', JSON.stringify(blocks));
-                displayBlock(currentBlockName);
-                updateBlockSelect(currentBlockName); // Mets à jour l'icône dans la liste
-            }
+            if (currentBlockName && blocks[currentBlockName]) { blocks[currentBlockName].favorite = !blocks[currentBlockName].favorite; localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); displayBlock(currentBlockName); updateBlockSelect(currentBlockName); }
         });
 
-        // --- GESTION IMPORT / EXPORT / SUPPRESSION ---
-        btnPasteJSON.addEventListener('click', () => { dropdownMenu.classList.remove('show'); pasteJsonText.value = ''; pasteModal.style.display = 'block'; });
+        // --- IMPORT / EXPORT (Modifié pour la modale paramètres) ---
+        btnPasteJSON.addEventListener('click', () => { settingsModal.style.display = 'none'; pasteJsonText.value = ''; pasteModal.style.display = 'block'; });
         btnClosePaste.addEventListener('click', () => pasteModal.style.display = 'none');
         btnSavePaste.addEventListener('click', () => {
             let text = pasteJsonText.value.trim(); if (!text) return alert("Veuillez coller du texte JSON.");
@@ -601,7 +643,7 @@
             if (confirm(`Voulez-vous vraiment supprimer définitivement le bloc "${currentBlockName}" ?`)) {
                 delete blocks[currentBlockName]; for (let listName in customLists) { customLists[listName] = customLists[listName].filter(b => b !== currentBlockName); }
                 localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); localStorage.setItem('minimoon_lists', JSON.stringify(customLists));
-                dropdownMenu.classList.remove('show'); updateBlockSelect(); updateSessionDropdown(); alert("Bloc supprimé avec succès.");
+                dropdownMenu.classList.remove('show'); updateListFilterOptions(); updateBlockSelect(); updateSessionDropdown(); alert("Bloc supprimé avec succès.");
             }
         });
         
@@ -610,7 +652,7 @@
             if (confirm(`Voulez-vous vraiment supprimer la liste "${activeList}" ?`)) { delete customLists[activeList]; localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); filterList.value = ""; updateListFilterOptions(); updateBlockSelect(); dropdownMenu.classList.remove('show'); alert(`La liste "${activeList}" a été supprimée.`); }
         });
 
-        // --- BLUETOOTH ---
+        // BLUETOOTH
         let bluetoothDevice = null; let bleCharacteristic = null; const btnConnect = document.getElementById('btnConnect');
         const BLE_SERVICE_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e"; const BLE_RX_UUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
 
@@ -636,15 +678,15 @@
             let encoder = new TextEncoder(); bleCharacteristic.writeValue(encoder.encode(payload)).catch(err => console.error(err));
         }
 
-        // --- EXPORT & RESTAURATION ---
+        // EXPORT / RESTAURATION
         function downloadData(dataObj, filename) {
             const dataStr = JSON.stringify(dataObj, null, 2);
-            if (navigator.canShare) { try { const file = new File([dataStr], filename, { type: "application/json" }); if (navigator.canShare({ files: [file] })) { navigator.share({ title: "Export", files: [file] }).catch(err => console.log(err)); dropdownMenu.classList.remove('show'); return; } } catch (e) { console.log(e); } }
+            if (navigator.canShare) { try { const file = new File([dataStr], filename, { type: "application/json" }); if (navigator.canShare({ files: [file] })) { navigator.share({ title: "Export", files: [file] }).catch(err => console.log(err)); settingsModal.style.display = 'none'; return; } } catch (e) { console.log(e); } }
             const blob = new Blob([dataStr], { type: 'application/json' }); const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.style.display = 'none'; a.href = url; a.download = filename; document.body.appendChild(a); a.click(); setTimeout(() => { document.body.removeChild(a); window.URL.revokeObjectURL(url); }, 100); dropdownMenu.classList.remove('show');
+            const a = document.createElement('a'); a.style.display = 'none'; a.href = url; a.download = filename; document.body.appendChild(a); a.click(); setTimeout(() => { document.body.removeChild(a); window.URL.revokeObjectURL(url); }, 100); settingsModal.style.display = 'none';
         }
 
-        document.getElementById('btnExportBlocks').addEventListener('click', () => { downloadData(blocks, 'minimoon_blocks_export.json'); });
+        document.getElementById('btnExportBlocks').addEventListener('click', () => downloadData(blocks, 'minimoon_blocks_export.json'));
         document.getElementById('btnExportBackup').addEventListener('click', () => { const backupData = { type: "minimoon_full_backup", blocks: blocks, lists: customLists, gridConfig: JSON.parse(localStorage.getItem('minimoon_grid') || '{}') }; downloadData(backupData, `minimoon_backup_${new Date().toISOString().slice(0,10)}.json`); });
 
         function processImportedData(parsed) {
@@ -652,7 +694,7 @@
                 if (parsed.blocks) blocks = parsed.blocks; if (parsed.lists) customLists = parsed.lists;
                 if (parsed.gridConfig) { gridConfig = parsed.gridConfig; applyGridConfig(); localStorage.setItem('minimoon_grid', JSON.stringify(gridConfig)); }
                 localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); localStorage.setItem('minimoon_lists', JSON.stringify(customLists));
-                updateListFilterOptions(); updateBlockSelect(); updateSessionDropdown(); return alert("Sauvegarde restaurée !");
+                updateListFilterOptions(); initGradeFilterSelect(); updateBlockSelect(); updateSessionDropdown(); return alert("Sauvegarde restaurée !");
             }
             let dataArray = [];
             if (Array.isArray(parsed)) dataArray = parsed; else if (parsed.data && Array.isArray(parsed.data)) dataArray = parsed.data; else if (parsed.name || parsed.Name || parsed.moves) dataArray.push(parsed);
@@ -677,9 +719,9 @@
             alert(`${newKeys.length} bloc(s) importé(s) !`); if(newKeys.length > 0) updateBlockSelect(newKeys[newKeys.length - 1]); else updateBlockSelect(); updateSessionDropdown();
         }
 
-        document.getElementById('btnImport').addEventListener('click', () => { document.getElementById('fileImport').click(); dropdownMenu.classList.remove('show'); });
+        document.getElementById('btnImport').addEventListener('click', () => { document.getElementById('fileImport').click(); settingsModal.style.display = 'none'; });
         document.getElementById('fileImport').addEventListener('change', (e) => { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = ev => { try { processImportedData(JSON.parse(ev.target.result)); } catch(err) { alert("Erreur."); console.error(err); } }; reader.readAsText(file); e.target.value = ''; });
-        document.getElementById('btnClearStorage').addEventListener('click', () => { if(confirm("⚠️ Effacer TOUT ?")) { blocks = {}; customLists = {}; localStorage.removeItem('minimoon_blocks'); localStorage.removeItem('minimoon_lists'); updateListFilterOptions(); updateBlockSelect(); updateSessionDropdown(); } });
+        document.getElementById('btnClearStorage').addEventListener('click', () => { if(confirm("⚠️ Effacer TOUT ?")) { blocks = {}; customLists = {}; localStorage.removeItem('minimoon_blocks'); localStorage.removeItem('minimoon_lists'); updateListFilterOptions(); updateBlockSelect(); updateSessionDropdown(); settingsModal.style.display = 'none'; } });
 
         // --- GESTION DE LA GRILLE ET CRÉATION DE BLOCS ---
         function initGrid() { gridOverlay.innerHTML = ''; ROWS.forEach(r => { COLS.forEach(c => { let holdId = c + r; let cell = document.createElement('div'); cell.className = 'grid-cell'; cell.addEventListener('click', () => handleHoldClick(holdId)); let div = document.createElement('div'); div.className = 'hold'; div.dataset.id = holdId; cell.appendChild(div); gridOverlay.appendChild(cell); }); }); }
@@ -699,7 +741,7 @@
             if (name) { blocks[name] = { depart: currentCreation.depart, progression: currentCreation.progression, arrivee: currentCreation.arrivee, method: "", grade: "6B+", isBenchmark: false, ascensionCount: 0, setby: "Moi", completed: false, favorite: false }; localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); isCreating = false; menusWrapper.style.display = 'flex'; creationTools.style.display = 'none'; bottomPanel.style.display = 'flex'; updateBlockSelect(name); }
         });
 
-        // --- AFFICHAGE ET LOGIQUE DE SÉLECTION ---
+        // --- AFFICHAGE DU BLOC ---
         function displayBlock(name) {
             if (isCreating || gridOverlay.classList.contains('grid-adjusting')) return; 
             currentBlockName = name; let block = blocks[name];
@@ -716,12 +758,7 @@
                 if (block.isBenchmark) badgeBenchmark.style.display = 'inline-flex';
                 bottomBlockName.textContent = name; let gradeVal = block.grade || "?"; bottomGrade.textContent = gradeVal; bottomGrade.style.backgroundColor = getGradeColor(gradeVal);
                 
-                // Mettre à jour l'en-tête du sélecteur custom
-                document.getElementById('csHeaderBadge').style.display = 'block';
-                document.getElementById('csHeaderBadge').textContent = gradeVal;
-                document.getElementById('csHeaderBadge').style.backgroundColor = getGradeColor(gradeVal);
-                document.getElementById('csHeaderName').textContent = name;
-
+                document.getElementById('csHeaderBadge').style.display = 'block'; document.getElementById('csHeaderBadge').textContent = gradeVal; document.getElementById('csHeaderBadge').style.backgroundColor = getGradeColor(gradeVal); document.getElementById('csHeaderName').textContent = name;
                 if (block.favorite) { bottomHeart.textContent = '❤️'; bottomHeart.classList.add('is-fav'); } else { bottomHeart.textContent = '🤍'; bottomHeart.classList.remove('is-fav'); }
 
                 if (block.completed) {
@@ -741,75 +778,44 @@
             }
         }
 
-        // --- NOUVELLE LOGIQUE DU SELECTEUR CUSTOM ---
+        // --- MISE A JOUR DU SELECTEUR PRINCIPAL ---
         function updateBlockSelect(forceSelectName = null) {
-            let selected = forceSelectName || blockSelect.value; 
-            blockSelect.innerHTML = '';
-            csList.innerHTML = ''; // Vide le custom menu
+            let selected = forceSelectName || blockSelect.value; blockSelect.innerHTML = ''; csList.innerHTML = ''; 
             
             let allKeys = Object.keys(blocks); let excludeChecked = excludeCompletedCheckbox.checked; let onlyChecked = onlyCompletedCheckbox.checked; let favOnly = filterFavorites.checked; let sortAscensions = sortAscensionsCheckbox.checked; let sortAlpha = sortAlphaCheckbox.checked; let currentGradeFilter = filterCotation.value; let currentListFilter = filterList.value; let benchmarkOnly = filterBenchmark.checked; let searchQuery = searchInput.value.toLowerCase(); let totalBlocksInDB = allKeys.length;
             
             let filteredKeys = allKeys.filter(k => {
                 let b = blocks[k];
-                if (excludeChecked && b.completed) return false; if (onlyChecked && !b.completed) return false;
-                if (favOnly && !b.favorite) return false;
+                if (excludeChecked && b.completed) return false; if (onlyChecked && !b.completed) return false; if (favOnly && !b.favorite) return false;
                 if (currentGradeFilter && !(b.grade && b.grade.includes(currentGradeFilter))) return false; if (benchmarkOnly && !b.isBenchmark) return false; if (searchQuery && !k.toLowerCase().includes(searchQuery)) return false; if (currentListFilter && (!customLists[currentListFilter] || !customLists[currentListFilter].includes(k))) return false;
                 return true;
             });
             
-            filteredKeys.sort((a, b) => {
-                if (sortAscensions) { let ascA = parseInt(blocks[a].ascensionCount) || 0; let ascB = parseInt(blocks[b].ascensionCount) || 0; if (ascB !== ascA) return ascB - ascA; }
-                return a.localeCompare(b); 
-            });
-            
+            filteredKeys.sort((a, b) => { if (sortAscensions) { let ascA = parseInt(blocks[a].ascensionCount) || 0; let ascB = parseInt(blocks[b].ascensionCount) || 0; if (ascB !== ascA) return ascB - ascA; } return a.localeCompare(b); });
             blockCounter.textContent = `${filteredKeys.length}/${totalBlocksInDB}`;
             
             filteredKeys.forEach(k => {
-                let b = blocks[k];
-                let gradeStr = b.grade || "?";
-                let bgColor = getGradeColor(gradeStr);
-                
-                // On met à jour l'ancien select caché pour la logique de l'app (Prev/Next)
+                let b = blocks[k]; let gradeStr = b.grade || "?"; let bgColor = getGradeColor(gradeStr);
                 let opt = document.createElement('option'); opt.value = k; opt.textContent = k; blockSelect.appendChild(opt);
                 
-                // Construction visuelle de la ligne Custom
                 let ascText = (sortAscensions && b.ascensionCount > 0) ? `<div class="cs-asc">- ${b.ascensionCount} asc.</div>` : '';
-                let favText = b.favorite ? '❤️' : ''; 
-                let doneText = b.completed ? '✅' : '';
-                let iconsHtml = (doneText || favText) ? `<div class="cs-icons">${doneText}${favText}</div>` : '';
-
-                let item = document.createElement('div');
-                item.className = 'cs-item';
-                if (k === selected) item.classList.add('selected'); // Marque la ligne active
+                let favText = b.favorite ? '❤️' : ''; let doneText = b.completed ? '✅' : ''; let iconsHtml = (doneText || favText) ? `<div class="cs-icons">${doneText}${favText}</div>` : '';
+                let item = document.createElement('div'); item.className = 'cs-item'; if (k === selected) item.classList.add('selected'); 
                 
-                // Structure HTML de la ligne : Badge -> Icones -> Nom -> (Grade) -> Ascensions
-                item.innerHTML = `
-                    <div class="cs-badge" style="background-color: ${bgColor};">${gradeStr}</div>
-                    ${iconsHtml}
-                    <div class="cs-name">${k}</div>
-                    <div class="cs-grade-text">(${gradeStr})</div>
-                    ${ascText}
-                `;
-                
-                // Action quand on clique sur la ligne
-                item.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    blockSelect.value = k;
-                    displayBlock(k);
-                    csList.classList.remove('show');
-                    updateBlockSelect(k); // Recharge pour déplacer le surlignage 'selected'
-                });
+                item.innerHTML = `<div class="cs-badge" style="background-color: ${bgColor};">${gradeStr}</div>${iconsHtml}<div class="cs-name">${k}</div><div class="cs-grade-text">(${gradeStr})</div>${ascText}`;
+                item.addEventListener('click', (e) => { e.stopPropagation(); blockSelect.value = k; displayBlock(k); csList.classList.remove('show'); updateBlockSelect(k); });
                 csList.appendChild(item);
             });
-            
             if (filteredKeys.includes(selected)) { blockSelect.value = selected; displayBlock(selected); } else if (filteredKeys.length > 0) { blockSelect.value = filteredKeys[0]; displayBlock(filteredKeys[0]); } else { displayBlock(""); }
         }
 
         sortAscensionsCheckbox.addEventListener('change', () => { if(sortAscensionsCheckbox.checked) sortAlphaCheckbox.checked = false; else if (!sortAlphaCheckbox.checked) sortAlphaCheckbox.checked = true; updateBlockSelect(); });
         sortAlphaCheckbox.addEventListener('change', () => { if(sortAlphaCheckbox.checked) sortAscensionsCheckbox.checked = false; else if (!sortAscensionsCheckbox.checked) sortAscensionsCheckbox.checked = true; updateBlockSelect(); });
         filterFavorites.addEventListener('change', () => updateBlockSelect());
+        filterBenchmark.addEventListener('change', () => updateBlockSelect());
+        excludeCompletedCheckbox.addEventListener('change', () => { if(excludeCompletedCheckbox.checked) onlyCompletedCheckbox.checked = false; updateBlockSelect(); }); 
+        onlyCompletedCheckbox.addEventListener('change', () => { if(onlyCompletedCheckbox.checked) excludeCompletedCheckbox.checked = false; updateBlockSelect(); });
 
-        // --- LOGIQUE DE VALIDATION ET DE RÉPÉTITION ---
         bottomCheckWrapper.addEventListener('click', () => {
             if (currentBlockName && blocks[currentBlockName]) {
                 let b = blocks[currentBlockName];
@@ -817,8 +823,7 @@
                 b.completed = !b.completed;
                 if (b.completed) { b.completedDate = getTodayString(); b.ascentsLog = [getTodayString()]; } else { b.completedDate = null; b.ascentsLog = []; }
                 localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); displayBlock(currentBlockName);
-                if (excludeCompletedCheckbox.checked || onlyCompletedCheckbox.checked) updateBlockSelect(); updateSessionDropdown();
-                updateBlockSelect(currentBlockName); // Recharge les coches
+                if (excludeCompletedCheckbox.checked || onlyCompletedCheckbox.checked) updateBlockSelect(); updateSessionDropdown(); updateBlockSelect(currentBlockName); 
             }
         });
 
@@ -842,9 +847,6 @@
             }
         });
 
-        filterCotation.addEventListener('change', () => updateBlockSelect()); filterList.addEventListener('change', () => { updateBlockSelect(); updateListButtonState(); }); filterBenchmark.addEventListener('change', () => updateBlockSelect());
-        excludeCompletedCheckbox.addEventListener('change', () => { if(excludeCompletedCheckbox.checked) onlyCompletedCheckbox.checked = false; updateBlockSelect(); }); onlyCompletedCheckbox.addEventListener('change', () => { if(onlyCompletedCheckbox.checked) excludeCompletedCheckbox.checked = false; updateBlockSelect(); });
-        
         function goToPrevBlock() { if(blockSelect.selectedIndex > 0) { blockSelect.selectedIndex--; let val = blockSelect.value; displayBlock(val); updateBlockSelect(val); } }
         function goToNextBlock() { if(blockSelect.selectedIndex < blockSelect.options.length - 1) { blockSelect.selectedIndex++; let val = blockSelect.value; displayBlock(val); updateBlockSelect(val); } }
         btnPrevBottom.addEventListener('click', goToPrevBlock); btnNextBottom.addEventListener('click', goToNextBlock);
@@ -860,12 +862,12 @@
         // --- REGLAGE GRILLE ---
         const adjustPanel = document.getElementById('adjustPanel'); const defaultGridConfig = { top: 9, left: 7.5, width: 85, height: 75.5 }; let gridConfig = JSON.parse(localStorage.getItem('minimoon_grid')) || defaultGridConfig;
         function applyGridConfig() { gridOverlay.style.top = gridConfig.top + '%'; gridOverlay.style.left = gridConfig.left + '%'; gridOverlay.style.width = gridConfig.width + '%'; gridOverlay.style.height = gridConfig.height + '%'; document.getElementById('adjTop').value = gridConfig.top; document.getElementById('adjLeft').value = gridConfig.left; document.getElementById('adjWidth').value = gridConfig.width; document.getElementById('adjHeight').value = gridConfig.height; }
-        document.getElementById('btnAdjustGrid').addEventListener('click', () => { dropdownMenu.classList.remove('show'); bottomPanel.style.display = 'none'; adjustPanel.style.display = 'flex'; gridOverlay.classList.add('grid-adjusting'); });
+        document.getElementById('btnAdjustGrid').addEventListener('click', () => { settingsModal.style.display = 'none'; bottomPanel.style.display = 'none'; adjustPanel.style.display = 'flex'; gridOverlay.classList.add('grid-adjusting'); });
         document.getElementById('btnCloseAdjust').addEventListener('click', () => { adjustPanel.style.display = 'none'; bottomPanel.style.display = 'flex'; gridOverlay.classList.remove('grid-adjusting'); localStorage.setItem('minimoon_grid', JSON.stringify(gridConfig)); displayBlock(currentBlockName); });
         document.getElementById('btnResetAdjust').addEventListener('click', () => { gridConfig = {...defaultGridConfig}; applyGridConfig(); });
         ['adjTop', 'adjLeft', 'adjWidth', 'adjHeight'].forEach(id => { document.getElementById(id).addEventListener('input', (e) => { gridConfig[id.replace('adj', '').toLowerCase()] = parseFloat(e.target.value); applyGridConfig(); }); });
 
-        // --- LOGIQUE DES STATISTIQUES ---
+        // --- STATISTIQUES ---
         btnStats.addEventListener('click', () => { dropdownMenu.classList.remove('show'); renderStats(); statsModal.style.display = 'block'; });
         btnCloseStats.addEventListener('click', () => { statsModal.style.display = 'none'; });
         tabStatsAll.addEventListener('click', () => { tabStatsAll.className = 'btn-blue'; tabStatsToday.className = 'btn-gray'; statsViewAll.style.display = 'flex'; statsViewToday.style.display = 'none'; });
@@ -880,8 +882,7 @@
                     let g = b.grade || "?"; if (!gradeOrder.includes(g)) g = "?";
                     if (!b.ascentsLog || b.ascentsLog.length === 0) b.ascentsLog = [b.completedDate || "1970-01-01"];
                     statsAll[g]++; totalAll++;
-                    let todayReps = b.ascentsLog.filter(d => d === todayStr).length;
-                    if (todayReps > 0) { statsToday[g] += todayReps; totalToday += todayReps; }
+                    let todayReps = b.ascentsLog.filter(d => d === todayStr).length; if (todayReps > 0) { statsToday[g] += todayReps; totalToday += todayReps; }
                 }
             }
             function buildHtml(statsObj, total) {
@@ -895,6 +896,7 @@
 
         // INITIALISATION
         updateListFilterOptions();
+        initGradeFilterSelect();
         applyGridConfig(); 
         initGrid(); 
         updateBlockSelect();
