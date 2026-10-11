@@ -70,7 +70,7 @@
         /* --- MENUS DÉROULANTS SUR-MESURE --- */
         .custom-select { position: relative; flex-grow: 1; min-width: 0; }
         .custom-select-header { background: #222; border: 1px solid #444; color: white; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; height: 32px; box-sizing: border-box; }
-        .custom-select-list { display: none; position: absolute; top: calc(100% + 4px); left: 0; min-width: 100%; width: max-content; max-width: 90vw; background: #1e1e1e; border: 1px solid #555; z-index: 1000; max-height: 400px; overflow-y: auto; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.9); }
+        .custom-select-list { display: none; position: absolute; top: calc(100% + 4px); left: 0; min-width: 100%; width: max-content; max-width: 90vw; background: #1e1e1e; border: 1px solid #555; z-index: 1000; max-height: 60vh; overflow-y: auto; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.9); -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
         .custom-select-list.show { display: block; }
         .cs-item { display: flex; align-items: center; padding: 8px 6px; border-bottom: 1px solid #333; cursor: pointer; gap: 6px; }
         .cs-item.selected { background: #2a2a2a; border-left: 3px solid #ffb700; padding-left: 3px; }
@@ -144,22 +144,33 @@
         .adjust-buttons button { flex: 1; padding: 10px; }
 
         /* MODALES */
-        .modal { display: none; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1000; width: 95%; max-width: 350px; }
+        .modal { display: none; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1000; width: 95%; max-width: 380px; }
         .modal-content { background: rgba(30, 30, 30, 0.98); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #555; box-shadow: 0 5px 15px rgba(0,0,0,0.8); }
         .modal-content h3 { margin: 0; font-size: 1rem; color: #ffb700; text-align: center; }
         .modal-buttons { display: flex; gap: 8px; margin-top: 5px; }
         .modal-buttons button { flex: 1; padding: 8px; }
-        .list-items-container { display: flex; flex-direction: column; gap: 4px; max-height: 150px; overflow-y: auto; }
+        
+        /* Correction défilement (Scroll tactile fluide) */
+        .list-items-container { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 4px; 
+            max-height: 60vh; 
+            overflow-y: auto; 
+            -webkit-overflow-scrolling: touch; 
+            overscroll-behavior: contain; 
+        }
+        
         .stat-row { display: flex; justify-content: space-between; align-items: center; background: #222; padding: 6px 10px; border-radius: 4px; margin-bottom: 4px; }
         .stat-grade { font-weight: bold; padding: 2px 6px; border-radius: 4px; color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); min-width: 30px; text-align: center; }
         .stat-count { font-weight: bold; color: #ffb700; font-size: 1.1rem; }
 
         /* HISTORIQUE CSS */
         .history-date { font-weight: bold; color: #ffb700; margin-top: 10px; border-bottom: 1px solid #444; padding-bottom: 3px; font-size: 0.9rem; }
-        .history-row { display: flex; justify-content: space-between; align-items: center; background: #222; padding: 6px 8px; border-radius: 4px; margin-top: 4px; font-size: 0.85rem; }
-        .history-time { color: #888; font-family: monospace; margin-right: 8px; font-size: 0.8rem; }
-        .history-name { flex-grow: 1; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .history-icon { margin-left: 8px; flex-shrink: 0; font-size: 0.9rem; }
+        .history-row { display: flex; align-items: center; background: #222; padding: 6px 8px; border-radius: 4px; margin-top: 4px; font-size: 0.85rem; gap: 6px; }
+        .history-time { color: #888; font-family: monospace; font-size: 0.8rem; margin-left: auto; flex-shrink: 0; }
+        .history-name { color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: bold; }
+        .history-icon { flex-shrink: 0; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -190,7 +201,7 @@
                 </button>
                 <div id="dropdownSession" class="dropdown-content" style="min-width: 180px;">
                     <div style="padding: 6px; color: #ffb700; font-weight: bold; text-align: center; font-size: 0.85rem; border-bottom: 1px solid #444; margin-bottom: 4px;">🎯 Blocs du jour</div>
-                    <div id="sessionListItems" style="max-height: 250px; overflow-y: auto; display:flex; flex-direction: column; gap: 2px;"></div>
+                    <div id="sessionListItems" class="list-items-container" style="max-height: 250px;"></div>
                 </div>
             </div>
 
@@ -209,7 +220,6 @@
                     <label><input type="checkbox" id="filterBenchmark"> <span class="menu-icon-badge">B</span> Uniquement Benchmarks</label>
                     <label><input type="checkbox" id="filterFavorites"> ❤️ Uniquement favoris</label>
                     <hr>
-                    <!-- Nouveau bouton Historique ajouté ici -->
                     <button id="btnHistory" style="color: #f1c40f;">🕒 Historique</button>
                     <button id="btnStats" style="color: #1abc9c;">📊 Statistiques</button>
                     <button id="btnOpenSettings" style="color: #aaa;">⚙️ Paramètres</button>
@@ -396,8 +406,8 @@
                 <button id="tabStatsAll" class="btn-blue" style="flex:1; margin-right:5px; padding:8px; font-size:0.8rem;">De tout temps</button>
                 <button id="tabStatsToday" class="btn-gray" style="flex:1; margin-left:5px; padding:8px; font-size:0.8rem;">Aujourd'hui</button>
             </div>
-            <div id="statsViewAll" class="list-items-container" style="display:flex; max-height: 300px; padding-right:5px;"></div>
-            <div id="statsViewToday" class="list-items-container" style="display:none; max-height: 300px; padding-right:5px;"></div>
+            <div id="statsViewAll" class="list-items-container" style="display:flex; padding-right:5px;"></div>
+            <div id="statsViewToday" class="list-items-container" style="display:none; padding-right:5px;"></div>
             <div class="modal-buttons" style="margin-top: 15px;">
                 <button id="btnCloseStats" class="btn-gray">Fermer</button>
             </div>
@@ -408,7 +418,7 @@
     <div id="historyModal" class="modal">
         <div class="modal-content">
             <h3 style="margin-bottom: 10px;">🕒 Historique des sessions</h3>
-            <div id="historyListContainer" class="list-items-container" style="display:flex; max-height: 400px; padding-right:5px; flex-direction:column; gap: 0;">
+            <div id="historyListContainer" class="list-items-container" style="padding-right:5px;">
                 <!-- Historique injecté ici par JS -->
             </div>
             <div class="modal-buttons" style="margin-top: 15px;">
@@ -524,11 +534,9 @@
         const historyListContainer = document.getElementById('historyListContainer');
 
         // --- FONCTIONS DE DATES ET HEURES ---
-        // Utilisée pour regrouper ou chercher "aujourd'hui" (Format: YYYY-MM-DD)
         function getTodayString() {
             let d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
         }
-        // NOUVEAU: Utilisée pour sauvegarder précisément un log (Format: YYYY-MM-DD HH:MM)
         function getNowString() {
             let d = new Date();
             let pad = (n) => String(n).padStart(2, '0');
@@ -571,7 +579,6 @@
             let todayStr = getTodayString(); let sessionBlocks = [];
             for (let k in blocks) {
                 let b = blocks[k];
-                // Vérifie si le log démarre par la date d'aujourd'hui (pour être compatible avec la nouvelle heure incluse)
                 if (b.completed && b.ascentsLog) { let todayCount = b.ascentsLog.filter(d => d.startsWith(todayStr)).length; if (todayCount > 0) sessionBlocks.push({ name: k, grade: b.grade || '?', count: todayCount }); }
             }
             sessionListItems.innerHTML = '';
@@ -805,7 +812,6 @@
             if (name) { blocks[name] = { depart: currentCreation.depart, progression: currentCreation.progression, arrivee: currentCreation.arrivee, method: "", grade: "6B+", isBenchmark: false, ascensionCount: 0, setby: "Moi", completed: false, favorite: false }; localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); isCreating = false; menusWrapper.style.display = 'flex'; creationTools.style.display = 'none'; bottomPanel.style.display = 'flex'; updateBlockSelect(name); }
         });
 
-        // --- AFFICHAGE LOCAL DU BLOC ---
         function displayBlock(name) {
             if (isCreating || gridOverlay.classList.contains('grid-adjusting')) return; 
             currentBlockName = name; let block = blocks[name];
@@ -906,7 +912,7 @@
                 b.completed = !b.completed;
                 if (b.completed) { 
                     b.completedDate = getTodayString(); 
-                    b.ascentsLog = [getNowString()]; // Enregistre la date ET l'heure
+                    b.ascentsLog = [getNowString()]; 
                 } else { 
                     b.completedDate = null; 
                     b.ascentsLog = []; 
@@ -921,7 +927,7 @@
             if (currentBlockName && blocks[currentBlockName] && blocks[currentBlockName].completed) {
                 let b = blocks[currentBlockName]; 
                 if (!b.ascentsLog) b.ascentsLog = [b.completedDate || getNowString()];
-                b.ascentsLog.push(getNowString()); // Ajoute la répétition avec l'heure exacte
+                b.ascentsLog.push(getNowString()); 
                 b.completedDate = getTodayString(); 
                 localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); displayBlock(currentBlockName); updateSessionDropdown();
             }
@@ -933,7 +939,6 @@
                 let b = blocks[currentBlockName];
                 if (b.ascentsLog && b.ascentsLog.length > 1) {
                     b.ascentsLog.pop(); 
-                    // Rétabli la date de la dernière ascension connue
                     let lastLog = b.ascentsLog[b.ascentsLog.length - 1];
                     b.completedDate = lastLog.substring(0, 10); 
                     localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); displayBlock(currentBlockName); updateSessionDropdown();
@@ -960,7 +965,6 @@
         document.getElementById('btnResetAdjust').addEventListener('click', () => { gridConfig = {...defaultGridConfig}; applyGridConfig(); });
         ['adjTop', 'adjLeft', 'adjWidth', 'adjHeight'].forEach(id => { document.getElementById(id).addEventListener('input', (e) => { gridConfig[id.replace('adj', '').toLowerCase()] = parseFloat(e.target.value); applyGridConfig(); }); });
 
-        // --- STATISTIQUES ---
         btnStats.addEventListener('click', () => { dropdownMenu.classList.remove('show'); renderStats(); statsModal.style.display = 'block'; });
         btnCloseStats.addEventListener('click', () => { statsModal.style.display = 'none'; });
         tabStatsAll.addEventListener('click', () => { tabStatsAll.className = 'btn-blue'; tabStatsToday.className = 'btn-gray'; statsViewAll.style.display = 'flex'; statsViewToday.style.display = 'none'; });
@@ -998,33 +1002,32 @@
         function renderHistory() {
             let allAscents = [];
             
-            // Parcours de tous les blocs pour extraire chaque log
             for (let k in blocks) {
                 let b = blocks[k];
                 if (b.completed && b.ascentsLog) {
                     b.ascentsLog.forEach((logStr, index) => {
-                        // logStr ressemble à "2026-10-11 14:30" (nouveau format) ou "2026-10-11" (ancien format)
                         let datePart = logStr.substring(0, 10);
-                        let timePart = logStr.length > 10 ? logStr.substring(11, 16) : "--:--"; // Si ancien log sans heure
+                        let timePart = logStr.length > 10 ? logStr.substring(11, 16) : "--:--"; 
                         
                         allAscents.push({
                             blockName: k,
                             date: datePart,
                             time: timePart,
-                            isFirst: index === 0 // L'index 0 est toujours la première ascension
+                            isFirst: index === 0,
+                            grade: b.grade || "?",
+                            bgColor: getGradeColor(b.grade || "?"),
+                            isFav: b.favorite
                         });
                     });
                 }
             }
             
-            // Tri décroissant : Du plus récent au plus ancien (par date, puis par heure)
             allAscents.sort((a, b) => {
                 if (a.date !== b.date) return b.date.localeCompare(a.date);
                 if (a.time !== b.time) return b.time.localeCompare(a.time);
                 return 0;
             });
 
-            // Regroupement par jour
             let grouped = {};
             allAscents.forEach(a => {
                 if (!grouped[a.date]) grouped[a.date] = [];
@@ -1038,9 +1041,7 @@
                 return;
             }
 
-            // Génération de l'affichage HTML
             for (let dateStr in grouped) {
-                // Formater la date YYYY-MM-DD en DD/MM/YYYY
                 let parts = dateStr.split('-');
                 let displayDate = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : dateStr;
                 
@@ -1052,10 +1053,18 @@
                 grouped[dateStr].forEach(asc => {
                     let row = document.createElement('div');
                     row.className = 'history-row';
-                    let icon = asc.isFirst ? '✅' : '➕';
-                    let timeHtml = asc.time !== "--:--" ? `<span class="history-time">[${asc.time}]</span>` : `<span class="history-time" style="opacity:0.4;">[--:--]</span>`;
                     
-                    row.innerHTML = `${timeHtml}<span class="history-name">${asc.blockName}</span><span class="history-icon">${icon}</span>`;
+                    let icon = asc.isFirst ? '✅' : '➕';
+                    let timeHtml = asc.time !== "--:--" ? `[${asc.time}]` : `[--:--]`;
+                    let favHtml = asc.isFav ? '<span style="font-size:0.9rem;">❤️</span>' : '';
+                    
+                    row.innerHTML = `
+                        <div class="cs-badge" style="background-color: ${asc.bgColor}; font-size: 0.7rem; min-width: 25px;">${asc.grade}</div>
+                        <span class="history-name">${asc.blockName}</span>
+                        <span class="history-icon">${icon}</span>
+                        ${favHtml}
+                        <span class="history-time">${timeHtml}</span>
+                    `;
                     historyListContainer.appendChild(row);
                 });
             }
