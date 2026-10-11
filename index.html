@@ -70,7 +70,7 @@
         /* --- MENUS DÉROULANTS SUR-MESURE --- */
         .custom-select { position: relative; flex-grow: 1; min-width: 0; }
         .custom-select-header { background: #222; border: 1px solid #444; color: white; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; height: 32px; box-sizing: border-box; }
-        .custom-select-list { display: none; position: absolute; top: calc(100% + 4px); left: 0; min-width: 100%; width: max-content; max-width: 90vw; background: #1e1e1e; border: 1px solid #555; z-index: 1000; max-height: 60vh; overflow-y: auto; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.9); -webkit-overflow-scrolling: touch; overscroll-behavior: contain; touch-action: pan-y; }
+        .custom-select-list { display: none; position: absolute; top: calc(100% + 4px); left: 0; min-width: 100%; width: max-content; max-width: 90vw; background: #1e1e1e; border: 1px solid #555; z-index: 1000; max-height: 60vh; overflow-y: auto; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.9); -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
         .custom-select-list.show { display: block; }
         .cs-item { display: flex; align-items: center; padding: 8px 6px; border-bottom: 1px solid #333; cursor: pointer; gap: 6px; }
         .cs-item.selected { background: #2a2a2a; border-left: 3px solid #ffb700; padding-left: 3px; }
@@ -144,8 +144,8 @@
         .adjust-buttons button { flex: 1; padding: 10px; }
 
         /* MODALES : Correction Scroll & Arrière-plan */
-        .modal { display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); z-index: 1000; touch-action: none; }
-        .modal-content { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 95%; max-width: 380px; max-height: 90vh; background: rgba(30, 30, 30, 0.98); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #555; box-shadow: 0 5px 15px rgba(0,0,0,0.8); touch-action: auto; }
+        .modal { display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); z-index: 1000; }
+        .modal-content { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 95%; max-width: 380px; max-height: 90vh; background: rgba(30, 30, 30, 0.98); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #555; box-shadow: 0 5px 15px rgba(0,0,0,0.8); }
         .modal-content h3 { margin: 0; font-size: 1rem; color: #ffb700; text-align: center; }
         .modal-buttons { display: flex; gap: 8px; margin-top: 5px; }
         .modal-buttons button { flex: 1; padding: 8px; }
@@ -159,7 +159,6 @@
             overflow-y: auto; 
             -webkit-overflow-scrolling: touch; 
             overscroll-behavior: contain; 
-            touch-action: pan-y;
             padding-right: 5px;
         }
         
@@ -531,12 +530,16 @@
         // --- GESTION DES FENETRES MODALES (Correction Scroll) ---
         function openModal(m) { 
             m.style.display = 'block'; 
+            // Bloque le défilement de la page en arrière-plan proprement pour iOS/Android
+            document.documentElement.style.overflow = 'hidden';
             document.body.style.overflow = 'hidden'; 
         }
         function closeModal(m) { 
             m.style.display = 'none'; 
+            document.documentElement.style.overflow = '';
             document.body.style.overflow = ''; 
         }
+        
         // Fermeture automatique en cliquant sur l'arrière-plan grisé
         window.addEventListener('click', (e) => {
             if (e.target.classList.contains('modal')) { closeModal(e.target); }
