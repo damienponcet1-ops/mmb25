@@ -70,7 +70,7 @@
         /* --- MENUS DÉROULANTS SUR-MESURE --- */
         .custom-select { position: relative; flex-grow: 1; min-width: 0; }
         .custom-select-header { background: #222; border: 1px solid #444; color: white; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; height: 32px; box-sizing: border-box; }
-        .custom-select-list { display: none; position: absolute; top: calc(100% + 4px); left: 0; min-width: 100%; width: max-content; max-width: 90vw; background: #1e1e1e; border: 1px solid #555; z-index: 1000; max-height: 60vh; overflow-y: auto; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.9); -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+        .custom-select-list { display: none; position: absolute; top: calc(100% + 4px); left: 0; min-width: 100%; width: max-content; max-width: 90vw; background: #1e1e1e; border: 1px solid #555; z-index: 1000; max-height: 60vh; overflow-y: auto; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.9); -webkit-overflow-scrolling: touch; overscroll-behavior: contain; touch-action: pan-y; }
         .custom-select-list.show { display: block; }
         .cs-item { display: flex; align-items: center; padding: 8px 6px; border-bottom: 1px solid #333; cursor: pointer; gap: 6px; }
         .cs-item.selected { background: #2a2a2a; border-left: 3px solid #ffb700; padding-left: 3px; }
@@ -143,14 +143,14 @@
         .adjust-buttons { display: flex; gap: 10px; margin-top: 4px; }
         .adjust-buttons button { flex: 1; padding: 10px; }
 
-        /* MODALES */
-        .modal { display: none; position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1000; width: 95%; max-width: 380px; }
-        .modal-content { background: rgba(30, 30, 30, 0.98); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #555; box-shadow: 0 5px 15px rgba(0,0,0,0.8); }
+        /* MODALES : Correction Scroll & Arrière-plan */
+        .modal { display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); z-index: 1000; touch-action: none; }
+        .modal-content { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 95%; max-width: 380px; max-height: 90vh; background: rgba(30, 30, 30, 0.98); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #555; box-shadow: 0 5px 15px rgba(0,0,0,0.8); touch-action: auto; }
         .modal-content h3 { margin: 0; font-size: 1rem; color: #ffb700; text-align: center; }
         .modal-buttons { display: flex; gap: 8px; margin-top: 5px; }
         .modal-buttons button { flex: 1; padding: 8px; }
         
-        /* Correction défilement (Scroll tactile fluide) */
+        /* Conteneurs défilants fluides (Scroll) */
         .list-items-container { 
             display: flex; 
             flex-direction: column; 
@@ -159,17 +159,19 @@
             overflow-y: auto; 
             -webkit-overflow-scrolling: touch; 
             overscroll-behavior: contain; 
+            touch-action: pan-y;
+            padding-right: 5px;
         }
         
         .stat-row { display: flex; justify-content: space-between; align-items: center; background: #222; padding: 6px 10px; border-radius: 4px; margin-bottom: 4px; }
         .stat-grade { font-weight: bold; padding: 2px 6px; border-radius: 4px; color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); min-width: 30px; text-align: center; }
         .stat-count { font-weight: bold; color: #ffb700; font-size: 1.1rem; }
 
-        /* HISTORIQUE CSS */
+        /* HISTORIQUE CSS (Nouveau Design) */
         .history-date { font-weight: bold; color: #ffb700; margin-top: 10px; border-bottom: 1px solid #444; padding-bottom: 3px; font-size: 0.9rem; }
-        .history-row { display: flex; align-items: center; background: #222; padding: 6px 8px; border-radius: 4px; margin-top: 4px; font-size: 0.85rem; gap: 6px; }
+        .history-row { display: flex; align-items: center; background: #222; padding: 6px 8px; border-radius: 4px; margin-top: 4px; font-size: 0.85rem; gap: 8px; }
         .history-time { color: #888; font-family: monospace; font-size: 0.8rem; margin-left: auto; flex-shrink: 0; }
-        .history-name { color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: bold; }
+        .history-name { color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: bold; flex-grow: 1; }
         .history-icon { flex-shrink: 0; font-size: 0.9rem; }
     </style>
 </head>
@@ -182,7 +184,6 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5"></polyline></svg>
             </button>
             <button id="btnClearBoard" class="btn-bt" title="Interrupteur du Mur (ON / OFF)">
-                <!-- Ampoule Interactive -->
                 <svg width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.2 1.18 4.1 2.9 5.3C8.6 15 9 16.5 9 18h6c0-1.5.4-3 1.1-3.7 1.72-1.2 2.9-3.1 2.9-5.3a7 7 0 0 0-7-7z"/></svg>
             </button>
         </div>
@@ -406,19 +407,18 @@
                 <button id="tabStatsAll" class="btn-blue" style="flex:1; margin-right:5px; padding:8px; font-size:0.8rem;">De tout temps</button>
                 <button id="tabStatsToday" class="btn-gray" style="flex:1; margin-left:5px; padding:8px; font-size:0.8rem;">Aujourd'hui</button>
             </div>
-            <div id="statsViewAll" class="list-items-container" style="display:flex; padding-right:5px;"></div>
-            <div id="statsViewToday" class="list-items-container" style="display:none; padding-right:5px;"></div>
+            <div id="statsViewAll" class="list-items-container" style="display:flex;"></div>
+            <div id="statsViewToday" class="list-items-container" style="display:none;"></div>
             <div class="modal-buttons" style="margin-top: 15px;">
                 <button id="btnCloseStats" class="btn-gray">Fermer</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL HISTORIQUE -->
     <div id="historyModal" class="modal">
         <div class="modal-content">
             <h3 style="margin-bottom: 10px;">🕒 Historique des sessions</h3>
-            <div id="historyListContainer" class="list-items-container" style="padding-right:5px;">
+            <div id="historyListContainer" class="list-items-container">
                 <!-- Historique injecté ici par JS -->
             </div>
             <div class="modal-buttons" style="margin-top: 15px;">
@@ -496,42 +496,51 @@
         const badgeFootlessKb = document.getElementById('badgeFootlessKb');
         const badgeBenchmark = document.getElementById('badgeBenchmark');
 
-        // Modal Paramètres & autres
+        // Modales
         const settingsModal = document.getElementById('settingsModal');
+        const listModal = document.getElementById('listModal');
+        const gradeModal = document.getElementById('gradeModal');
+        const pasteModal = document.getElementById('pasteModal');
+        const statsModal = document.getElementById('statsModal');
+        const historyModal = document.getElementById('historyModal');
+
         const btnOpenSettings = document.getElementById('btnOpenSettings');
         const btnCloseSettings = document.getElementById('btnCloseSettings');
-
-        const listModal = document.getElementById('listModal');
         const btnCloseList = document.getElementById('btnCloseList');
         const btnCreateList = document.getElementById('btnCreateList');
         const existingListsDiv = document.getElementById('existingLists');
         const newListNameInput = document.getElementById('newListName');
         const listModalTitle = document.getElementById('listModalTitle');
-        
-        const gradeModal = document.getElementById('gradeModal');
         const newGradeSelect = document.getElementById('newGradeSelect');
         const btnCloseGrade = document.getElementById('btnCloseGrade');
         const btnSaveGrade = document.getElementById('btnSaveGrade');
-
         const btnPasteJSON = document.getElementById('btnPasteJSON');
-        const pasteModal = document.getElementById('pasteModal');
         const pasteJsonText = document.getElementById('pasteJsonText');
         const btnClosePaste = document.getElementById('btnClosePaste');
         const btnSavePaste = document.getElementById('btnSavePaste');
-
         const btnStats = document.getElementById('btnStats');
-        const statsModal = document.getElementById('statsModal');
         const btnCloseStats = document.getElementById('btnCloseStats');
         const tabStatsAll = document.getElementById('tabStatsAll');
         const tabStatsToday = document.getElementById('tabStatsToday');
         const statsViewAll = document.getElementById('statsViewAll');
         const statsViewToday = document.getElementById('statsViewToday');
-
-        // Éléments pour l'historique
         const btnHistory = document.getElementById('btnHistory');
-        const historyModal = document.getElementById('historyModal');
         const btnCloseHistory = document.getElementById('btnCloseHistory');
         const historyListContainer = document.getElementById('historyListContainer');
+
+        // --- GESTION DES FENETRES MODALES (Correction Scroll) ---
+        function openModal(m) { 
+            m.style.display = 'block'; 
+            document.body.style.overflow = 'hidden'; 
+        }
+        function closeModal(m) { 
+            m.style.display = 'none'; 
+            document.body.style.overflow = ''; 
+        }
+        // Fermeture automatique en cliquant sur l'arrière-plan grisé
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) { closeModal(e.target); }
+        });
 
         // --- FONCTIONS DE DATES ET HEURES ---
         function getTodayString() {
@@ -562,8 +571,8 @@
             if(!e.target.closest('.custom-select') && !e.target.closest('.menus-wrapper')) closeAllCustomSelects(); 
         });
 
-        btnOpenSettings.addEventListener('click', () => { closeAllCustomSelects(); settingsModal.style.display = 'block'; });
-        btnCloseSettings.addEventListener('click', () => settingsModal.style.display = 'none');
+        btnOpenSettings.addEventListener('click', () => { closeAllCustomSelects(); openModal(settingsModal); });
+        btnCloseSettings.addEventListener('click', () => closeModal(settingsModal));
 
         btnRefresh.addEventListener('click', () => { if (blockSelect.options.length > 0) { blockSelect.selectedIndex = 0; displayBlock(blockSelect.value); updateBlockSelect(blockSelect.value); } });
         
@@ -677,10 +686,10 @@
                 let isInside = customLists[activeList].includes(currentBlockName);
                 if (isInside) customLists[activeList] = customLists[activeList].filter(b => b !== currentBlockName); else customLists[activeList].push(currentBlockName);
                 localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); updateListButtonState(); updateListFilterOptions(); updateBlockSelect();
-            } else { listModal.style.display = 'block'; newListNameInput.value = ''; renderListModal(); }
+            } else { openModal(listModal); newListNameInput.value = ''; renderListModal(); }
         });
 
-        btnCloseList.addEventListener('click', () => listModal.style.display = 'none');
+        btnCloseList.addEventListener('click', () => closeModal(listModal));
         btnCreateList.addEventListener('click', () => {
             let val = newListNameInput.value.trim(); if(!val) return alert("Entrez un nom de liste.");
             if(!customLists[val]) customLists[val] = []; if(!customLists[val].includes(currentBlockName)) customLists[val].push(currentBlockName);
@@ -690,23 +699,23 @@
         bottomGrade.addEventListener('click', () => {
             if(!currentBlockName || !blocks[currentBlockName]) return;
             let currentGrade = blocks[currentBlockName].grade || "?"; let optionExists = Array.from(newGradeSelect.options).some(opt => opt.value === currentGrade);
-            newGradeSelect.value = optionExists ? currentGrade : "?"; gradeModal.style.display = 'block';
+            newGradeSelect.value = optionExists ? currentGrade : "?"; openModal(gradeModal);
         });
-        btnCloseGrade.addEventListener('click', () => gradeModal.style.display = 'none');
+        btnCloseGrade.addEventListener('click', () => closeModal(gradeModal));
         btnSaveGrade.addEventListener('click', () => {
             if(!currentBlockName || !blocks[currentBlockName]) return; blocks[currentBlockName].grade = newGradeSelect.value;
-            localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); gradeModal.style.display = 'none'; displayBlock(currentBlockName); updateBlockSelect(); 
+            localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); closeModal(gradeModal); displayBlock(currentBlockName); updateBlockSelect(); 
         });
 
         bottomHeart.addEventListener('click', () => {
             if (currentBlockName && blocks[currentBlockName]) { blocks[currentBlockName].favorite = !blocks[currentBlockName].favorite; localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); displayBlock(currentBlockName); updateBlockSelect(currentBlockName); }
         });
 
-        btnPasteJSON.addEventListener('click', () => { settingsModal.style.display = 'none'; pasteJsonText.value = ''; pasteModal.style.display = 'block'; });
-        btnClosePaste.addEventListener('click', () => pasteModal.style.display = 'none');
+        btnPasteJSON.addEventListener('click', () => { closeModal(settingsModal); pasteJsonText.value = ''; openModal(pasteModal); });
+        btnClosePaste.addEventListener('click', () => closeModal(pasteModal));
         btnSavePaste.addEventListener('click', () => {
             let text = pasteJsonText.value.trim(); if (!text) return alert("Veuillez coller du texte JSON.");
-            try { let parsed = JSON.parse(text); processImportedData(parsed); pasteModal.style.display = 'none'; } catch(e) { alert("Erreur JSON: " + e.message + "\nVérifiez que le code copié est valide."); }
+            try { let parsed = JSON.parse(text); processImportedData(parsed); closeModal(pasteModal); } catch(e) { alert("Erreur JSON: " + e.message + "\nVérifiez que le code copié est valide."); }
         });
 
         btnSearchToggle.addEventListener('click', () => { if (searchInput.style.display === 'none' || searchInput.style.display === '') { searchInput.style.display = 'block'; searchInput.focus(); } else { searchInput.style.display = 'none'; searchInput.value = ''; updateBlockSelect(); } });
@@ -753,9 +762,22 @@
 
         function downloadData(dataObj, filename) {
             const dataStr = JSON.stringify(dataObj, null, 2);
-            if (navigator.canShare) { try { const file = new File([dataStr], filename, { type: "application/json" }); if (navigator.canShare({ files: [file] })) { navigator.share({ title: "Export", files: [file] }).catch(err => console.log(err)); settingsModal.style.display = 'none'; return; } } catch (e) { console.log(e); } }
-            const blob = new Blob([dataStr], { type: 'application/json' }); const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.style.display = 'none'; a.href = url; a.download = filename; document.body.appendChild(a); a.click(); setTimeout(() => { document.body.removeChild(a); window.URL.revokeObjectURL(url); }, 100); settingsModal.style.display = 'none';
+            if (navigator.canShare) { 
+                try { 
+                    const file = new File([dataStr], filename, { type: "application/json" }); 
+                    if (navigator.canShare({ files: [file] })) { 
+                        navigator.share({ title: "Export", files: [file] }).catch(err => console.log(err)); 
+                        closeModal(settingsModal); 
+                        return; 
+                    } 
+                } catch (e) { console.log(e); } 
+            }
+            const blob = new Blob([dataStr], { type: 'application/json' }); 
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.style.display = 'none'; a.href = url; a.download = filename; 
+            document.body.appendChild(a); a.click(); 
+            setTimeout(() => { document.body.removeChild(a); window.URL.revokeObjectURL(url); }, 100); 
+            closeModal(settingsModal);
         }
 
         document.getElementById('btnExportBlocks').addEventListener('click', () => downloadData(blocks, 'minimoon_blocks_export.json'));
@@ -791,9 +813,9 @@
             alert(`${newKeys.length} bloc(s) importé(s) !`); if(newKeys.length > 0) updateBlockSelect(newKeys[newKeys.length - 1]); else updateBlockSelect(); updateSessionDropdown();
         }
 
-        document.getElementById('btnImport').addEventListener('click', () => { document.getElementById('fileImport').click(); settingsModal.style.display = 'none'; });
+        document.getElementById('btnImport').addEventListener('click', () => { document.getElementById('fileImport').click(); closeModal(settingsModal); });
         document.getElementById('fileImport').addEventListener('change', (e) => { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = ev => { try { processImportedData(JSON.parse(ev.target.result)); } catch(err) { alert("Erreur."); console.error(err); } }; reader.readAsText(file); e.target.value = ''; });
-        document.getElementById('btnClearStorage').addEventListener('click', () => { if(confirm("⚠️ Effacer TOUT ?")) { blocks = {}; customLists = {}; localStorage.removeItem('minimoon_blocks'); localStorage.removeItem('minimoon_lists'); currentListFilter = ""; updateListFilterOptions(); updateBlockSelect(); updateSessionDropdown(); settingsModal.style.display = 'none'; } });
+        document.getElementById('btnClearStorage').addEventListener('click', () => { if(confirm("⚠️ Effacer TOUT ?")) { blocks = {}; customLists = {}; localStorage.removeItem('minimoon_blocks'); localStorage.removeItem('minimoon_lists'); currentListFilter = ""; updateListFilterOptions(); updateBlockSelect(); updateSessionDropdown(); closeModal(settingsModal); } });
 
         function initGrid() { gridOverlay.innerHTML = ''; ROWS.forEach(r => { COLS.forEach(c => { let holdId = c + r; let cell = document.createElement('div'); cell.className = 'grid-cell'; cell.addEventListener('click', () => handleHoldClick(holdId)); let div = document.createElement('div'); div.className = 'hold'; div.dataset.id = holdId; cell.appendChild(div); gridOverlay.appendChild(cell); }); }); }
         function handleHoldClick(holdId) {
@@ -960,13 +982,13 @@
 
         const adjustPanel = document.getElementById('adjustPanel'); const defaultGridConfig = { top: 9, left: 7.5, width: 85, height: 75.5 }; let gridConfig = JSON.parse(localStorage.getItem('minimoon_grid')) || defaultGridConfig;
         function applyGridConfig() { gridOverlay.style.top = gridConfig.top + '%'; gridOverlay.style.left = gridConfig.left + '%'; gridOverlay.style.width = gridConfig.width + '%'; gridOverlay.style.height = gridConfig.height + '%'; document.getElementById('adjTop').value = gridConfig.top; document.getElementById('adjLeft').value = gridConfig.left; document.getElementById('adjWidth').value = gridConfig.width; document.getElementById('adjHeight').value = gridConfig.height; }
-        document.getElementById('btnAdjustGrid').addEventListener('click', () => { settingsModal.style.display = 'none'; bottomPanel.style.display = 'none'; adjustPanel.style.display = 'flex'; gridOverlay.classList.add('grid-adjusting'); });
+        document.getElementById('btnAdjustGrid').addEventListener('click', () => { closeModal(settingsModal); bottomPanel.style.display = 'none'; adjustPanel.style.display = 'flex'; gridOverlay.classList.add('grid-adjusting'); });
         document.getElementById('btnCloseAdjust').addEventListener('click', () => { adjustPanel.style.display = 'none'; bottomPanel.style.display = 'flex'; gridOverlay.classList.remove('grid-adjusting'); localStorage.setItem('minimoon_grid', JSON.stringify(gridConfig)); displayBlock(currentBlockName); });
         document.getElementById('btnResetAdjust').addEventListener('click', () => { gridConfig = {...defaultGridConfig}; applyGridConfig(); });
         ['adjTop', 'adjLeft', 'adjWidth', 'adjHeight'].forEach(id => { document.getElementById(id).addEventListener('input', (e) => { gridConfig[id.replace('adj', '').toLowerCase()] = parseFloat(e.target.value); applyGridConfig(); }); });
 
-        btnStats.addEventListener('click', () => { dropdownMenu.classList.remove('show'); renderStats(); statsModal.style.display = 'block'; });
-        btnCloseStats.addEventListener('click', () => { statsModal.style.display = 'none'; });
+        btnStats.addEventListener('click', () => { dropdownMenu.classList.remove('show'); renderStats(); openModal(statsModal); });
+        btnCloseStats.addEventListener('click', () => closeModal(statsModal));
         tabStatsAll.addEventListener('click', () => { tabStatsAll.className = 'btn-blue'; tabStatsToday.className = 'btn-gray'; statsViewAll.style.display = 'flex'; statsViewToday.style.display = 'none'; });
         tabStatsToday.addEventListener('click', () => { tabStatsToday.className = 'btn-blue'; tabStatsAll.className = 'btn-gray'; statsViewToday.style.display = 'flex'; statsViewAll.style.display = 'none'; });
 
@@ -991,13 +1013,13 @@
             statsViewAll.innerHTML = buildHtml(statsAll, totalAll); statsViewToday.innerHTML = buildHtml(statsToday, totalToday);
         }
 
-        // --- NOUVEAU : HISTORIQUE ---
+        // --- HISTORIQUE (Nouveau Design) ---
         btnHistory.addEventListener('click', () => { 
             dropdownMenu.classList.remove('show'); 
             renderHistory(); 
-            historyModal.style.display = 'block'; 
+            openModal(historyModal); 
         });
-        btnCloseHistory.addEventListener('click', () => { historyModal.style.display = 'none'; });
+        btnCloseHistory.addEventListener('click', () => closeModal(historyModal));
 
         function renderHistory() {
             let allAscents = [];
