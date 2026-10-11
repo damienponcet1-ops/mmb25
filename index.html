@@ -44,8 +44,8 @@
         .menu-icon-check-slash::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background-color: #dc3545; transform: translateY(-50%) rotate(-45deg); }
 
         /* BARRES D'OUTILS */
-        .toolbar { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; align-items: center; width: 100%; max-width: 450px; margin-bottom: 6px; }
-        button, select.btn-outline, select.main-select, input { border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold; display: flex; align-items: center; justify-content: center; color: white; white-space: nowrap; }
+        .toolbar { display: flex; flex-wrap: nowrap; gap: 6px; justify-content: center; align-items: center; width: 100%; max-width: 450px; margin-bottom: 6px; }
+        button, select.btn-outline, input { border: none; padding: 5px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: bold; display: flex; align-items: center; justify-content: center; color: white; white-space: nowrap; }
         button:active { opacity: 0.8; }
         
         .btn-blue { background-color: #005bb5; } .btn-orange { background-color: #e67e22; } .btn-green { background-color: #27ae60; }
@@ -57,9 +57,23 @@
         .btn-bt:active { transform: scale(0.9); }
         
         select.btn-outline { background-color: #1e1e1e; border: 1px solid #e67e22; color: #e67e22; }
-        select.main-select { background: #222; border: 1px solid #444; flex-grow: 1; font-size: 0.85rem; min-width: 120px; }
         input.search-input { background: #222; border: 1px solid #444; color: #fff; width: 100%; box-sizing: border-box; margin-bottom: 6px; display: none; font-size: 16px; }
         input[type="text"] { font-size: 16px; background: #333; color: white; border: 1px solid #555; }
+        select.main-select { background: #222; border: 1px solid #444; font-size: 0.85rem; width: 100%; }
+
+        /* --- NOUVEAU MENU DÉROULANT SUR-MESURE --- */
+        .custom-select { position: relative; flex-grow: 1; min-width: 0; }
+        .custom-select-header { background: #222; border: 1px solid #444; color: white; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; height: 32px; box-sizing: border-box; }
+        .custom-select-list { display: none; position: absolute; top: calc(100% + 4px); left: 0; min-width: 100%; width: max-content; max-width: 90vw; background: #1e1e1e; border: 1px solid #555; z-index: 1000; max-height: 400px; overflow-y: auto; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.9); }
+        .custom-select-list.show { display: block; }
+        .cs-item { display: flex; align-items: center; padding: 8px 6px; border-bottom: 1px solid #333; cursor: pointer; gap: 6px; }
+        .cs-item.selected { background: #2a2a2a; border-left: 3px solid #ffb700; padding-left: 3px; }
+        .cs-item:hover { background: #333; }
+        .cs-badge { padding: 2px 4px; border-radius: 3px; font-weight: bold; font-size: 0.75rem; color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); min-width: 28px; text-align: center; flex-shrink: 0; }
+        .cs-icons { display: flex; gap: 2px; font-size: 0.75rem; flex-shrink: 0; }
+        .cs-name { font-weight: bold; font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-shrink: 1; color: #fff; }
+        .cs-grade-text { color: #aaa; font-size: 0.75rem; flex-shrink: 0; }
+        .cs-asc { color: #888; font-size: 0.7rem; flex-shrink: 0; margin-left: 4px; }
 
         /* PANNEAU DU MUR */
         .board-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 11 / 12; background-color: #f4d03f; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.5); touch-action: pan-y; }
@@ -67,7 +81,6 @@
         .grid-overlay { position: absolute; display: grid; grid-template-columns: repeat(11, 1fr); grid-template-rows: repeat(12, 1fr); z-index: 10; }
         .grid-cell { display: flex; justify-content: center; align-items: center; cursor: pointer; }
         .hold { width: 170%; aspect-ratio: 1; border-radius: 50%; background: transparent; box-sizing: border-box; border: none; pointer-events: none; transition: transform 0.1s; }
-        
         div.grid-overlay.grid-adjusting div.hold { border: 1.5px dashed rgba(255, 255, 255, 0.9) !important; background: rgba(0, 0, 0, 0.35) !important; }
         .hold.depart { border: 3px solid #00ff00; box-shadow: 0 0 8px rgba(0, 255, 0, 0.8); background: transparent !important; }
         .hold.progression { border: 3px solid #00d2ff; box-shadow: 0 0 8px rgba(0, 210, 255, 0.8); background: transparent !important; }
@@ -88,7 +101,6 @@
         .nav-btn { background: #1e1e1e; border: 1px solid #333; color: #ffb700; font-size: 1rem; padding: 10px 12px; border-radius: 6px; cursor: pointer; }
         .nav-btn:active { background: #333; }
 
-        /* NOUVEAU GRID : 4 COLONNES POUR AJOUTER LE COEUR */
         .bottom-triptych { display: grid; grid-template-columns: 0.7fr 0.7fr 1.4fr 0.7fr; gap: 6px; }
         .triptych-container { display: flex; flex-direction: column; align-items: flex-end; }
         .triptych-btn { background: #1e1e1e; border: 1px solid #333; border-radius: 8px; height: 52px; width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; cursor: pointer; transition: all 0.2s; }
@@ -129,7 +141,6 @@
         .modal-buttons { display: flex; gap: 8px; margin-top: 5px; }
         .modal-buttons button { flex: 1; padding: 8px; }
         .list-items-container { display: flex; flex-direction: column; gap: 4px; max-height: 150px; overflow-y: auto; }
-        
         .stat-row { display: flex; justify-content: space-between; align-items: center; background: #222; padding: 6px 10px; border-radius: 4px; margin-bottom: 4px; }
         .stat-grade { font-weight: bold; padding: 2px 6px; border-radius: 4px; color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); min-width: 30px; text-align: center; }
         .stat-count { font-weight: bold; color: #ffb700; font-size: 1.1rem; }
@@ -164,9 +175,7 @@
                 </button>
                 <div id="dropdownSession" class="dropdown-content" style="min-width: 180px;">
                     <div style="padding: 6px; color: #ffb700; font-weight: bold; text-align: center; font-size: 0.85rem; border-bottom: 1px solid #444; margin-bottom: 4px;">🎯 Blocs du jour</div>
-                    <div id="sessionListItems" style="max-height: 250px; overflow-y: auto; display:flex; flex-direction: column; gap: 2px;">
-                        <!-- Rempli par le JavaScript -->
-                    </div>
+                    <div id="sessionListItems" style="max-height: 250px; overflow-y: auto; display:flex; flex-direction: column; gap: 2px;"></div>
                 </div>
             </div>
 
@@ -199,14 +208,27 @@
         <input type="file" id="fileImport" accept=".json" style="display: none;">
     </div>
 
-    <!-- RECHERCHE -->
     <div style="width: 100%; max-width: 450px;">
         <input type="text" id="searchInput" class="search-input" placeholder="Rechercher par nom...">
     </div>
 
-    <!-- LIGNE 2 : Select & Loupe -->
+    <!-- LIGNE 2 : Select sur mesure & Loupe -->
     <div class="toolbar" style="flex-wrap: nowrap;">
-        <select id="blockSelect" class="main-select"></select>
+        
+        <div class="custom-select" id="customBlockSelect">
+            <div class="custom-select-header" id="csHeader">
+                <div style="display:flex; align-items:center; gap:8px; overflow:hidden;">
+                    <span id="csHeaderBadge" class="cs-badge" style="background:#333; display:none;">?</span>
+                    <span id="csHeaderName" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size: 0.85rem; font-weight: bold;">Sélectionnez un bloc</span>
+                </div>
+                <span style="font-size: 0.7rem; color: #888;">▼</span>
+            </div>
+            <div class="custom-select-list" id="csList"></div>
+        </div>
+        
+        <!-- On garde le select natif caché pour ne pas casser la logique interne -->
+        <select id="blockSelect" style="display:none;"></select>
+        
         <button id="btnSearchToggle" class="btn-gray">🔍</button>
     </div>
 
@@ -365,7 +387,8 @@
         let currentBlockName = ""; let isCreating = false; let currentCreation = { depart: [], progression: [], arrivee: [] };
 
         const gridOverlay = document.getElementById('gridOverlay');
-        const blockSelect = document.getElementById('blockSelect');
+        const blockSelect = document.getElementById('blockSelect'); // Invisible, gardé pour la logique
+        const csList = document.getElementById('csList'); // Nouveau menu déroulant
         const filterCotation = document.getElementById('filterCotation');
         const filterList = document.getElementById('filterList');
         const filterBenchmark = document.getElementById('filterBenchmark');
@@ -454,7 +477,13 @@
         }
 
         // --- GESTION DU RAFRAÎCHISSEMENT ---
-        btnRefresh.addEventListener('click', () => { if (blockSelect.options.length > 0) { blockSelect.selectedIndex = 0; displayBlock(blockSelect.value); } });
+        btnRefresh.addEventListener('click', () => { 
+            if (blockSelect.options.length > 0) { 
+                blockSelect.selectedIndex = 0; 
+                displayBlock(blockSelect.value); 
+                updateBlockSelect(blockSelect.value); 
+            } 
+        });
 
         // --- GESTION DU MENU SESSION (LIVE) ---
         function updateSessionDropdown() {
@@ -476,15 +505,21 @@
                     let btn = document.createElement('button'); btn.className = 'session-item';
                     let repText = sb.count > 1 ? ` <span style="color:#aaa; font-size:0.75rem;">(x${sb.count})</span>` : '';
                     btn.innerHTML = `<span class="s-name">${sb.name}</span><span><span class="s-grade">${sb.grade}</span>${repText}</span>`;
-                    btn.onclick = () => { blockSelect.value = sb.name; displayBlock(sb.name); dropdownSession.classList.remove('show'); };
+                    btn.onclick = () => { blockSelect.value = sb.name; displayBlock(sb.name); dropdownSession.classList.remove('show'); updateBlockSelect(sb.name); };
                     sessionListItems.appendChild(btn);
                 });
             }
         }
 
-        btnLiveSession.addEventListener('click', (e) => { dropdownSession.classList.toggle('show'); dropdownMenu.classList.remove('show'); e.stopPropagation(); });
-        btnMenu.addEventListener('click', (e) => { dropdownMenu.classList.toggle('show'); dropdownSession.classList.remove('show'); e.stopPropagation(); });
-        document.addEventListener('click', (e) => { if(!e.target.closest('#mainMenu')) dropdownMenu.classList.remove('show'); if(!e.target.closest('#sessionMenu')) dropdownSession.classList.remove('show'); });
+        btnLiveSession.addEventListener('click', (e) => { dropdownSession.classList.toggle('show'); dropdownMenu.classList.remove('show'); csList.classList.remove('show'); e.stopPropagation(); });
+        btnMenu.addEventListener('click', (e) => { dropdownMenu.classList.toggle('show'); dropdownSession.classList.remove('show'); csList.classList.remove('show'); e.stopPropagation(); });
+        document.getElementById('csHeader').addEventListener('click', (e) => { csList.classList.toggle('show'); dropdownMenu.classList.remove('show'); dropdownSession.classList.remove('show'); e.stopPropagation(); });
+        
+        document.addEventListener('click', (e) => { 
+            if(!e.target.closest('#mainMenu')) dropdownMenu.classList.remove('show'); 
+            if(!e.target.closest('#sessionMenu')) dropdownSession.classList.remove('show'); 
+            if(!e.target.closest('#customBlockSelect')) csList.classList.remove('show'); 
+        });
 
         // --- GESTION DES LISTES ---
         function updateListFilterOptions() {
@@ -546,7 +581,7 @@
                 blocks[currentBlockName].favorite = !blocks[currentBlockName].favorite;
                 localStorage.setItem('minimoon_blocks', JSON.stringify(blocks));
                 displayBlock(currentBlockName);
-                updateBlockSelect(currentBlockName);
+                updateBlockSelect(currentBlockName); // Mets à jour l'icône dans la liste
             }
         });
 
@@ -681,6 +716,12 @@
                 if (block.isBenchmark) badgeBenchmark.style.display = 'inline-flex';
                 bottomBlockName.textContent = name; let gradeVal = block.grade || "?"; bottomGrade.textContent = gradeVal; bottomGrade.style.backgroundColor = getGradeColor(gradeVal);
                 
+                // Mettre à jour l'en-tête du sélecteur custom
+                document.getElementById('csHeaderBadge').style.display = 'block';
+                document.getElementById('csHeaderBadge').textContent = gradeVal;
+                document.getElementById('csHeaderBadge').style.backgroundColor = getGradeColor(gradeVal);
+                document.getElementById('csHeaderName').textContent = name;
+
                 if (block.favorite) { bottomHeart.textContent = '❤️'; bottomHeart.classList.add('is-fav'); } else { bottomHeart.textContent = '🤍'; bottomHeart.classList.remove('is-fav'); }
 
                 if (block.completed) {
@@ -694,14 +735,20 @@
             } else {
                 bottomBlockName.textContent = "Aucun bloc sélectionné"; bottomGrade.textContent = "-"; bottomGrade.style.backgroundColor = "#333333";
                 bottomHeart.textContent = '🤍'; bottomHeart.classList.remove('is-fav');
+                document.getElementById('csHeaderBadge').style.display = 'none'; document.getElementById('csHeaderName').textContent = "Aucun bloc sélectionné";
                 bottomCheckWrapper.classList.remove('is-checked'); repControls.style.display = 'none'; infoSetter.textContent = "-"; infoAscensions.textContent = "-";
                 updateListButtonState(); sendToESP32(null); 
             }
         }
 
+        // --- NOUVELLE LOGIQUE DU SELECTEUR CUSTOM ---
         function updateBlockSelect(forceSelectName = null) {
-            let selected = forceSelectName || blockSelect.value; blockSelect.innerHTML = '';
+            let selected = forceSelectName || blockSelect.value; 
+            blockSelect.innerHTML = '';
+            csList.innerHTML = ''; // Vide le custom menu
+            
             let allKeys = Object.keys(blocks); let excludeChecked = excludeCompletedCheckbox.checked; let onlyChecked = onlyCompletedCheckbox.checked; let favOnly = filterFavorites.checked; let sortAscensions = sortAscensionsCheckbox.checked; let sortAlpha = sortAlphaCheckbox.checked; let currentGradeFilter = filterCotation.value; let currentListFilter = filterList.value; let benchmarkOnly = filterBenchmark.checked; let searchQuery = searchInput.value.toLowerCase(); let totalBlocksInDB = allKeys.length;
+            
             let filteredKeys = allKeys.filter(k => {
                 let b = blocks[k];
                 if (excludeChecked && b.completed) return false; if (onlyChecked && !b.completed) return false;
@@ -709,18 +756,52 @@
                 if (currentGradeFilter && !(b.grade && b.grade.includes(currentGradeFilter))) return false; if (benchmarkOnly && !b.isBenchmark) return false; if (searchQuery && !k.toLowerCase().includes(searchQuery)) return false; if (currentListFilter && (!customLists[currentListFilter] || !customLists[currentListFilter].includes(k))) return false;
                 return true;
             });
+            
             filteredKeys.sort((a, b) => {
                 if (sortAscensions) { let ascA = parseInt(blocks[a].ascensionCount) || 0; let ascB = parseInt(blocks[b].ascensionCount) || 0; if (ascB !== ascA) return ascB - ascA; }
                 return a.localeCompare(b); 
             });
+            
             blockCounter.textContent = `${filteredKeys.length}/${totalBlocksInDB}`;
+            
             filteredKeys.forEach(k => {
-                let opt = document.createElement('option'); opt.value = k; 
-                let ascText = (sortAscensions && blocks[k].ascensionCount > 0) ? ` - ${blocks[k].ascensionCount} asc.` : '';
-                let favText = blocks[k].favorite ? ' ❤️' : ''; let doneText = blocks[k].completed ? ' ✅' : '';
-                opt.textContent = `${k} (${blocks[k].grade || '?'})${ascText}${doneText}${favText}`;
-                blockSelect.appendChild(opt);
+                let b = blocks[k];
+                let gradeStr = b.grade || "?";
+                let bgColor = getGradeColor(gradeStr);
+                
+                // On met à jour l'ancien select caché pour la logique de l'app (Prev/Next)
+                let opt = document.createElement('option'); opt.value = k; opt.textContent = k; blockSelect.appendChild(opt);
+                
+                // Construction visuelle de la ligne Custom
+                let ascText = (sortAscensions && b.ascensionCount > 0) ? `<div class="cs-asc">- ${b.ascensionCount} asc.</div>` : '';
+                let favText = b.favorite ? '❤️' : ''; 
+                let doneText = b.completed ? '✅' : '';
+                let iconsHtml = (doneText || favText) ? `<div class="cs-icons">${doneText}${favText}</div>` : '';
+
+                let item = document.createElement('div');
+                item.className = 'cs-item';
+                if (k === selected) item.classList.add('selected'); // Marque la ligne active
+                
+                // Structure HTML de la ligne : Badge -> Icones -> Nom -> (Grade) -> Ascensions
+                item.innerHTML = `
+                    <div class="cs-badge" style="background-color: ${bgColor};">${gradeStr}</div>
+                    ${iconsHtml}
+                    <div class="cs-name">${k}</div>
+                    <div class="cs-grade-text">(${gradeStr})</div>
+                    ${ascText}
+                `;
+                
+                // Action quand on clique sur la ligne
+                item.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    blockSelect.value = k;
+                    displayBlock(k);
+                    csList.classList.remove('show');
+                    updateBlockSelect(k); // Recharge pour déplacer le surlignage 'selected'
+                });
+                csList.appendChild(item);
             });
+            
             if (filteredKeys.includes(selected)) { blockSelect.value = selected; displayBlock(selected); } else if (filteredKeys.length > 0) { blockSelect.value = filteredKeys[0]; displayBlock(filteredKeys[0]); } else { displayBlock(""); }
         }
 
@@ -737,6 +818,7 @@
                 if (b.completed) { b.completedDate = getTodayString(); b.ascentsLog = [getTodayString()]; } else { b.completedDate = null; b.ascentsLog = []; }
                 localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); displayBlock(currentBlockName);
                 if (excludeCompletedCheckbox.checked || onlyCompletedCheckbox.checked) updateBlockSelect(); updateSessionDropdown();
+                updateBlockSelect(currentBlockName); // Recharge les coches
             }
         });
 
@@ -760,11 +842,11 @@
             }
         });
 
-        blockSelect.addEventListener('change', (e) => displayBlock(e.target.value));
         filterCotation.addEventListener('change', () => updateBlockSelect()); filterList.addEventListener('change', () => { updateBlockSelect(); updateListButtonState(); }); filterBenchmark.addEventListener('change', () => updateBlockSelect());
         excludeCompletedCheckbox.addEventListener('change', () => { if(excludeCompletedCheckbox.checked) onlyCompletedCheckbox.checked = false; updateBlockSelect(); }); onlyCompletedCheckbox.addEventListener('change', () => { if(onlyCompletedCheckbox.checked) excludeCompletedCheckbox.checked = false; updateBlockSelect(); });
-        function goToPrevBlock() { if(blockSelect.selectedIndex > 0) { blockSelect.selectedIndex--; displayBlock(blockSelect.value); } }
-        function goToNextBlock() { if(blockSelect.selectedIndex < blockSelect.options.length - 1) { blockSelect.selectedIndex++; displayBlock(blockSelect.value); } }
+        
+        function goToPrevBlock() { if(blockSelect.selectedIndex > 0) { blockSelect.selectedIndex--; let val = blockSelect.value; displayBlock(val); updateBlockSelect(val); } }
+        function goToNextBlock() { if(blockSelect.selectedIndex < blockSelect.options.length - 1) { blockSelect.selectedIndex++; let val = blockSelect.value; displayBlock(val); updateBlockSelect(val); } }
         btnPrevBottom.addEventListener('click', goToPrevBlock); btnNextBottom.addEventListener('click', goToNextBlock);
 
         let touchStartX = 0, touchStartY = 0; const mainBoardContainer = document.getElementById('mainBoardContainer');
