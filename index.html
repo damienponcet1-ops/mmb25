@@ -57,6 +57,11 @@
         .btn-bt { background-color: #333; color: #888; border: 1px solid transparent; transition: all 0.3s ease; padding: 6px; }
         .btn-bt.connected { color: #00d2ff; background-color: #111; border: 1px solid #00d2ff; box-shadow: 0 0 10px rgba(0, 210, 255, 0.6); }
         .btn-bt:active { transform: scale(0.9); }
+
+        /* Ampoule Header Interactive */
+        #btnClearBoard svg { stroke: currentColor; fill: transparent; transition: all 0.3s ease; }
+        #btnClearBoard.is-on { color: #ffea00; }
+        #btnClearBoard.is-on svg { fill: #ffea00; filter: drop-shadow(0 0 6px rgba(255, 234, 0, 0.9)); }
         
         input.search-input { background: #222; border: 1px solid #444; color: #fff; width: 100%; box-sizing: border-box; margin-bottom: 6px; display: none; font-size: 16px; }
         input[type="text"] { font-size: 16px; background: #333; color: white; border: 1px solid #555; }
@@ -74,7 +79,6 @@
         .cs-badge { padding: 2px 4px; border-radius: 3px; font-weight: bold; font-size: 0.75rem; color: #fff; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); min-width: 28px; text-align: center; flex-shrink: 0; }
         .cs-icons { display: flex; gap: 2px; font-size: 0.75rem; flex-shrink: 0; }
         
-        /* Flex-grow sur le nom permet de repousser les éléments de droite sans déborder */
         .cs-name { font-weight: bold; font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-grow: 1; min-width: 0; color: #fff; }
         
         .cs-asc { color: #888; font-size: 0.7rem; flex-shrink: 0; margin-left: 4px; }
@@ -160,8 +164,8 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5"></polyline></svg>
             </button>
             <button id="btnClearBoard" class="btn-bt" title="Éteindre le mur (Libérer pour un ami)">
-                <!-- Ampoule violette -->
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="#b388ff" stroke="#b388ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.2 1.18 4.1 2.9 5.3C8.6 15 9 16.5 9 18h6c0-1.5.4-3 1.1-3.7 1.72-1.2 2.9-3.1 2.9-5.3a7 7 0 0 0-7-7z"/></svg>
+                <!-- Ampoule Interactive (CSS gère le fill et le halo) -->
+                <svg width="18" height="18" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.2 1.18 4.1 2.9 5.3C8.6 15 9 16.5 9 18h6c0-1.5.4-3 1.1-3.7 1.72-1.2 2.9-3.1 2.9-5.3a7 7 0 0 0-7-7z"/></svg>
             </button>
         </div>
         
@@ -193,7 +197,7 @@
                     <label><input type="checkbox" id="sortAscensions" checked> <span class="menu-icon-badge" style="background-color: #3498db; border-color: #2980b9; color: white;">📈</span> Popularité</label>
                     <label><input type="checkbox" id="sortAlpha"> <span class="menu-icon-badge" style="background-color: #95a5a6; border-color: #7f8c8d; color: white;">🔤</span> Ordre alphabétique</label>
                     <hr>
-                    <label><input type="checkbox" id="excludeCompleted" checked> <span class="menu-icon-check-slash"></span> Masquer réalisés</label>
+                    <label><input type="checkbox" id="excludeCompleted"> <span class="menu-icon-check-slash"></span> Masquer réalisés</label>
                     <label><input type="checkbox" id="onlyCompleted"> <span class="menu-icon-check"></span> Uniquement réalisés</label>
                     <label><input type="checkbox" id="filterBenchmark"> <span class="menu-icon-badge">B</span> Uniquement Benchmarks</label>
                     <label><input type="checkbox" id="filterFavorites"> ❤️ Uniquement favoris</label>
@@ -401,12 +405,11 @@
         let customLists = JSON.parse(localStorage.getItem('minimoon_lists') || '{}');
         let currentBlockName = ""; let isCreating = false; let currentCreation = { depart: [], progression: [], arrivee: [] };
 
-        // Nouveaux filtres propres en variables (remplace les <select> cachés)
         let currentListFilter = "";
         let currentGradeFilter = "";
 
         const gridOverlay = document.getElementById('gridOverlay');
-        const blockSelect = document.getElementById('blockSelect'); // Caché, pour compatibilité interne
+        const blockSelect = document.getElementById('blockSelect'); 
         const csList = document.getElementById('csList'); 
         const clList = document.getElementById('clList');
         const cgList = document.getElementById('cgList');
@@ -501,7 +504,6 @@
             for (let key in gradeScale) { if (g.includes(key)) return gradeScale[key]; } return '#333333';
         }
 
-        // --- GESTION DES CLICS SUR LES MENUS CUSTOM ---
         function closeAllCustomSelects() { csList.classList.remove('show'); clList.classList.remove('show'); cgList.classList.remove('show'); dropdownMenu.classList.remove('show'); dropdownSession.classList.remove('show'); }
         
         document.getElementById('csHeader').addEventListener('click', (e) => { e.stopPropagation(); let isShow = csList.classList.contains('show'); closeAllCustomSelects(); if(!isShow) csList.classList.add('show'); });
@@ -515,13 +517,12 @@
             if(!e.target.closest('.custom-select') && !e.target.closest('.menus-wrapper')) closeAllCustomSelects(); 
         });
 
-        // --- MENU PARAMETRES ---
         btnOpenSettings.addEventListener('click', () => { closeAllCustomSelects(); settingsModal.style.display = 'block'; });
         btnCloseSettings.addEventListener('click', () => settingsModal.style.display = 'none');
 
         btnRefresh.addEventListener('click', () => { if (blockSelect.options.length > 0) { blockSelect.selectedIndex = 0; displayBlock(blockSelect.value); updateBlockSelect(blockSelect.value); } });
         
-        // --- BOUTON ETEINDRE LE MUR ---
+        // BOUTON ETEINDRE LE MUR - Libère le bloc
         btnClearBoard.addEventListener('click', () => {
             blockSelect.value = ""; displayBlock(""); updateBlockSelect("");
         });
@@ -547,7 +548,6 @@
             }
         }
 
-        // --- CUSTOM SELECT : LISTES ---
         function updateListFilterOptions() {
             clList.innerHTML = '';
             let allOpt = document.createElement('div'); allOpt.className = 'cs-item' + (currentListFilter === "" ? " selected" : "");
@@ -566,9 +566,7 @@
             btnDeleteList.disabled = (currentListFilter === "");
         }
 
-        // --- CUSTOM SELECT : COTATIONS ---
         function initGradeFilterSelect() {
-            // Nettoyage: un seul point d'interrogation en excluant '?' du mapping de gradeOrder
             const gradeOptions = [
                 {val: "", label: "Toutes cotations"}, 
                 {val: "?", label: "Non coté"}, 
@@ -580,13 +578,10 @@
                 let opt = document.createElement('div'); opt.className = 'cs-item' + (currentGradeFilter === optData.val ? " selected" : "");
                 
                 if (optData.val === "") {
-                    // Pas de couleur pour "Toutes cotations"
                     opt.innerHTML = `<div class="cs-name" style="text-align:center; width:100%;">${optData.label}</div>`;
                 } else if (optData.val === "?") {
-                    // Gros badge noir pour "Non coté" - Sans redondance de texte
                     opt.innerHTML = `<div class="cs-badge" style="background-color: #333; flex-grow: 1; text-align: center; padding: 6px; font-size: 0.85rem;">${optData.label}</div>`;
                 } else {
-                    // Gros badge coloré pour les cotations - Sans redondance de texte
                     let bgColor = getGradeColor(optData.val);
                     opt.innerHTML = `<div class="cs-badge" style="background-color: ${bgColor}; flex-grow: 1; text-align: center; padding: 6px; font-size: 0.85rem;">${optData.val}</div>`;
                 }
@@ -659,7 +654,6 @@
             if (currentBlockName && blocks[currentBlockName]) { blocks[currentBlockName].favorite = !blocks[currentBlockName].favorite; localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); displayBlock(currentBlockName); updateBlockSelect(currentBlockName); }
         });
 
-        // --- IMPORT / EXPORT ---
         btnPasteJSON.addEventListener('click', () => { settingsModal.style.display = 'none'; pasteJsonText.value = ''; pasteModal.style.display = 'block'; });
         btnClosePaste.addEventListener('click', () => pasteModal.style.display = 'none');
         btnSavePaste.addEventListener('click', () => {
@@ -684,7 +678,6 @@
             if (confirm(`Voulez-vous vraiment supprimer la liste "${activeList}" ?`)) { delete customLists[activeList]; localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); currentListFilter = ""; updateListFilterOptions(); updateBlockSelect(); dropdownMenu.classList.remove('show'); alert(`La liste "${activeList}" a été supprimée.`); }
         });
 
-        // BLUETOOTH
         let bluetoothDevice = null; let bleCharacteristic = null; const btnConnect = document.getElementById('btnConnect');
         const BLE_SERVICE_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e"; const BLE_RX_UUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
 
@@ -710,7 +703,6 @@
             let encoder = new TextEncoder(); bleCharacteristic.writeValue(encoder.encode(payload)).catch(err => console.error(err));
         }
 
-        // EXPORT / RESTAURATION
         function downloadData(dataObj, filename) {
             const dataStr = JSON.stringify(dataObj, null, 2);
             if (navigator.canShare) { try { const file = new File([dataStr], filename, { type: "application/json" }); if (navigator.canShare({ files: [file] })) { navigator.share({ title: "Export", files: [file] }).catch(err => console.log(err)); settingsModal.style.display = 'none'; return; } } catch (e) { console.log(e); } }
@@ -755,7 +747,6 @@
         document.getElementById('fileImport').addEventListener('change', (e) => { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = ev => { try { processImportedData(JSON.parse(ev.target.result)); } catch(err) { alert("Erreur."); console.error(err); } }; reader.readAsText(file); e.target.value = ''; });
         document.getElementById('btnClearStorage').addEventListener('click', () => { if(confirm("⚠️ Effacer TOUT ?")) { blocks = {}; customLists = {}; localStorage.removeItem('minimoon_blocks'); localStorage.removeItem('minimoon_lists'); currentListFilter = ""; updateListFilterOptions(); updateBlockSelect(); updateSessionDropdown(); settingsModal.style.display = 'none'; } });
 
-        // --- GESTION DE LA GRILLE ET CRÉATION DE BLOCS ---
         function initGrid() { gridOverlay.innerHTML = ''; ROWS.forEach(r => { COLS.forEach(c => { let holdId = c + r; let cell = document.createElement('div'); cell.className = 'grid-cell'; cell.addEventListener('click', () => handleHoldClick(holdId)); let div = document.createElement('div'); div.className = 'hold'; div.dataset.id = holdId; cell.appendChild(div); gridOverlay.appendChild(cell); }); }); }
         function handleHoldClick(holdId) {
             if (!isCreating) return;
@@ -773,13 +764,16 @@
             if (name) { blocks[name] = { depart: currentCreation.depart, progression: currentCreation.progression, arrivee: currentCreation.arrivee, method: "", grade: "6B+", isBenchmark: false, ascensionCount: 0, setby: "Moi", completed: false, favorite: false }; localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); isCreating = false; menusWrapper.style.display = 'flex'; creationTools.style.display = 'none'; bottomPanel.style.display = 'flex'; updateBlockSelect(name); }
         });
 
-        // --- AFFICHAGE DU BLOC ---
         function displayBlock(name) {
             if (isCreating || gridOverlay.classList.contains('grid-adjusting')) return; 
             currentBlockName = name; let block = blocks[name];
             document.querySelectorAll('.hold').forEach(div => div.className = 'hold');
             badgeNoKb.style.display = 'none'; badgeMarked.style.display = 'none'; badgeFootless.style.display = 'none'; badgeFootlessKb.style.display = 'none'; badgeBenchmark.style.display = 'none';
+            
             if (block) {
+                // Allume le bouton Ampoule du haut
+                document.getElementById('btnClearBoard').classList.add('is-on');
+
                 block.depart.forEach(id => { let h = document.querySelector(`[data-id="${id}"]`); if(h) h.classList.add('depart'); });
                 block.progression.forEach(id => { let h = document.querySelector(`[data-id="${id}"]`); if(h) h.classList.add('progression'); });
                 block.arrivee.forEach(id => { let h = document.querySelector(`[data-id="${id}"]`); if(h) h.classList.add('arrivee'); });
@@ -802,6 +796,9 @@
                 infoSetter.textContent = block.setby || "Inconnu"; infoAscensions.textContent = block.ascensionCount || "0";
                 updateListButtonState(); sendToESP32(block);
             } else {
+                // Eteint le bouton Ampoule du haut
+                document.getElementById('btnClearBoard').classList.remove('is-on');
+
                 bottomBlockName.textContent = "Aucun bloc sélectionné"; bottomGrade.textContent = "-"; bottomGrade.style.backgroundColor = "#333333";
                 bottomHeart.textContent = '🤍'; bottomHeart.classList.remove('is-fav');
                 document.getElementById('csHeaderBadge').style.display = 'none'; document.getElementById('csHeaderName').textContent = "Aucun bloc sélectionné";
@@ -810,7 +807,6 @@
             }
         }
 
-        // --- MISE A JOUR DU SELECTEUR PRINCIPAL ---
         function updateBlockSelect(forceSelectName = null) {
             let selected = forceSelectName || blockSelect.value; blockSelect.innerHTML = ''; csList.innerHTML = ''; 
             
@@ -842,8 +838,8 @@
                 let favText = b.favorite ? '❤️' : ''; let doneText = b.completed ? '✅' : ''; let iconsHtml = (doneText || favText) ? `<div class="cs-icons">${doneText}${favText}</div>` : '';
                 
                 let isActive = (k === selected);
-                // Ampoule violette en format SVG inline parfait
-                let activeBulbHtml = isActive ? `<div class="cs-active-bulb"><svg width="16" height="16" viewBox="0 0 24 24" fill="#b388ff" stroke="#b388ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.2 1.18 4.1 2.9 5.3C8.6 15 9 16.5 9 18h6c0-1.5.4-3 1.1-3.7 1.72-1.2 2.9-3.1 2.9-5.3a7 7 0 0 0-7-7z"/></svg></div>` : '';
+                // Ampoule jaune fluo pour le bloc actif dans la liste
+                let activeBulbHtml = isActive ? `<div class="cs-active-bulb"><svg width="16" height="16" viewBox="0 0 24 24" fill="#ffea00" stroke="#ffea00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 5px rgba(255, 234, 0, 0.9));"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.2 1.18 4.1 2.9 5.3C8.6 15 9 16.5 9 18h6c0-1.5.4-3 1.1-3.7 1.72-1.2 2.9-3.1 2.9-5.3a7 7 0 0 0-7-7z"/></svg></div>` : '';
 
                 let item = document.createElement('div'); item.className = 'cs-item'; if (isActive) item.classList.add('selected'); 
                 
@@ -904,7 +900,6 @@
             if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 40) { if (deltaX > 0) goToPrevBlock(); else goToNextBlock(); }
         }, { passive: true });
 
-        // --- REGLAGE GRILLE ---
         const adjustPanel = document.getElementById('adjustPanel'); const defaultGridConfig = { top: 9, left: 7.5, width: 85, height: 75.5 }; let gridConfig = JSON.parse(localStorage.getItem('minimoon_grid')) || defaultGridConfig;
         function applyGridConfig() { gridOverlay.style.top = gridConfig.top + '%'; gridOverlay.style.left = gridConfig.left + '%'; gridOverlay.style.width = gridConfig.width + '%'; gridOverlay.style.height = gridConfig.height + '%'; document.getElementById('adjTop').value = gridConfig.top; document.getElementById('adjLeft').value = gridConfig.left; document.getElementById('adjWidth').value = gridConfig.width; document.getElementById('adjHeight').value = gridConfig.height; }
         document.getElementById('btnAdjustGrid').addEventListener('click', () => { settingsModal.style.display = 'none'; bottomPanel.style.display = 'none'; adjustPanel.style.display = 'flex'; gridOverlay.classList.add('grid-adjusting'); });
@@ -912,7 +907,6 @@
         document.getElementById('btnResetAdjust').addEventListener('click', () => { gridConfig = {...defaultGridConfig}; applyGridConfig(); });
         ['adjTop', 'adjLeft', 'adjWidth', 'adjHeight'].forEach(id => { document.getElementById(id).addEventListener('input', (e) => { gridConfig[id.replace('adj', '').toLowerCase()] = parseFloat(e.target.value); applyGridConfig(); }); });
 
-        // --- STATISTIQUES ---
         btnStats.addEventListener('click', () => { dropdownMenu.classList.remove('show'); renderStats(); statsModal.style.display = 'block'; });
         btnCloseStats.addEventListener('click', () => { statsModal.style.display = 'none'; });
         tabStatsAll.addEventListener('click', () => { tabStatsAll.className = 'btn-blue'; tabStatsToday.className = 'btn-gray'; statsViewAll.style.display = 'flex'; statsViewToday.style.display = 'none'; });
