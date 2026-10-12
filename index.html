@@ -530,7 +530,6 @@
         // --- GESTION DES FENETRES MODALES (Correction Scroll) ---
         function openModal(m) { 
             m.style.display = 'block'; 
-            // Bloque le défilement de la page en arrière-plan proprement pour iOS/Android
             document.documentElement.style.overflow = 'hidden';
             document.body.style.overflow = 'hidden'; 
         }
@@ -744,7 +743,11 @@
         btnConnect.addEventListener('click', async () => {
             if (bluetoothDevice && bluetoothDevice.gatt.connected) { bluetoothDevice.gatt.disconnect(); return; }
             try {
-                bluetoothDevice = await navigator.bluetooth.requestDevice({ filters: [{ namePrefix: 'MoonBoard' }], optionalServices: [BLE_SERVICE_UUID] });
+                // MODIFICATION : Cherche MMB et MoonBoard pour contourner le cache du téléphone
+                bluetoothDevice = await navigator.bluetooth.requestDevice({ 
+                    filters: [{ namePrefix: 'MMB' }, { namePrefix: 'MoonBoard' }], 
+                    optionalServices: [BLE_SERVICE_UUID] 
+                });
                 bluetoothDevice.addEventListener('gattserverdisconnected', () => { btnConnect.classList.remove('connected'); bleCharacteristic = null; });
                 const server = await bluetoothDevice.gatt.connect(); const service = await server.getPrimaryService(BLE_SERVICE_UUID); bleCharacteristic = await service.getCharacteristic(BLE_RX_UUID);
                 btnConnect.classList.add('connected'); 
