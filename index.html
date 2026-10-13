@@ -343,6 +343,14 @@
     <div id="settingsModal" class="modal">
         <div class="modal-content" style="gap: 10px;">
             <h3 style="margin-bottom: 10px;">⚙️ Paramètres</h3>
+             <div style="background:#242424;border:1px solid #444;border-radius:7px;padding:12px;display:flex;flex-direction:column;gap:9px;">
+                 <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;">
+                     <label for="ledBrightness" style="color:#fff;font-weight:bold;">☀️ Luminosité des LED</label>
+                     <strong id="ledBrightnessValue" style="color:#ffb700;">100 %</strong>
+                 </div>
+                 <input id="ledBrightness" type="range" min="0" max="100" step="1" value="100" style="width:100%;padding:0;accent-color:#ffb700;">
+                 <small style="color:#aaa;font-size:0.7rem;">Réglage mémorisé sur cet appareil. Transmission par Bluetooth.</small>
+             </div>
             <button id="btnImport" class="btn-gray-modal"><span style="color: #b388ff; width:20px; text-align:center;">📥</span> Importer un fichier</button>
             <button id="btnPasteJSON" class="btn-gray-modal"><span style="color: #e67e22; width:20px; text-align:center;">📋</span> Coller un JSON</button>
             <button id="btnExportBlocks" class="btn-gray-modal"><span style="color: #2ecc71; width:20px; text-align:center;">📤</span> Exporter Blocs (Brut)</button>
@@ -750,10 +758,33 @@
                 });
                 bluetoothDevice.addEventListener('gattserverdisconnected', () => { btnConnect.classList.remove('connected'); bleCharacteristic = null; });
                 const server = await bluetoothDevice.gatt.connect(); const service = await server.getPrimaryService(BLE_SERVICE_UUID); bleCharacteristic = await service.getCharacteristic(BLE_RX_UUID);
-                btnConnect.classList.add('connected'); 
+                btnConnect.classList.add('connected');
+                 await sendLedBrightness(); 
             } catch (error) { console.error("Erreur Bluetooth:", error); }
         });
 
+         // Réglage de luminosité BLE, conservé sur ce navigateur.
+         const brightnessSlider = document.getElementById('ledBrightness');
+         const brightnessValue = document.getElementById('ledBrightnessValue');
+         const storedBrightness = Number(localStorage.getItem('mmb25_led_brightness'));
+         let ledBrightnessPercent = localStorage.getItem('mmb25_led_brightness') !== null && Number.isFinite(storedBrightness)
+             ? Math.max(0, Math.min(100, Math.round(storedBrightness))) : 100;
+         brightnessSlider.value = ledBrightnessPercent;
+         brightnessValue.textContent = ledBrightnessPercent + ' %';
+         let brightnessTimer = null;
+         async function sendLedBrightness() {
+             if (!bleCharacteristic) return;
+             const value = Math.round(ledBrightnessPercent * 255 / 100);
+             try { await bleCharacteristic.writeValue(new TextEncoder().encode('BRIGHTNESS:' + value)); }
+             catch (err) { console.error('Luminosité Bluetooth:', err); }
+         }
+         brightnessSlider.addEventListener('input', () => {
+             ledBrightnessPercent = Number(brightnessSlider.value);
+             brightnessValue.textContent = ledBrightnessPercent + ' %';
+             localStorage.setItem('mmb25_led_brightness', String(ledBrightnessPercent));
+             clearTimeout(brightnessTimer);
+             brightnessTimer = setTimeout(sendLedBrightness, 180);
+         });
         function sendToESP32(blockData) {
             if (!bleCharacteristic) return; let payload = "CLEAR";
             if (blockData) {
