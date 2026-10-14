@@ -67,7 +67,7 @@
         input[type="text"] { font-size: 16px; background: #333; color: white; border: 1px solid #555; }
         select.main-select { background: #222; border: 1px solid #444; font-size: 0.85rem; width: 100%; color: white; border-radius: 4px; padding: 5px; }
 
-        /* --- MENUS DÃROULANTS SUR-MESURE --- */
+        /* --- MENUS D&#201;ROULANTS SUR-MESURE --- */
         .custom-select { position: relative; flex-grow: 1; min-width: 0; }
         .custom-select-header { background: #222; border: 1px solid #444; color: white; padding: 6px 10px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; height: 32px; box-sizing: border-box; }
         .custom-select-list { display: none; position: absolute; top: calc(100% + 4px); left: 0; min-width: 100%; width: max-content; max-width: 90vw; background: #1e1e1e; border: 1px solid #555; z-index: 1000; max-height: 60vh; overflow-y: auto; border-radius: 6px; box-shadow: 0 10px 25px rgba(0,0,0,0.9); -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
@@ -134,7 +134,7 @@
         .footer-info { font-size: 0.65rem; color: #888; margin-top: 2px; text-align: right; width: 100%; }
         .footer-info span.counter { color: #ffb700; font-weight: bold; }
 
-        /* PANNEAU DE RÃGLAGE GRILLE */
+        /* PANNEAU DE R&#201;GLAGE GRILLE */
         #adjustPanel { display: none; width: 100%; max-width: 450px; margin-top: 4px; background: #1e1e1e; border: 1px solid #ffb700; border-radius: 8px; padding: 10px; box-sizing: border-box; flex-direction: column; gap: 8px; }
         #adjustPanel h3 { margin: 0; font-size: 0.95rem; color: #ffb700; text-align: center; }
         .adjust-grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 15px; }
@@ -143,14 +143,14 @@
         .adjust-buttons { display: flex; gap: 10px; margin-top: 4px; }
         .adjust-buttons button { flex: 1; padding: 10px; }
 
-        /* MODALES : Correction Scroll & ArriÃ¨re-plan */
+        /* MODALES : Correction Scroll & Arri&#232;re-plan */
         .modal { display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); z-index: 1000; }
         .modal-content { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 95%; max-width: 380px; max-height: 90vh; background: rgba(30, 30, 30, 0.98); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; gap: 8px; border: 1px solid #555; box-shadow: 0 5px 15px rgba(0,0,0,0.8); }
         .modal-content h3 { margin: 0; font-size: 1rem; color: #ffb700; text-align: center; }
         .modal-buttons { display: flex; gap: 8px; margin-top: 5px; }
         .modal-buttons button { flex: 1; padding: 8px; }
         
-        /* Conteneurs dÃ©filants fluides (Scroll) */
+        /* Conteneurs d&#233;filants fluides (Scroll) */
         .list-items-container { 
             display: flex; 
             flex-direction: column; 
@@ -190,8 +190,8 @@
         <h1>MMB25</h1>
         
         <div id="creationTools" style="display: none; gap: 6px;">
-            <button id="btnCancelCreate" class="btn-red">â Annuler</button>
-            <button id="btnSaveCreate" class="btn-green">ð¾ Enregistrer</button>
+            <button id="btnCancelCreate" class="btn-red">&#10060; Annuler</button>
+            <button id="btnSaveCreate" class="btn-green">&#128190; Enregistrer</button>
         </div>
 
         <div class="menus-wrapper" id="menusWrapper">
@@ -200,29 +200,29 @@
                     <span class="live-dot"></span> Live
                 </button>
                 <div id="dropdownSession" class="dropdown-content" style="min-width: 180px;">
-                    <div style="padding: 6px; color: #ffb700; font-weight: bold; text-align: center; font-size: 0.85rem; border-bottom: 1px solid #444; margin-bottom: 4px;">ð¯ Blocs du jour</div>
+                    <div style="padding: 6px; color: #ffb700; font-weight: bold; text-align: center; font-size: 0.85rem; border-bottom: 1px solid #444; margin-bottom: 4px;">&#127919; Blocs du jour</div>
                     <div id="sessionListItems" class="list-items-container" style="max-height: 250px;"></div>
                 </div>
             </div>
 
             <div id="mainMenu">
-                <button id="btnMenu" class="btn-menu">â°</button>
+                <button id="btnMenu" class="btn-menu">&#9776;</button>
                 <div id="dropdownMenu" class="dropdown-content">
-                    <button id="btnPencil" style="color: #f39c12;">âï¸ CrÃ©er un bloc</button>
-                    <button id="btnDeleteBlock" style="color: #ff4d4d;">ðï¸ Supprimer le bloc</button>
-                    <button id="btnDeleteList" style="color: #ff9800;" disabled>ðï¸ Supprimer la liste</button>
+                    <button id="btnPencil" style="color: #f39c12;">&#9999;&#65039; Cr&#233;er un bloc</button>
+                    <button id="btnDeleteBlock" style="color: #ff4d4d;">&#128465;&#65039; Supprimer le bloc</button>
+                    <button id="btnDeleteList" style="color: #ff9800;" disabled>&#128465;&#65039; Supprimer la liste</button>
                     <hr>
-                    <label><input type="checkbox" id="sortAscensions" checked> <span class="menu-icon-badge" style="background-color: #3498db; border-color: #2980b9; color: white;">ð</span> PopularitÃ©</label>
-                    <label><input type="checkbox" id="sortAlpha"> <span class="menu-icon-badge" style="background-color: #95a5a6; border-color: #7f8c8d; color: white;">ð¤</span> Ordre alphabÃ©tique</label>
+                    <label><input type="checkbox" id="sortAscensions" checked> <span class="menu-icon-badge" style="background-color: #3498db; border-color: #2980b9; color: white;">&#128200;</span> Popularit&#233;</label>
+                    <label><input type="checkbox" id="sortAlpha"> <span class="menu-icon-badge" style="background-color: #95a5a6; border-color: #7f8c8d; color: white;">&#128292;</span> Ordre alphab&#233;tique</label>
                     <hr>
-                    <label><input type="checkbox" id="excludeCompleted"> <span class="menu-icon-check-slash"></span> Masquer rÃ©alisÃ©s</label>
-                    <label><input type="checkbox" id="onlyCompleted"> <span class="menu-icon-check"></span> Uniquement rÃ©alisÃ©s</label>
+                    <label><input type="checkbox" id="excludeCompleted"> <span class="menu-icon-check-slash"></span> Masquer r&#233;alis&#233;s</label>
+                    <label><input type="checkbox" id="onlyCompleted"> <span class="menu-icon-check"></span> Uniquement r&#233;alis&#233;s</label>
                     <label><input type="checkbox" id="filterBenchmark"> <span class="menu-icon-badge">B</span> Uniquement Benchmarks</label>
-                    <label><input type="checkbox" id="filterFavorites"> â¤ï¸ Uniquement favoris</label>
+                    <label><input type="checkbox" id="filterFavorites"> &#10084;&#65039; Uniquement favoris</label>
                     <hr>
-                    <button id="btnHistory" style="color: #f1c40f;">ð Historique</button>
-                    <button id="btnStats" style="color: #1abc9c;">ð Statistiques</button>
-                    <button id="btnOpenSettings" style="color: #aaa;">âï¸ ParamÃ¨tres</button>
+                    <button id="btnHistory" style="color: #f1c40f;">&#128338; Historique</button>
+                    <button id="btnStats" style="color: #1abc9c;">&#128202; Statistiques</button>
+                    <button id="btnOpenSettings" style="color: #aaa;">&#9881;&#65039; Param&#232;tres</button>
                 </div>
             </div>
         </div>
@@ -242,14 +242,14 @@
             <div class="custom-select-header" id="csHeader">
                 <div style="display:flex; align-items:center; gap:8px; overflow:hidden;">
                     <span id="csHeaderBadge" class="cs-badge" style="background:#333; display:none;">?</span>
-                    <span id="csHeaderName" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size: 0.85rem; font-weight: bold;">SÃ©lectionnez un bloc</span>
+                    <span id="csHeaderName" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size: 0.85rem; font-weight: bold;">S&#233;lectionnez un bloc</span>
                 </div>
-                <span style="font-size: 0.7rem; color: #888;">â¼</span>
+                <span style="font-size: 0.7rem; color: #888;">&#9660;</span>
             </div>
             <div class="custom-select-list" id="csList"></div>
         </div>
         <select id="blockSelect" style="display:none;"></select>
-        <button id="btnSearchToggle" class="btn-gray">ð</button>
+        <button id="btnSearchToggle" class="btn-gray">&#128269;</button>
     </div>
 
     <!-- LIGNE 3 : Custom Select Listes & Cotations -->
@@ -257,7 +257,7 @@
         <div class="custom-select" id="customListSelect" style="width: 50%;">
             <div class="custom-select-header" id="clHeader">
                 <span id="clHeaderName" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size: 0.85rem;">Toutes les listes</span>
-                <span style="font-size: 0.7rem; color: #888;">â¼</span>
+                <span style="font-size: 0.7rem; color: #888;">&#9660;</span>
             </div>
             <div class="custom-select-list" id="clList"></div>
         </div>
@@ -268,7 +268,7 @@
                     <span id="cgHeaderBadge" class="cs-badge" style="background:transparent; display:none;"></span>
                     <span id="cgHeaderName" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size: 0.85rem;">Toutes cotations</span>
                 </div>
-                <span style="font-size: 0.7rem; color: #888;">â¼</span>
+                <span style="font-size: 0.7rem; color: #888;">&#9660;</span>
             </div>
             <div class="custom-select-list" id="cgList"></div>
         </div>
@@ -292,28 +292,28 @@
     <!-- PANNEAU DU BAS -->
     <div id="bottomPanel" class="bottom-panel">
         <div class="name-row">
-            <button id="btnPrevBottom" class="nav-btn">â</button>
-            <div id="bottomBlockName" class="bottom-name">SÃ©lectionnez un bloc</div>
-            <button id="btnNextBottom" class="nav-btn">â¶</button>
+            <button id="btnPrevBottom" class="nav-btn">&#9664;</button>
+            <div id="bottomBlockName" class="bottom-name">S&#233;lectionnez un bloc</div>
+            <button id="btnNextBottom" class="nav-btn">&#9654;</button>
         </div>
         
         <div class="bottom-triptych">
             <div id="bottomGrade" class="triptych-btn triptych-grade" title="Modifier la cotation">-</div>
-            <div id="bottomHeart" class="triptych-btn triptych-heart" title="Ajouter aux favoris">ð¤</div>
+            <div id="bottomHeart" class="triptych-btn triptych-heart" title="Ajouter aux favoris">&#129293;</div>
             
             <div id="bottomCheckWrapper" class="triptych-btn" style="flex-direction: row; gap: 8px;">
                 <div id="bottomCheck" class="check-circle" style="flex-shrink: 0;">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 </div>
                 <div id="repControls" style="display: none; flex-direction: row; align-items: center; justify-content: center; gap: 6px;">
-                    <button id="btnSubRep" title="Enlever une rÃ©pÃ©tition" style="background: rgba(255,255,255,0.25); border: 1px solid #fff; color: #fff; border-radius: 50%; width: 22px; height: 22px; font-size: 16px; font-weight:bold; display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1; cursor: pointer;">-</button>
+                    <button id="btnSubRep" title="Enlever une r&#233;p&#233;tition" style="background: rgba(255,255,255,0.25); border: 1px solid #fff; color: #fff; border-radius: 50%; width: 22px; height: 22px; font-size: 16px; font-weight:bold; display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1; cursor: pointer;">-</button>
                     <span id="repCount" style="font-size: 0.85rem; font-weight: bold; color: #fff; min-width: 20px; text-align: center;">x1</span>
-                    <button id="btnAddRep" title="Ajouter une rÃ©pÃ©tition" style="background: rgba(255,255,255,0.25); border: 1px solid #fff; color: #fff; border-radius: 50%; width: 22px; height: 22px; font-size: 16px; font-weight:bold; display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1; cursor: pointer;">+</button>
+                    <button id="btnAddRep" title="Ajouter une r&#233;p&#233;tition" style="background: rgba(255,255,255,0.25); border: 1px solid #fff; color: #fff; border-radius: 50%; width: 22px; height: 22px; font-size: 16px; font-weight:bold; display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1; cursor: pointer;">+</button>
                 </div>
             </div>
 
             <div class="triptych-container">
-                <div id="bottomListAdd" class="triptych-btn triptych-list">â</div>
+                <div id="bottomListAdd" class="triptych-btn triptych-list">&#10133;</div>
                 <div class="footer-info"><span id="blockCounter" class="counter">0/0</span></div>
             </div>
         </div>
@@ -324,7 +324,7 @@
         </div>
     </div>
 
-    <!-- PANNEAU DE RÃGLAGE GRILLE -->
+    <!-- PANNEAU DE R&#201;GLAGE GRILLE -->
     <div id="adjustPanel">
         <h3>Ajuster la grille</h3>
         <div class="adjust-grid-layout">
@@ -334,7 +334,7 @@
             <label>Hauteur (Height) <input type="range" id="adjHeight" min="50" max="100" step="0.1"></label>
         </div>
         <div class="adjust-buttons">
-            <button id="btnResetAdjust" class="btn-orange">Valeurs par DÃ©faut</button>
+            <button id="btnResetAdjust" class="btn-orange">Valeurs par D&#233;faut</button>
             <button id="btnCloseAdjust" class="btn-green">Valider & Fermer</button>
         </div>
     </div>
@@ -342,30 +342,30 @@
     <!-- MODALES -->
     <div id="settingsModal" class="modal">
         <div class="modal-content" style="gap: 10px;">
-            <h3 style="margin-bottom: 10px;">âï¸ ParamÃ¨tres</h3>
+            <h3 style="margin-bottom: 10px;">&#9881;&#65039; Param&#232;tres</h3>
              <div style="background:#242424;border:1px solid #444;border-radius:7px;padding:12px;display:flex;flex-direction:column;gap:9px;">
                  <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;">
-                     <label for="ledBrightness" style="color:#fff;font-weight:bold;">âï¸ LuminositÃ© des LED</label>
+                     <label for="ledBrightness" style="color:#fff;font-weight:bold;">&#9728;&#65039; Luminosit&#233; des LED</label>
                      <strong id="ledBrightnessValue" style="color:#ffb700;">100 %</strong>
                  </div>
                  <input id="ledBrightness" type="range" min="0" max="100" step="1" value="100" style="width:100%;padding:0;accent-color:#ffb700;">
-                 <small style="color:#aaa;font-size:0.7rem;">RÃ©glage mÃ©morisÃ© sur cet appareil. Transmission par Bluetooth.</small>
+                 <small style="color:#aaa;font-size:0.7rem;">R&#233;glage m&#233;moris&#233; sur cet appareil. Transmission par Bluetooth.</small>
              </div>
             <div style="background:#242424;border:1px solid #444;border-radius:7px;padding:12px;display:flex;flex-direction:column;gap:8px;">
-                <strong style="font-size:0.85rem;color:#fff;">ð§ª Test des LED â 4 zones</strong>
-                <small style="color:#aaa;font-size:0.75rem;white-space:normal;">De bas en haut : 3 lignes par zone, vert / bleu / rouge, 2 secondes par couleur. DurÃ©e : 24 secondes. Utilise la luminositÃ© actuelle.</small>
+                <strong style="font-size:0.85rem;color:#fff;">&#129514; Test des LED &#8212; 4 zones</strong>
+                <small style="color:#aaa;font-size:0.75rem;white-space:normal;">De bas en haut : 3 lignes par zone, vert / bleu / rouge, 2 secondes par couleur. Dur&#233;e : 24 secondes. Utilise la luminosit&#233; actuelle.</small>
                 <div style="display:flex;gap:8px;">
-                    <button id="btnStartLedTest" class="btn-green" style="flex:1;padding:10px;">â¶ DÃ©marrer</button>
-                    <button id="btnStopLedTest" class="btn-red" style="flex:1;padding:10px;" disabled>â  ArrÃªter</button>
+                    <button id="btnStartLedTest" class="btn-green" style="flex:1;padding:10px;">&#9654; D&#233;marrer</button>
+                    <button id="btnStopLedTest" class="btn-red" style="flex:1;padding:10px;" disabled>&#9632; Arr&#234;ter</button>
                 </div>
-                <small id="ledTestStatus" aria-live="polite" style="color:#ffb700;font-size:0.75rem;white-space:normal;">PrÃªt â connecter le Bluetooth avant le test.</small>
+                <small id="ledTestStatus" aria-live="polite" style="color:#ffb700;font-size:0.75rem;white-space:normal;">Pr&#234;t &#8212; connecter le Bluetooth avant le test.</small>
             </div>
-            <button id="btnImport" class="btn-gray-modal"><span style="color: #b388ff; width:20px; text-align:center;">ð¥</span> Importer un fichier</button>
-            <button id="btnPasteJSON" class="btn-gray-modal"><span style="color: #e67e22; width:20px; text-align:center;">ð</span> Coller un JSON</button>
-            <button id="btnExportBlocks" class="btn-gray-modal"><span style="color: #2ecc71; width:20px; text-align:center;">ð¤</span> Exporter Blocs (Brut)</button>
-            <button id="btnExportBackup" class="btn-gray-modal"><span style="color: #3498db; width:20px; text-align:center;">ð¾</span> Sauvegarde complÃ¨te (Total)</button>
-            <button id="btnAdjustGrid" class="btn-gray-modal"><span style="color: #aaa; width:20px; text-align:center;">âï¸</span> Ajuster la grille</button>
-            <button id="btnClearStorage" class="btn-gray-modal" style="margin-top: 5px; border-color:#dc3545;"><span style="color: #e74c3c; width:20px; text-align:center;">â ï¸</span> Vider la base</button>
+            <button id="btnImport" class="btn-gray-modal"><span style="color: #b388ff; width:20px; text-align:center;">&#128229;</span> Importer un fichier</button>
+            <button id="btnPasteJSON" class="btn-gray-modal"><span style="color: #e67e22; width:20px; text-align:center;">&#128203;</span> Coller un JSON</button>
+            <button id="btnExportBlocks" class="btn-gray-modal"><span style="color: #2ecc71; width:20px; text-align:center;">&#128228;</span> Exporter Blocs (Brut)</button>
+            <button id="btnExportBackup" class="btn-gray-modal"><span style="color: #3498db; width:20px; text-align:center;">&#128190;</span> Sauvegarde compl&#232;te (Total)</button>
+            <button id="btnAdjustGrid" class="btn-gray-modal"><span style="color: #aaa; width:20px; text-align:center;">&#9881;&#65039;</span> Ajuster la grille</button>
+            <button id="btnClearStorage" class="btn-gray-modal" style="margin-top: 5px; border-color:#dc3545;"><span style="color: #e74c3c; width:20px; text-align:center;">&#9888;&#65039;</span> Vider la base</button>
             <div class="modal-buttons" style="margin-top: 10px;">
                 <button id="btnCloseSettings" class="btn-gray" style="background-color: #444;">Fermer</button>
             </div>
@@ -374,12 +374,12 @@
 
     <div id="listModal" class="modal">
         <div class="modal-content">
-            <h3 id="listModalTitle">Ajouter Ã  une liste</h3>
+            <h3 id="listModalTitle">Ajouter &#224; une liste</h3>
             <div id="existingLists" class="list-items-container"></div>
             <input type="text" id="newListName" placeholder="Nom de la nouvelle liste..." autocomplete="off">
             <div class="modal-buttons">
                 <button id="btnCloseList" class="btn-gray">Fermer</button>
-                <button id="btnCreateList" class="btn-blue">CrÃ©er & Ajouter</button>
+                <button id="btnCreateList" class="btn-blue">Cr&#233;er & Ajouter</button>
             </div>
         </div>
     </div>
@@ -388,7 +388,7 @@
         <div class="modal-content">
             <h3 style="margin-bottom: 10px;">Modifier la cotation</h3>
             <select id="newGradeSelect" class="main-select" style="width: 100%; padding: 10px; font-size: 1rem;">
-                <option value="?">Non cotÃ© (?)</option>
+                <option value="?">Non cot&#233; (?)</option>
                 <option value="6A">6A</option> <option value="6A+">6A+</option>
                 <option value="6B">6B</option> <option value="6B+">6B+</option>
                 <option value="6C">6C</option> <option value="6C+">6C+</option>
@@ -418,7 +418,7 @@
 
     <div id="statsModal" class="modal">
         <div class="modal-content">
-            <h3 style="margin-bottom: 10px;">ð Statistiques de rÃ©alisation</h3>
+            <h3 style="margin-bottom: 10px;">&#128202; Statistiques de r&#233;alisation</h3>
             <div style="display:flex; justify-content:space-between; margin-bottom: 10px;">
                 <button id="tabStatsAll" class="btn-blue" style="flex:1; margin-right:5px; padding:8px; font-size:0.8rem;">De tout temps</button>
                 <button id="tabStatsToday" class="btn-gray" style="flex:1; margin-left:5px; padding:8px; font-size:0.8rem;">Aujourd'hui</button>
@@ -433,9 +433,9 @@
 
     <div id="historyModal" class="modal">
         <div class="modal-content">
-            <h3 style="margin-bottom: 10px;">ð Historique des sessions</h3>
+            <h3 style="margin-bottom: 10px;">&#128338; Historique des sessions</h3>
             <div id="historyListContainer" class="list-items-container">
-                <!-- Historique injectÃ© ici par JS -->
+                <!-- Historique inject&#233; ici par JS -->
             </div>
             <div class="modal-buttons" style="margin-top: 15px;">
                 <button id="btnCloseHistory" class="btn-gray">Fermer</button>
@@ -556,7 +556,7 @@
             document.body.style.overflow = ''; 
         }
         
-        // Fermeture automatique en cliquant sur l'arriÃ¨re-plan grisÃ©
+        // Fermeture automatique en cliquant sur l'arri\u00E8re-plan gris\u00E9
         window.addEventListener('click', (e) => {
             if (e.target.classList.contains('modal')) { closeModal(e.target); }
         });
@@ -611,7 +611,7 @@
             }
             sessionListItems.innerHTML = '';
             if (sessionBlocks.length === 0) {
-                sessionListItems.innerHTML = '<div style="padding: 10px; text-align: center; color: #888; font-size: 0.75rem;">Aucun bloc validÃ© aujourd\'hui</div>';
+                sessionListItems.innerHTML = '<div style="padding: 10px; text-align: center; color: #888; font-size: 0.75rem;">Aucun bloc valid\u00E9 aujourd\'hui</div>';
                 btnLiveSession.style.opacity = '0.5'; btnLiveSession.querySelector('.live-dot').style.animation = 'none';
             } else {
                 btnLiveSession.style.opacity = '1'; btnLiveSession.querySelector('.live-dot').style.animation = 'pulse-red 1.5s infinite';
@@ -645,7 +645,7 @@
         function initGradeFilterSelect() {
             const gradeOptions = [
                 {val: "", label: "Toutes cotations"}, 
-                {val: "?", label: "Non cotÃ©"}, 
+                {val: "?", label: "Non cot\u00E9"}, 
                 ...gradeOrder.filter(g => g !== '?').map(g => ({val: g, label: g}))
             ];
             cgList.innerHTML = ''; 
@@ -669,7 +669,7 @@
                     if(optData.val === "") { 
                         hBadge.style.display = 'none'; hName.style.display = 'block'; hName.textContent = "Toutes cotations"; 
                     } else if(optData.val === "?") { 
-                        hBadge.style.display = 'block'; hBadge.textContent = "Non cotÃ©"; hBadge.style.backgroundColor = "#333"; hName.style.display = 'none';
+                        hBadge.style.display = 'block'; hBadge.textContent = "Non cot\u00E9"; hBadge.style.backgroundColor = "#333"; hName.style.display = 'none';
                     } else { 
                         hBadge.style.display = 'block'; hBadge.textContent = optData.val; hBadge.style.backgroundColor = getGradeColor(optData.val); hName.style.display = 'none'; 
                     }
@@ -683,7 +683,7 @@
             if(!currentBlockName) return; listModalTitle.textContent = `Listes pour "${currentBlockName}"`; existingListsDiv.innerHTML = '';
             for(let listName in customLists) {
                 let isInside = customLists[listName].includes(currentBlockName);
-                let btn = document.createElement('button'); btn.textContent = listName + (isInside ? ' â' : ''); btn.className = isInside ? 'btn-green' : 'btn-gray';
+                let btn = document.createElement('button'); btn.textContent = listName + (isInside ? ' \u2705' : ''); btn.className = isInside ? 'btn-green' : 'btn-gray';
                 btn.onclick = () => { if(isInside) customLists[listName] = customLists[listName].filter(b => b !== currentBlockName); else customLists[listName].push(currentBlockName); localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); renderListModal(); updateListButtonState(); updateListFilterOptions(); updateBlockSelect(); };
                 existingListsDiv.appendChild(btn);
             }
@@ -693,13 +693,13 @@
             let activeList = currentListFilter;
             if (activeList && customLists[activeList]) {
                 let isInside = customLists[activeList].includes(currentBlockName);
-                if (isInside) { bottomListAdd.textContent = 'â'; bottomListAdd.classList.add('in-list'); bottomListAdd.title = `Retirer de la liste "${activeList}"`; } 
-                else { bottomListAdd.textContent = 'â'; bottomListAdd.classList.remove('in-list'); bottomListAdd.title = `Ajouter Ã  la liste "${activeList}"`; }
-            } else { bottomListAdd.textContent = 'â'; bottomListAdd.classList.remove('in-list'); bottomListAdd.title = "GÃ©rer les listes"; }
+                if (isInside) { bottomListAdd.textContent = '\u2796'; bottomListAdd.classList.add('in-list'); bottomListAdd.title = `Retirer de la liste "${activeList}"`; } 
+                else { bottomListAdd.textContent = '\u2795'; bottomListAdd.classList.remove('in-list'); bottomListAdd.title = `Ajouter \u00E0 la liste "${activeList}"`; }
+            } else { bottomListAdd.textContent = '\u2795'; bottomListAdd.classList.remove('in-list'); bottomListAdd.title = "G\u00E9rer les listes"; }
         }
 
         bottomListAdd.addEventListener('click', () => {
-            if(!currentBlockName) return alert("SÃ©lectionnez un bloc d'abord !");
+            if(!currentBlockName) return alert("S\u00E9lectionnez un bloc d'abord !");
             let activeList = currentListFilter;
             if (activeList && customLists[activeList]) {
                 let isInside = customLists[activeList].includes(currentBlockName);
@@ -734,7 +734,7 @@
         btnClosePaste.addEventListener('click', () => closeModal(pasteModal));
         btnSavePaste.addEventListener('click', () => {
             let text = pasteJsonText.value.trim(); if (!text) return alert("Veuillez coller du texte JSON.");
-            try { let parsed = JSON.parse(text); processImportedData(parsed); closeModal(pasteModal); } catch(e) { alert("Erreur JSON: " + e.message + "\nVÃ©rifiez que le code copiÃ© est valide."); }
+            try { let parsed = JSON.parse(text); processImportedData(parsed); closeModal(pasteModal); } catch(e) { alert("Erreur JSON: " + e.message + "\nV\u00E9rifiez que le code copi\u00E9 est valide."); }
         });
 
         btnSearchToggle.addEventListener('click', () => { if (searchInput.style.display === 'none' || searchInput.style.display === '') { searchInput.style.display = 'block'; searchInput.focus(); } else { searchInput.style.display = 'none'; searchInput.value = ''; updateBlockSelect(); } });
@@ -742,16 +742,16 @@
 
         btnDeleteBlock.addEventListener('click', () => {
             if (!currentBlockName || !blocks[currentBlockName]) return;
-            if (confirm(`Voulez-vous vraiment supprimer dÃ©finitivement le bloc "${currentBlockName}" ?`)) {
+            if (confirm(`Voulez-vous vraiment supprimer d\u00E9finitivement le bloc "${currentBlockName}" ?`)) {
                 delete blocks[currentBlockName]; for (let listName in customLists) { customLists[listName] = customLists[listName].filter(b => b !== currentBlockName); }
                 localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); localStorage.setItem('minimoon_lists', JSON.stringify(customLists));
-                dropdownMenu.classList.remove('show'); updateListFilterOptions(); updateBlockSelect(); updateSessionDropdown(); alert("Bloc supprimÃ© avec succÃ¨s.");
+                dropdownMenu.classList.remove('show'); updateListFilterOptions(); updateBlockSelect(); updateSessionDropdown(); alert("Bloc supprim\u00E9 avec succ\u00E8s.");
             }
         });
         
         btnDeleteList.addEventListener('click', () => {
             let activeList = currentListFilter; if (!activeList) return; 
-            if (confirm(`Voulez-vous vraiment supprimer la liste "${activeList}" ?`)) { delete customLists[activeList]; localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); currentListFilter = ""; updateListFilterOptions(); updateBlockSelect(); dropdownMenu.classList.remove('show'); alert(`La liste "${activeList}" a Ã©tÃ© supprimÃ©e.`); }
+            if (confirm(`Voulez-vous vraiment supprimer la liste "${activeList}" ?`)) { delete customLists[activeList]; localStorage.setItem('minimoon_lists', JSON.stringify(customLists)); currentListFilter = ""; updateListFilterOptions(); updateBlockSelect(); dropdownMenu.classList.remove('show'); alert(`La liste "${activeList}" a \u00E9t\u00E9 supprim\u00E9e.`); }
         });
 
         let bluetoothDevice = null; let bleCharacteristic = null; const btnConnect = document.getElementById('btnConnect');
@@ -760,7 +760,7 @@
         btnConnect.addEventListener('click', async () => {
             if (bluetoothDevice && bluetoothDevice.gatt.connected) { bluetoothDevice.gatt.disconnect(); return; }
             try {
-                // MODIFICATION : Cherche MMB et MoonBoard pour contourner le cache du tÃ©lÃ©phone
+                // MODIFICATION : Cherche MMB et MoonBoard pour contourner le cache du t\u00E9l\u00E9phone
                 bluetoothDevice = await navigator.bluetooth.requestDevice({ 
                     filters: [{ namePrefix: 'MMB' }, { namePrefix: 'MoonBoard' }], 
                     optionalServices: [BLE_SERVICE_UUID] 
@@ -772,7 +772,7 @@
             } catch (error) { console.error("Erreur Bluetooth:", error); }
         });
 
-         // RÃ©glage de luminositÃ© BLE, conservÃ© sur ce navigateur.
+         // R\u00E9glage de luminosit\u00E9 BLE, conserv\u00E9 sur ce navigateur.
          const brightnessSlider = document.getElementById('ledBrightness');
          const brightnessValue = document.getElementById('ledBrightnessValue');
          const storedBrightness = Number(localStorage.getItem('mmb25_led_brightness'));
@@ -785,7 +785,7 @@
              if (!bleCharacteristic) return;
              const value = Math.round(ledBrightnessPercent * 255 / 100);
              try { await bleCharacteristic.writeValue(new TextEncoder().encode('BRIGHTNESS:' + value)); }
-             catch (err) { console.error('LuminositÃ© Bluetooth:', err); }
+             catch (err) { console.error('Luminosit\u00E9 Bluetooth:', err); }
          }
          brightnessSlider.addEventListener('input', () => {
              ledBrightnessPercent = Number(brightnessSlider.value);
@@ -794,8 +794,8 @@
              clearTimeout(brightnessTimer);
              brightnessTimer = setTimeout(sendLedBrightness, 180);
          });
-        // Test sÃ©quentiel des 132 positions, en quatre zones de trois lignes.
-        // Utilise uniquement les commandes S/P/E/CLEAR dÃ©jÃ  comprises par le firmware.
+        // Test s\u00E9quentiel des 132 positions, en quatre zones de trois lignes.
+        // Utilise uniquement les commandes S/P/E/CLEAR d\u00E9j\u00E0 comprises par le firmware.
         let ledTestRunning = false;
         let ledTestCancel = false;
         const btnStartLedTest = document.getElementById('btnStartLedTest');
@@ -803,7 +803,7 @@
         const ledTestStatus = document.getElementById('ledTestStatus');
         const ledTestSleep = ms => new Promise(resolve => setTimeout(resolve, ms));
         async function ledTestWrite(command) {
-            if (!bleCharacteristic || !bluetoothDevice || !bluetoothDevice.gatt.connected) throw new Error('Bluetooth dÃ©connectÃ©');
+            if (!bleCharacteristic || !bluetoothDevice || !bluetoothDevice.gatt.connected) throw new Error('Bluetooth d\u00E9connect\u00E9');
             await bleCharacteristic.writeValue(new TextEncoder().encode(command));
         }
         function restoreLedTestButtons() {
@@ -813,7 +813,7 @@
         btnStartLedTest.addEventListener('click', async () => {
             if (ledTestRunning) return;
             if (!bleCharacteristic || !bluetoothDevice?.gatt.connected) {
-                ledTestStatus.textContent = 'Connecte dâabord ton Arduino en Bluetooth.';
+                ledTestStatus.textContent = 'Connecte d\u2019abord ton Arduino en Bluetooth.';
                 return;
             }
             ledTestRunning = true;
@@ -831,22 +831,22 @@
                                 holds.push(`${col}${row}:${code}`);
                             }
                         }
-                        ledTestStatus.textContent = `Zone ${zone + 1}/4 â lignes ${zone * 3 + 1} Ã  ${zone * 3 + 3} â ${colorName}`;
+                        ledTestStatus.textContent = `Zone ${zone + 1}/4 \u2014 lignes ${zone * 3 + 1} \u00E0 ${zone * 3 + 3} \u2014 ${colorName}`;
                         await ledTestWrite(holds.join(','));
-                        // 2 secondes Ã  compter de l'envoi de la commande.
+                        // 2 secondes \u00E0 compter de l'envoi de la commande.
                         for (let elapsed = 0; elapsed < 2000 && !ledTestCancel; elapsed += 100) {
                             await ledTestSleep(100);
                         }
                     }
                 }
-                ledTestStatus.textContent = ledTestCancel ? 'Test interrompu.' : 'Test terminÃ© (24 secondes).';
+                ledTestStatus.textContent = ledTestCancel ? 'Test interrompu.' : 'Test termin\u00E9 (24 secondes).';
             } catch (err) {
                 console.error('Test LED :', err);
                 ledTestStatus.textContent = 'Test interrompu : ' + err.message;
             } finally {
                 ledTestRunning = false;
                 restoreLedTestButtons();
-                // Revenir Ã  l'Ã©tat prÃ©cÃ©dent, sans toucher Ã  la luminositÃ©.
+                // Revenir \u00E0 l'\u00E9tat pr\u00E9c\u00E9dent, sans toucher \u00E0 la luminosit\u00E9.
                 if (bleCharacteristic && bluetoothDevice?.gatt.connected) {
                     try {
                         await ledTestWrite('CLEAR');
@@ -859,7 +859,7 @@
         });
         btnStopLedTest.addEventListener('click', () => {
             ledTestCancel = true;
-            ledTestStatus.textContent = 'ArrÃªt en coursâ¦';
+            ledTestStatus.textContent = 'Arr\u00EAt en cours\u2026';
         });
         function sendToESP32(blockData) {
             if (!bleCharacteristic) return; let payload = "CLEAR";
@@ -901,7 +901,7 @@
                 if (parsed.blocks) blocks = parsed.blocks; if (parsed.lists) customLists = parsed.lists;
                 if (parsed.gridConfig) { gridConfig = parsed.gridConfig; applyGridConfig(); localStorage.setItem('minimoon_grid', JSON.stringify(gridConfig)); }
                 localStorage.setItem('minimoon_blocks', JSON.stringify(blocks)); localStorage.setItem('minimoon_lists', JSON.stringify(customLists));
-                updateListFilterOptions(); initGradeFilterSelect(); updateBlockSelect(); updateSessionDropdown(); return alert("Sauvegarde restaurÃ©e !");
+                updateListFilterOptions(); initGradeFilterSelect(); updateBlockSelect(); updateSessionDropdown(); return alert("Sauvegarde restaur\u00E9e !");
             }
             let dataArray = [];
             if (Array.isArray(parsed)) dataArray = parsed; else if (parsed.data && Array.isArray(parsed.data)) dataArray = parsed.data; else if (parsed.name || parsed.Name || parsed.moves) dataArray.push(parsed);
@@ -923,12 +923,12 @@
             });
             
             let newKeys = Object.keys(newBlocks); blocks = {...blocks, ...newBlocks}; localStorage.setItem('minimoon_blocks', JSON.stringify(blocks));
-            alert(`${newKeys.length} bloc(s) importÃ©(s) !`); if(newKeys.length > 0) updateBlockSelect(newKeys[newKeys.length - 1]); else updateBlockSelect(); updateSessionDropdown();
+            alert(`${newKeys.length} bloc(s) import\u00E9(s) !`); if(newKeys.length > 0) updateBlockSelect(newKeys[newKeys.length - 1]); else updateBlockSelect(); updateSessionDropdown();
         }
 
         document.getElementById('btnImport').addEventListener('click', () => { document.getElementById('fileImport').click(); closeModal(settingsModal); });
         document.getElementById('fileImport').addEventListener('change', (e) => { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = ev => { try { processImportedData(JSON.parse(ev.target.result)); } catch(err) { alert("Erreur."); console.error(err); } }; reader.readAsText(file); e.target.value = ''; });
-        document.getElementById('btnClearStorage').addEventListener('click', () => { if(confirm("â ï¸ Effacer TOUT ?")) { blocks = {}; customLists = {}; localStorage.removeItem('minimoon_blocks'); localStorage.removeItem('minimoon_lists'); currentListFilter = ""; updateListFilterOptions(); updateBlockSelect(); updateSessionDropdown(); closeModal(settingsModal); } });
+        document.getElementById('btnClearStorage').addEventListener('click', () => { if(confirm("\u26A0\uFE0F Effacer TOUT ?")) { blocks = {}; customLists = {}; localStorage.removeItem('minimoon_blocks'); localStorage.removeItem('minimoon_lists'); currentListFilter = ""; updateListFilterOptions(); updateBlockSelect(); updateSessionDropdown(); closeModal(settingsModal); } });
 
         function initGrid() { gridOverlay.innerHTML = ''; ROWS.forEach(r => { COLS.forEach(c => { let holdId = c + r; let cell = document.createElement('div'); cell.className = 'grid-cell'; cell.addEventListener('click', () => handleHoldClick(holdId)); let div = document.createElement('div'); div.className = 'hold'; div.dataset.id = holdId; cell.appendChild(div); gridOverlay.appendChild(cell); }); }); }
         function handleHoldClick(holdId) {
@@ -965,7 +965,7 @@
                 bottomBlockName.textContent = name; let gradeVal = block.grade || "?"; bottomGrade.textContent = gradeVal; bottomGrade.style.backgroundColor = getGradeColor(gradeVal);
                 
                 document.getElementById('csHeaderBadge').style.display = 'block'; document.getElementById('csHeaderBadge').textContent = gradeVal; document.getElementById('csHeaderBadge').style.backgroundColor = getGradeColor(gradeVal); document.getElementById('csHeaderName').textContent = name;
-                if (block.favorite) { bottomHeart.textContent = 'â¤ï¸'; bottomHeart.classList.add('is-fav'); } else { bottomHeart.textContent = 'ð¤'; bottomHeart.classList.remove('is-fav'); }
+                if (block.favorite) { bottomHeart.textContent = '\u2764\uFE0F'; bottomHeart.classList.add('is-fav'); } else { bottomHeart.textContent = '\uD83E\uDD0D'; bottomHeart.classList.remove('is-fav'); }
 
                 if (block.completed) {
                     bottomCheckWrapper.classList.add('is-checked'); repControls.style.display = 'flex';
@@ -982,9 +982,9 @@
                 isBulbOn = false;
                 document.getElementById('btnClearBoard').classList.remove('is-on');
 
-                bottomBlockName.textContent = "Aucun bloc sÃ©lectionnÃ©"; bottomGrade.textContent = "-"; bottomGrade.style.backgroundColor = "#333333";
-                bottomHeart.textContent = 'ð¤'; bottomHeart.classList.remove('is-fav');
-                document.getElementById('csHeaderBadge').style.display = 'none'; document.getElementById('csHeaderName').textContent = "Aucun bloc sÃ©lectionnÃ©";
+                bottomBlockName.textContent = "Aucun bloc s\u00E9lectionn\u00E9"; bottomGrade.textContent = "-"; bottomGrade.style.backgroundColor = "#333333";
+                bottomHeart.textContent = '\uD83E\uDD0D'; bottomHeart.classList.remove('is-fav');
+                document.getElementById('csHeaderBadge').style.display = 'none'; document.getElementById('csHeaderName').textContent = "Aucun bloc s\u00E9lectionn\u00E9";
                 bottomCheckWrapper.classList.remove('is-checked'); repControls.style.display = 'none'; infoSetter.textContent = "-"; infoAscensions.textContent = "-";
                 updateListButtonState(); 
                 sendToESP32(null); 
@@ -1019,7 +1019,7 @@
                 let opt = document.createElement('option'); opt.value = k; opt.textContent = k; blockSelect.appendChild(opt);
                 
                 let ascText = (sortAscensions && b.ascensionCount > 0) ? `<div class="cs-asc">- ${b.ascensionCount} asc.</div>` : '';
-                let favText = b.favorite ? 'â¤ï¸' : ''; let doneText = b.completed ? 'â' : ''; let iconsHtml = (doneText || favText) ? `<div class="cs-icons">${doneText}${favText}</div>` : '';
+                let favText = b.favorite ? '\u2764\uFE0F' : ''; let doneText = b.completed ? '\u2705' : ''; let iconsHtml = (doneText || favText) ? `<div class="cs-icons">${doneText}${favText}</div>` : '';
                 
                 let isActive = (k === selected);
                 let activeBulbHtml = (isActive && isBulbOn) ? `<div class="cs-active-bulb"><svg width="16" height="16" viewBox="0 0 24 24" fill="#ffea00" stroke="#ffea00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 5px rgba(255, 234, 0, 0.9));"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-7 7c0 2.2 1.18 4.1 2.9 5.3C8.6 15 9 16.5 9 18h6c0-1.5.4-3 1.1-3.7 1.72-1.2 2.9-3.1 2.9-5.3a7 7 0 0 0-7-7z"/></svg></div>` : '';
@@ -1043,7 +1043,7 @@
         bottomCheckWrapper.addEventListener('click', () => {
             if (currentBlockName && blocks[currentBlockName]) {
                 let b = blocks[currentBlockName];
-                if (b.completed && b.ascentsLog && b.ascentsLog.length > 1) { if (!confirm(`Tu as enregistrÃ© ${b.ascentsLog.length} ascensions.\nVoulez-vous dÃ©cocher et effacer cet historique ?`)) { return; } }
+                if (b.completed && b.ascentsLog && b.ascentsLog.length > 1) { if (!confirm(`Tu as enregistr\u00E9 ${b.ascentsLog.length} ascensions.\nVoulez-vous d\u00E9cocher et effacer cet historique ?`)) { return; } }
                 b.completed = !b.completed;
                 if (b.completed) { 
                     b.completedDate = getTodayString(); 
@@ -1118,7 +1118,7 @@
                 }
             }
             function buildHtml(statsObj, total) {
-                if (total === 0) return `<div style="text-align:center; color:#888; padding:10px;">Aucun bloc rÃ©alisÃ©</div>`;
+                if (total === 0) return `<div style="text-align:center; color:#888; padding:10px;">Aucun bloc r\u00E9alis\u00E9</div>`;
                 let html = `<div style="text-align:center; margin-bottom:8px; color:#ffb700; font-weight:bold;">Total : ${total} blocs</div>`;
                 gradeOrder.forEach(g => { if (statsObj[g] > 0) { let bgColor = getGradeColor(g); html += `<div class="stat-row"><span class="stat-grade" style="background-color: ${bgColor};">${g}</span><span class="stat-count">${statsObj[g]}</span></div>`; } });
                 return html;
@@ -1189,9 +1189,9 @@
                     let row = document.createElement('div');
                     row.className = 'history-row';
                     
-                    let icon = asc.isFirst ? 'â' : 'â';
+                    let icon = asc.isFirst ? '\u2705' : '\u2795';
                     let timeHtml = asc.time !== "--:--" ? `[${asc.time}]` : `[--:--]`;
-                    let favHtml = asc.isFav ? '<span style="font-size:0.9rem;">â¤ï¸</span>' : '';
+                    let favHtml = asc.isFav ? '<span style="font-size:0.9rem;">\u2764\uFE0F</span>' : '';
                     
                     row.innerHTML = `
                         <div class="cs-badge" style="background-color: ${asc.bgColor}; font-size: 0.7rem; min-width: 25px;">${asc.grade}</div>
